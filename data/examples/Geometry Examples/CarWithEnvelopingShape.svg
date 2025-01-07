@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="389px" preserveAspectRatio="none" style="width:445px;height:389px;background:#FFFFFF;" version="1.1" viewBox="0 0 445 389" width="445px" zoomAndPan="magnify"><defs/><g><!--MD5=[fbc87193dbaf4d95561dea2c320d4a47]
+cluster E1--><g id="cluster_E1"><a href="psysml:7e118b2f-362d-44ff-9e38-dfa5d4fe1286" target="_top" title="psysml:7e118b2f-362d-44ff-9e38-dfa5d4fe1286" xlink:actuate="onRequest" xlink:href="psysml:7e118b2f-362d-44ff-9e38-dfa5d4fe1286" xlink:show="new" xlink:title="psysml:7e118b2f-362d-44ff-9e38-dfa5d4fe1286" xlink:type="simple"><polygon fill="none" points="16,6,201,6,208,29.6094,428,29.6094,428,382,16,382,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="208" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="179" x="20" y="22.5332">CarWithEnvelopingShape</text></a></g><!--MD5=[b4997ac47864f28c2f74865a473b2911]
+class E2--><a href="psysml:b44c1e92-520c-47d2-bf9e-255d0666e9f8" target="_top" title="psysml:b44c1e92-520c-47d2-bf9e-255d0666e9f8" xlink:actuate="onRequest" xlink:href="psysml:b44c1e92-520c-47d2-bf9e-255d0666e9f8" xlink:show="new" xlink:title="psysml:b44c1e92-520c-47d2-bf9e-255d0666e9f8" xlink:type="simple"><g id="elem_E2"><rect fill="#FFFFFF" height="96.9656" id="E2" style="stroke:#181818;stroke-width:0.5;" width="309" x="67.5" y="42"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="58" x="193" y="59.457">«part  def»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="23" x="210.5" y="76.627">Car</text><line style="stroke:#181818;stroke-width:0.5;" x1="68.5" x2="375.5" y1="84.7031" y2="84.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="293" x="73.5" y="114.2801">Example car with simple enveloping shape that</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81" x="73.5" y="131.8895">is a solid box</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="23" x="210.5" y="97.9316">doc</text></g></a><!--MD5=[09b614a08d8cba4a07c9adeb5e0fee81]
+class E3--><a href="psysml:3d5a14c6-de6f-4a49-9a7a-4efe815ee69d" target="_top" title="psysml:3d5a14c6-de6f-4a49-9a7a-4efe815ee69d" xlink:actuate="onRequest" xlink:href="psysml:3d5a14c6-de6f-4a49-9a7a-4efe815ee69d" xlink:show="new" xlink:title="psysml:3d5a14c6-de6f-4a49-9a7a-4efe815ee69d" xlink:type="simple"><g id="elem_E3"><rect fill="#FFFFFF" height="167.4031" id="E3" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="379" x="32.5" y="199"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="38" x="203" y="216.457">«item»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="369" x="35.5" y="233.627">boundingBox: RectangularCuboid :&gt;Item::boundingShapes</text><line style="stroke:#181818;stroke-width:0.5;" x1="33.5" x2="410.5" y1="241.7031" y2="241.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="121" x="38.5" y="271.2801">length = 4800 [mm]</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="189" x="38.5" y="288.8895">:&gt;&gt;RectangularCuboid::length</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114" x="38.5" y="306.4988">width = 1840 [mm]</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="182" x="38.5" y="324.1082">:&gt;&gt;RectangularCuboid::width</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="121" x="38.5" y="341.7176">height = 1350 [mm]</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="189" x="38.5" y="359.327">:&gt;&gt;RectangularCuboid::height</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="68" x="188" y="254.9316">references</text></g></a><!--MD5=[209b3feb70ccb6233bfe1053d122c12c]
+reverse link E2 to E3--><g id="link_E2_E3"><a href="psysml:f28535f3-6762-4a55-82f3-0e009862fd0c" target="_top" title="psysml:f28535f3-6762-4a55-82f3-0e009862fd0c" xlink:actuate="onRequest" xlink:href="psysml:f28535f3-6762-4a55-82f3-0e009862fd0c" xlink:show="new" xlink:title="psysml:f28535f3-6762-4a55-82f3-0e009862fd0c" xlink:type="simple"><path d="M222,152.57 C222,167.3 222,183.28 222,198.82 " fill="none" id="E2-backto-E3" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="222,139.45,218.0066,145.4544,222.0132,151.45,226.0066,145.4456,222,139.45" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="7" x="214.6883" y="188.1476">1</text></a></g><!--MD5=[5e2c74f3b028d357d8ee4c6e1617d1f6]
+@startuml
+skin sysmlbw
+skinparam monochrome true
+skinparam wrapWidth 300
+hide circle
+
+package "CarWithEnvelopingShape" as E1  [[psysml:7e118b2f-362d-44ff-9e38-dfa5d4fe1286 ]]  {
+comp def "Car" as E2  <<(T,blue) part  def>> [[psysml:b44c1e92-520c-47d2-bf9e-255d0666e9f8 ]] {
+##//doc//##
+Example car with simple enveloping shape that is a solid box
+}
+comp usage "boundingBox: RectangularCuboid :>Item::boundingShapes " as E3  <<(T,blue) item>> [[psysml:3d5a14c6-de6f-4a49-9a7a-4efe815ee69d ]] {
+##//references//##
+length <U+003D> 4800 [mm]\n//:>>RectangularCuboid::length// 
+width <U+003D> 1840 [mm]\n//:>>RectangularCuboid::width// 
+height <U+003D> 1350 [mm]\n//:>>RectangularCuboid::height// 
+}
+}
+E2 *- - "1"E3 [[psysml:f28535f3-6762-4a55-82f3-0e009862fd0c ]] 
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(EPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="396px" preserveAspectRatio="none" style="width:678px;height:396px;background:#FFFFFF;" version="1.1" viewBox="0 0 678 396" width="678px" zoomAndPan="magnify"><defs/><g><!--MD5=[fbc87193dbaf4d95561dea2c320d4a47]
+cluster E1--><g id="cluster_E1"><a href="psysml:6e03adda-48d6-4198-98d2-6916aa60c69a" target="_top" title="psysml:6e03adda-48d6-4198-98d2-6916aa60c69a" xlink:actuate="onRequest" xlink:href="psysml:6e03adda-48d6-4198-98d2-6916aa60c69a" xlink:show="new" xlink:title="psysml:6e03adda-48d6-4198-98d2-6916aa60c69a" xlink:type="simple"><polygon fill="none" points="16,6,155,6,162,29.6094,661,29.6094,661,389.72,16,389.72,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="162" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="133" x="20" y="22.5332">AnalysisAnnotation</text></a></g><!--MD5=[e4f7fae6ed58524ba242bb0b0d3be6b7]
+cluster E2--><g id="cluster_E2"><a href="psysml:4b67117a-d187-4062-8996-e6b484a66aa6" target="_top" title="psysml:4b67117a-d187-4062-8996-e6b484a66aa6" xlink:actuate="onRequest" xlink:href="psysml:4b67117a-d187-4062-8996-e6b484a66aa6" xlink:show="new" xlink:title="psysml:4b67117a-d187-4062-8996-e6b484a66aa6" xlink:type="simple"><rect fill="#FFFFFF" height="267.22" id="E2" style="stroke:#383838;stroke-width:1.5;" width="318" x="323" y="84.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="70" x="447" y="101.957">«action  def»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="118" x="423" y="119.127">ComputeDynamics</text><line style="stroke:#383838;stroke-width:1.0;" x1="323" x2="641" y1="127.2031" y2="127.2031"/></a></g><g id="elem_E3"><path d="M32,42 L32,126.6504 L300,126.6504 L300,52 L290,42 L32,42 " fill="#FAFAFA" style="stroke:#181818;stroke-width:0.5;"/><path d="M290,42 L290,52 L300,52 L290,42 " fill="#FAFAFA" style="stroke:#181818;stroke-width:1.0;"/><text fill="#000000" font-family="monospace" font-size="13" lengthAdjust="spacing" textLength="112" x="38" y="60.0698">              </text><a href="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" target="_top" title="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" xlink:actuate="onRequest" xlink:href="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" xlink:show="new" xlink:title="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" xlink:type="simple"><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" text-decoration="underline" textLength="68" x="150" y="61.1172">«metadata»</text></a><text fill="#000000" font-family="monospace" font-size="13" font-style="italic" lengthAdjust="spacing" textLength="104" x="38" y="77.0435">             </text><text fill="#000000" font-family="sans-serif" font-size="13" font-style="italic" lengthAdjust="spacing" textLength="82" x="142" y="78.0908">ToolExecution</text><line style="stroke:#181818;stroke-width:1.0;" x1="33" x2="299" y1="80.9473" y2="80.9473"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="158" x="38" y="98.4424">toolName =  "ModelCenter"</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="247" x="38" y="114.7939">uri =  "aserv://localhost/Vehicle/Equation1"</text></g><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="12" x="335" y="63.4238">dt</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="335" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="42" x="367" y="63.4238">whlpwr</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="382" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="18" x="426" y="63.4238">Cd</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="429" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="14" x="475" y="63.4238">Cf</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="476" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="15" x="521.5" y="63.4238">tm</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="523" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="26" x="563" y="63.4238">v_in</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="570" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="25" x="610.5" y="63.4238">x_in</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="617" y="78.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="36" x="339" y="372.2532">a_out</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="351" y="345.72"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="35" x="386.5" y="372.2532">v_out</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="398" y="345.72"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="34" x="434" y="372.2532">x_out</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="445" y="345.72"/><!--MD5=[05d275557350bfb9b23a4ef7222b4c39]
+link E3 to E2--><g id="link_E3_E2"><a href="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" target="_top" title="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" xlink:actuate="onRequest" xlink:href="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" xlink:show="new" xlink:title="psysml:251cb877-d667-4b02-8ccc-ffe80738a867" xlink:type="simple"><path d="M273.29,127.13 C286.4425,132.2325 300.0963,137.5294 313.8152,142.8516 C315.53,143.5168 317.2459,144.1825 318.9619,144.8482 C319.82,145.1811 320.678,145.514 321.536,145.8468 C321.965,146.0133 322.394,146.1797 322.823,146.3461 " fill="none" id="E3-to-E2" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><ellipse cx="317.2292" cy="144.176" fill="#181818" rx="6" ry="6" style="stroke:#181818;stroke-width:1.5;"/></a></g><!--MD5=[1a33194868af307724672e1231a02d62]
+@startuml
+skin sysmlbw
+skinparam monochrome true
+skinparam wrapWidth 300
+hide circle
+
+package "AnalysisAnnotation" as E1  [[psysml:6e03adda-48d6-4198-98d2-6916aa60c69a ]]  {
+rec def "ComputeDynamics" as E2  <<(T,blue) action  def>> [[psysml:4b67117a-d187-4062-8996-e6b484a66aa6 ]] {
+portin "dt" as E4  [[psysml:72f94419-641b-466f-b08d-691919d4ee54 ]] 
+portin "whlpwr" as E5  [[psysml:b9c213cd-0548-4912-bdb3-97dc9f45f006 ]] 
+portin "Cd" as E6  [[psysml:ab522065-f921-48d2-993a-7887d560e1b3 ]] 
+portin "Cf" as E7  [[psysml:26f1d35e-bf72-49da-8cd2-4cd3138aabad ]] 
+portin "tm" as E8  [[psysml:7e726871-90f9-4593-8821-d22b73dabd8d ]] 
+portin "v_in" as E9  [[psysml:ce755d46-577f-4d92-999e-bec9ffa93646 ]] 
+portin "x_in" as E10  [[psysml:cd743fe9-2a4d-4a11-bf2d-bc15f44afdd6 ]] 
+portout "a_out" as E11  [[psysml:c08eb55d-b611-412d-a315-2a9c28e3f139 ]] 
+portout "v_out" as E12  [[psysml:2effabb1-ddca-4f66-a14c-8aad74f1923f ]] 
+portout "x_out" as E13  [[psysml:1ad2980f-439f-4726-a69c-02b1944e00b1 ]] 
+}
+
+note as E3
+""              ""[[psysml:251cb877-d667-4b02-8ccc-ffe80738a867 «metadata»]]
+==== ""             ""ToolExecution
+- -
+toolName =  "ModelCenter"
+uri =  "aserv://localhost/Vehicle/Equation1"
+end note
+}
+E3 ..@ E2 [[psysml:251cb877-d667-4b02-8ccc-ffe80738a867 ]] 
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(EPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
