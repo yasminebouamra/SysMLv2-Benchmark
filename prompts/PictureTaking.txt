@@ -1,0 +1,1 @@
+A simplified model of a picture-taking process in SysMLV2, incorporating actions for focusing and shooting the picture. The model includes a sequence where focusing the camera gets the necessary exposure settings, which are then used to shoot the picture, highlighting the flow of exposure settings from the focus action to the shoot action.
