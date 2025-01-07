@@ -1,0 +1,18 @@
+```SysMLV2
+package PictureTakingProcess {
+    action def Focus {
+        output exposureSettings;
+    }
+
+    action def Shoot {
+        input exposureSettings;
+    }
+
+    action takePicture {
+        perform focus : Focus;
+        perform shoot : Shoot {
+            bind exposureSettings = focus.exposureSettings;
+        }
+    }
+}
+```

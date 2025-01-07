@@ -1,0 +1,129 @@
+```sysmlv2
+package Q {
+
+    -- Part Type: F
+    part def F {
+        attribute f1 : Integer;
+        attribute f2 : String;
+    }
+
+    -- Part Type: A
+    part def A {
+        attribute a1 : Real;
+        attribute a2 : Boolean;
+        part b : B;
+    }
+
+    -- Part Type: B
+    part def B {
+        attribute b1 : Date;
+        attribute b2 : Time;
+        part c : C;
+    }
+
+    -- Part Type: C
+    part def C {
+        attribute c1 : String;
+        attribute c2 : Integer;
+        part d : D;
+        part e : E;
+        part f : F;
+        part g : G;
+    }
+
+    -- Part Type: D
+    part def D {
+        attribute d1 : Integer;
+        attribute d2 : Float;
+    }
+
+    -- Enumeration Type: E
+    enum def E {
+        element e1;
+        element e2;
+    }
+
+    -- Attribute Binding
+    part q : A {
+        attribute e : E :>> e1;
+    }
+
+    -- Recursive Relationship (Part G)
+    part def G {
+        part h : H;
+    }
+
+    part def H {
+        part i : I;
+    }
+
+    part def I {
+        part j : J;
+        part k : K;
+    }
+
+    part def J {
+        part l : L;
+    }
+
+    part def K {
+        part m : M;
+    }
+
+    part def L {
+        part n : N;
+    }
+
+    part def M {
+        part o : O;
+    }
+
+    part def N {
+        part p : P;
+    }
+
+    part def O {
+        part q : Q;
+    }
+
+    part def P {
+        part r : R;
+    }
+
+    part def R {
+        part s : S;
+    }
+
+    part def S {
+        part t : T;
+    }
+
+    part def T {
+        part u : U;
+    }
+
+    part def U {
+        part v : V;
+    }
+
+    part def V {
+        part w : W;
+    }
+
+    part def W {
+        part x : X;
+    }
+
+    part def X {
+        part y : Y;
+    }
+
+    part def Y {
+        part z : Z;
+    }
+
+    part def Z {
+        part a : A;
+    }
+}
+```

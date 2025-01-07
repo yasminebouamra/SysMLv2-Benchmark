@@ -1,0 +1,56 @@
+```SysMLV2
+package PubSubSystemModel {
+
+    part def Producer {
+        action publishMessage;
+    }
+
+    part def Server {
+        part subscriptions;
+        action processMessage;
+        action forwardMessage;
+    }
+
+    part def Consumer {
+        action receiveMessage;
+        action sendAcknowledgment;
+    }
+
+    part pubSubSequence :> PubSubSequenceOutside {
+        part producer : Producer;
+        part server : Server;
+        part consumer : Consumer;
+
+        connect producer.publishMessage to server.processMessage;
+        connect server.processMessage to server.forwardMessage;
+        connect server.forwardMessage to consumer.receiveMessage;
+        connect consumer.receiveMessage to consumer.sendAcknowledgment;
+    }
+
+    state def PubSubSequenceOutside {
+        state InitialSubscription {
+            do send subscriptionRequest to server.subscriptions;
+            accept subscriptionAcknowledgment;
+            then MessageHandling;
+        }
+
+        state MessageHandling {
+            accept messagePublished : Producer::publishMessage;
+            do server::processMessage;
+            do server::forwardMessage;
+            accept messageReceived : Consumer::receiveMessage;
+            do consumer::sendAcknowledgment;
+            then Finalize;
+        }
+
+        state Finalize {
+            do {
+                log "Message delivery complete.";
+            }
+        }
+
+        transition from InitialSubscription to MessageHandling;
+        transition from MessageHandling to Finalize;
+    }
+}
+```

@@ -1,0 +1,53 @@
+```SysMLV2
+package EngineTradeStudy {
+
+    part def Engine {
+        attribute power : ScalarValues::Watt;
+        attribute efficiency : ScalarValues::Percent;
+    }
+    
+    part engine1 : Engine {
+        power = 200 [ScalarValues::kW];
+        efficiency = 85 [ScalarValues::Percent];
+    }
+    
+    part engine2 : Engine {
+        power = 180 [ScalarValues::kW];
+        efficiency = 90 [ScalarValues::Percent];
+    }
+    
+    analysis def PerformanceEvaluation {
+        objective maximizeEfficiency {
+            direction = Direction::Maximize;
+            expression (eng : Engine) : ScalarValues::Percent = eng.efficiency;
+        }
+
+        objective maximizePower {
+            direction = Direction::Maximize;
+            expression (eng : Engine) : ScalarValues::Watt = eng.power;
+        }
+
+        decision variable selectedEngine : Engine;
+
+        constraint powerPreference {
+            definition = selectedEngine.power >= 190 [ScalarValues::kW];
+        }
+
+        evaluate {
+            assess selectedEngine using maximizeEfficiency;
+            assess selectedEngine using maximizePower;
+        }
+
+        recommend {
+            basedOn maximizeEfficiency, maximizePower;
+            select selectedEngine;
+        }
+    }
+    
+    perform analysis {
+        perform PerformanceEvaluation {
+            provide engine1, engine2 as selectedEngine;
+        }
+    }
+}
+```

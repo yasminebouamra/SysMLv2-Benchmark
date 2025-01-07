@@ -1,0 +1,88 @@
+```
+package VehicleDynamicsModel
+
+	type PowerValue;
+	type AccelerationValue;
+	type DistancePerVolumeValue;
+	type VelocityValue;
+	type PositionValue;
+
+	type NominalScenario {
+		type TimeStateRecord {
+			t : Real;
+			s : State;
+		}
+		n : Integer;
+		samples : TimeStateRecord[];
+	}
+
+	type Vehicle {
+		driveTrainEfficiency : Real;
+		mass : Real;
+		fuelEconomy_city : DistancePerVolumeValue;
+		fuelEconomy_highway : DistancePerVolumeValue;
+	}
+
+	type State {
+		velocity : VelocityValue;
+		position : PositionValue;
+	}
+
+	type StraightLineDynamicsEquations {
+		p : PowerValue;
+		m : Real;
+		dt : Real;
+		x_i : PositionValue;
+		v_i : VelocityValue;
+		x_f : PositionValue;
+		v_f : VelocityValue;
+		a : AccelerationValue;
+	}
+
+	type FuelEconomyAnalysis {
+		subject vehicle : Vehicle;
+		in attribute scenario : NominalScenario;
+		in requirement fuelEconomyRequirement : Requirement;
+		out calculatedFuelEconomy : DistancePerVolumeValue;
+	}
+
+	type DynamicsAnalysis {
+		in sc : NominalScenario;
+		out power : PowerValue[];
+		out acceleration : AccelerationValue[];
+	}
+
+	type FuelConsumptionAnalysis {
+		in power : PowerValue[];
+		in acceleration : AccelerationValue[];
+		out fuelEconomy : DistancePerVolumeValue;
+	}
+
+	part vehicleFuelEconomyAnalysisContext {
+		requirement vehicleFuelEconomyRequirementsGroup {
+			subject vehicle : Vehicle;
+			requirement vehicleFuelEconomyRequirement_city :> cityFuelEconomyRequirement;
+			requirement vehicleFuelEconomyRequirement_highway :> highwayFuelEconomyRequirement;
+		}
+		attribute cityScenario : NominalScenario;
+		attribute highwayScenario : NominalScenario;
+		analysis cityFuelEconomyAnalysis : FuelEconomyAnalysis;
+		analysis highwayFuelEconomyAnalysis : FuelEconomyAnalysis;
+		part vehicle_c1_analysized :> vehicle_c1 {
+			attribute :>> fuelEconomy_city = cityFuelEconomyAnalysis.calculatedFuelEconomy;
+			attribute :>> fuelEconomy_highway = highwayFuelEconomyAnalysis.calculatedFuelEconomy;
+		}
+		satisfy vehicleFuelEconomyRequirementsGroup by vehicle_c1_analysized;
+	}
+
+	part vehicle_c1 {
+		driveTrainEfficiency : Real = 0.4;
+		mass : Real = 1000;
+		fuelEconomy_city : DistancePerVolumeValue;
+		fuelEconomy_highway : DistancePerVolumeValue;
+	}
+
+```
+```
+
+**Note:** The code assumes the presence of a "ModelCenter" simulation tool that provides the necessary functionality for dynamic analysis.

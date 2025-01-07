@@ -1,0 +1,77 @@
+```sysmlv2
+model DeliveryMonitoringSystem {
+
+	// Define the necessary data types
+	datatype CallGiveItems {
+		int productID;
+	}
+
+	datatype Return_AllItems {
+		string productData;
+	}
+
+	datatype ResultGiveItems {
+		boolean success;
+	}
+
+	// Define the interface for interacting with the systems
+	interface APIS_transfer_interface : Interfaces::Interface {
+		message call_getItems of CallGiveItems
+		from tlu to apsph;
+		message returnallitems of Return_AllItems
+		from apspm to mqget;
+		message returnack of ResultGiveItems
+		from apsph to tlu;
+	}
+
+	// Define the system for pulling product information
+	system TellUConsumer {
+		port apisp : APIS_transfer_interface;
+	}
+
+	// Define the system for consuming product information
+	system APISConsumer {
+		port apisp : APIS_transfer_interface;
+	}
+
+	// Define the system for monitoring product deliveries
+	system APISProducer {
+		port apisc : APIS_transfer_interface;
+	}
+
+	// Define the cloud configuration
+	cloud AHFNorway_LocalCloudDD {
+		system MQTTServer;
+	}
+
+	// Define the communication between the systems
+	occurrence def APIScommunication {
+		ref part tlu = TellUConsumer{apisp};
+		ref part apsph = APISProducer{apisc};
+		ref part apisc = APISConsumer{apisp};
+
+		in event occurrence call_getItems;
+		in event occurrence returnallitems;
+		in event occurrence returnack;
+
+		message call_getItems_message of CallGiveItems
+		from tlu.apisp.call_getItems to apsph.apisp.call_getItems;
+		message returnallitems_message of Return_AllItems
+		from apsph.apisp.returnallitems to apisc.apisp.returnallitems;
+		message returnack_message of ResultGiveItems
+		from apsph.apisp.returnack to tlu.apisp.returnack;
+	}
+
+	// Define the state machine for the MQTTServer
+	statemachine MQTTServer {
+		initial state receive_returnallitems;
+		state send_returnallitems;
+
+		transition receive_returnallitems -> send_returnallitems
+		when MQTTServer.mq.receive(returnallitems_message);
+
+		transition send_returnallitems -> receive_returnallitems
+		when MQTTServer.mq.send(returnallitems_message);
+	}
+}
+```

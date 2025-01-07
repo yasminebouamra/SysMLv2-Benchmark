@@ -1,0 +1,80 @@
+```sysmlv2
+package ElectricVehicle
+
+part def Vehicle {
+    attribute mass : Real;
+    attribute range : Distance;
+    attribute efficiency : Efficiency;
+    attribute maxSpeed : Speed;
+}
+
+part def Battery {
+    attribute capacity : Energy;
+    attribute chargeRate : Power;
+}
+
+part def Motor {
+    attribute power : Power;
+    attribute torque : Torque;
+}
+
+part def Tire {
+    attribute rollingResistance : Resistance;
+    attribute frictionCoefficient : FrictionCoefficient;
+}
+
+unit def ISQ {
+    unit mass : kg;
+    unit range : km;
+    unit efficiency : kWh/km;
+    unit maxSpeed : km/h;
+    unit capacity : kWh;
+    unit chargeRate : kW;
+    unit power : kW;
+    unit torque : Nm;
+    unit rollingResistance : ohm;
+    unit frictionCoefficient : dimensionless;
+}
+
+constraint def VehicleRangeRequirement {
+    attribute redefines vehicle : Vehicle;
+    vehicle.range >= 300 * ISQ::km;
+}
+
+constraint def VehicleEfficiencyRequirement {
+    attribute redefines vehicle : Vehicle;
+    vehicle.efficiency >= 0.8 * ISQ::kWh/km;
+}
+
+constraint def VehicleMaxSpeedRequirement {
+    attribute redefines vehicle : Vehicle;
+    vehicle.maxSpeed >= 180 * ISQ::km/h;
+}
+
+part context {
+    part vehicle : Vehicle {
+        attribute size : String;
+        constraint smallVehicle : VehicleSizeRequirement {
+            in size = "Small";
+        }
+        constraint largeVehicle : VehicleSizeRequirement {
+            in size = "Large";
+        }
+    }
+    part battery : Battery {
+        attribute capacity : Real;
+        attribute chargeRate : Real;
+    }
+    part motor : Motor {
+        attribute power : Real;
+        attribute torque : Real;
+    }
+    part tire : Tire {
+        attribute rollingResistance : Real;
+        attribute frictionCoefficient : Real;
+    }
+
+    // Add state space dynamics for each component here.
+}
+
+```

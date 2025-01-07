@@ -1,0 +1,28 @@
+package PublishSubscribeSystem {
+
+	part def Publisher;
+	part def Subscriber;
+	part def Server;
+
+	sequence def PublishSubscribeSequence {
+		
+		action Subscribe;
+		action Publish;
+		action Deliver;
+		
+		subscribeRequest : Subscriber expresses interest in topic;
+		publicationEvent : Publisher posts content on topic;
+		deliveryEvent : Server facilitates delivery of content to subscriber;
+		
+		transition
+			first Subscribe
+			if subscribeRequest
+			then Publish;
+			
+		transition
+			first Publish
+			if publicationEvent
+			then Deliver;
+	}
+
+}

@@ -1,0 +1,28 @@
+```sysmlv2
+package ParameterTest {
+
+	attribute def A {
+		attribute x : string;
+		ref y : A;
+	}
+
+	calc def F {
+		in a : A;
+		in n : integer;
+		return result : integer = n + a.x.length;
+	}
+
+	A a1 {
+		x = "hello";
+	}
+
+	A a2 {
+		x = "world";
+		y = a1;
+	}
+
+	integer r1 = F(a1, 5);
+	integer r2 = F(a2, 10);
+	integer r3 = F(a2.y, 15);
+}
+```

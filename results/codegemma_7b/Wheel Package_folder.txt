@@ -1,0 +1,70 @@
+```sysmlv2
+package 'Wheel Hub Assembly'
+
+part hub : Hub[1] {
+    part lugBoltThreadableHoles : LugBoltThreadableHole[5] {
+        attribute :>> diameter {
+            attribute :>> source = datum;
+            attribute :>> elements = diameter[datum]
+        }
+    }
+}
+
+part wheel : Wheel[1] {
+    part rim : TireMountingRim[2] {
+        attribute :>> diameter {
+            attribute :>> source = datum;
+            attribute :>> elements = diameter[datum]
+        }
+        attribute :>> width {
+            attribute :>> source = datum;
+            attribute :>> elements = width[datum]
+        }
+    }
+}
+
+part tire : Tire[1] {
+    attribute :>> tireSpecification {
+        attribute :>> source = datum;
+        attribute :>> elements = tireSpecification[datum]
+    }
+    part bead : TireBead[2] {
+        attribute :>> material {
+            attribute :>> source = datum;
+            attribute :>> elements = material[datum]
+        }
+    }
+}
+
+connection pressureSeat : PressureSeat {
+    attribute :>> torque {
+        attribute :>> source = datum;
+        attribute :>> elements = torque[datum]
+    }
+}
+
+part inflationValve : InflationValve[1] {
+    attribute :>> pressure {
+        attribute :>> source = datum;
+        attribute :>> elements = pressure[datum]
+    }
+}
+
+part balanceWeight : BalanceWeight[0..6] {
+    attribute :>> weight {
+        attribute :>> source = datum;
+        attribute :>> elements = weight[datum]
+    }
+}
+
+part lugBoltJoint : LugBoltJoint[5] {
+    attribute :>> torque {
+        attribute :>> source = datum;
+        attribute :>> elements = torque[datum]
+    }
+    attribute :>> boltTension {
+        attribute :>> source = datum;
+        attribute :>> elements = boltTension[datum]
+    }
+}
+```

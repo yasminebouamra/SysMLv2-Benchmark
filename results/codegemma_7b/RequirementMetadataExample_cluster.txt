@@ -1,0 +1,41 @@
+```sysml
+package VehicleMassManagementSystem {
+
+    # Goal requirement
+    goal requirement deliverPayload {
+        assume goal constraint payloadMassLimit;
+        require goal vehicleMassRequirement;
+    }
+
+    # Constraint
+    constraint payloadMassLimit {
+        expression vehicle.totalMass <= vehicle.payloadMass;
+    }
+
+    # Requirement
+    requirement vehicleMassRequirement {
+        expression vehicle.totalMass <= vehicleMassLimitValue;
+    }
+
+    # Metadata for vehicleMassRequirement
+    metamodel Requirement {
+        attribute totalRisk { type: Real }
+        attribute technicalRisk { type: Real }
+        attribute scheduleRisk { type: Real }
+    }
+
+    # Vehicle entity
+    entity Vehicle {
+        attribute totalMass { type: Real }
+        attribute payloadMass { type: Real }
+    }
+
+    # Annotation for status, originator, and owner
+    annotation RequirementStatus {
+        attribute status { type: String }
+        attribute originator { type: String }
+        attribute owner { type: String }
+    }
+
+}
+```

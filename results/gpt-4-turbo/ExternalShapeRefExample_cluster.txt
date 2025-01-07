@@ -1,0 +1,20 @@
+```SysMLV2
+package ExternalGeometryReference {
+    
+    import Geometry::STEPFile;
+    import Shapes::Box;
+    
+    part def Battery {
+        geometry externalGeometry : STEPFile;
+        geometry simplifiedGeometry : Box;
+        
+        annotation for externalGeometry {
+            @ExternalResourceLocator("path/to/external/geometry.step")
+        }
+        
+        annotation for simplifiedGeometry {
+            @Description("[Simplified Representation] Rectangular box approximation of the battery unit.")
+        }
+    }
+}
+```

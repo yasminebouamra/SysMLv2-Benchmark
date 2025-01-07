@@ -1,0 +1,101 @@
+```sysmlv2
+model TradeStudyEngineComparison {
+
+	type Engine {
+		attribute enginePartNumber : String;
+		attribute power : Real;
+		attribute torque : Real;
+		attribute fuelEfficiency : Real;
+	}
+
+	part EnginePartA : Engine {
+		attribute enginePartNumber = "A";
+		attribute power = 200;
+		attribute torque = 300;
+		attribute fuelEfficiency = 0.3;
+	}
+
+	part EnginePartB : Engine {
+		attribute enginePartNumber = "B";
+		attribute power = 250;
+		attribute torque = 350;
+		attribute fuelEfficiency = 0.4;
+	}
+
+	type TradeStudyObjective {
+		attribute name : String;
+		attribute weight : Real;
+	}
+
+	part TradeStudyObjectivePower : TradeStudyObjective {
+		attribute name = "Power";
+		attribute weight = 0.4;
+	}
+
+	part TradeStudyObjectiveTorque : TradeStudyObjective {
+		attribute name = "Torque";
+		attribute weight = 0.3;
+	}
+
+	part TradeStudyObjectiveFuelEfficiency : TradeStudyObjective {
+		attribute name = "Fuel Efficiency";
+		attribute weight = 0.3;
+	}
+
+	type EngineEvaluation {
+		attribute engine : Engine;
+		attribute powerScore : Real;
+		attribute torqueScore : Real;
+		attribute fuelEfficiencyScore : Real;
+	}
+
+	part EngineEvaluationA : EngineEvaluation {
+		attribute engine = EnginePartA;
+	}
+
+	part EngineEvaluationB : EngineEvaluation {
+		attribute engine = EnginePartB;
+	}
+
+	type TradeStudyResult {
+		attribute recommendedEngine : Engine;
+	}
+
+	part TradeStudyResult : TradeStudyResult {
+		attribute recommendedEngine = EnginePartA; // Initial recommendation based on Power objective
+	}
+
+	action EvaluateEngines {
+		in engineA : Engine = EnginePartA;
+		in engineB : Engine = EnginePartB;
+		out evaluationA : EngineEvaluation = EngineEvaluationA;
+		out evaluationB : EngineEvaluationB;
+
+		assert rule {
+			evaluationA.powerScore = engineA.power * TradeStudyObjectivePower.weight;
+			evaluationA.torqueScore = engineA.torque * TradeStudyObjectiveTorque.weight;
+			evaluationA.fuelEfficiencyScore = engineA.fuelEfficiency * TradeStudyObjectiveFuelEfficiency.weight;
+		}
+
+		assert rule {
+			evaluationB.powerScore = engineB.power * TradeStudyObjectivePower.weight;
+			evaluationB.torqueScore = engineB.torque * TradeStudyObjectiveTorque.weight;
+			evaluationB.fuelEfficiencyScore = engineB.fuelEfficiency * TradeStudyObjectiveFuelEfficiency.weight;
+		}
+	}
+
+	action UpdateTradeStudyResult {
+		in evaluationA : EngineEvaluation;
+		in evaluationB : EngineEvaluation;
+		out updatedTradeStudyResult : TradeStudyResult;
+
+		assert rule {
+			if (evaluationA.powerScore + evaluationA.torqueScore + evaluationA.fuelEfficiencyScore > evaluationB.powerScore + evaluationB.torqueScore + evaluationB.fuelEfficiencyScore) {
+				updatedTradeStudyResult.recommendedEngine = EnginePartA;
+			} else {
+				updatedTradeStudyResult.recommendedEngine = EnginePartB;
+			}
+		}
+	}
+}
+```

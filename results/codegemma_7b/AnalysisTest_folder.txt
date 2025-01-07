@@ -1,0 +1,43 @@
+```
+package AnalysisTest {
+
+  part def P {
+    attribute x : Integer;
+  }
+
+  part p : P;
+
+  requirement def R {
+    doc Analyze the value of attribute x in part p.
+  }
+
+  verification def VerificationCase1 {
+    subject p : P;
+    objective {
+      verify p.x == 10;
+    }
+  }
+
+  verification def VerificationCase2 {
+    subject p : P;
+    objective {
+      verify p.x > 5;
+    }
+  }
+
+  part verificationContext {
+    verification verificationPlan : VerificationPlan {
+      subject p = p;
+    }
+  }
+
+  verification def VerificationPlan {
+    subject p : P;
+    objective {
+      verify r;
+    }
+    verification verificationCase1 : VerificationCase1;
+    verification verificationCase2 : VerificationCase2;
+  }
+}
+```

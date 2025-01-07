@@ -1,0 +1,49 @@
+```SysMLV2
+package VehicleDefinitions {
+    import ScalarValues::*;
+    import SI::*; // International Standards System for measurements
+
+    part def Vehicle {
+        attribute mass : Mass;
+        attribute torque : Torque;
+    }
+
+    part def Transmission {
+        attribute torqueCapability : Torque;
+        port transmissionOutput;
+    }
+
+    part def AxleAssembly {
+        attribute torqueTransfer : Torque;
+        part frontAxle : Axle;
+        part rearAxle : Axle;
+    }
+
+    part def Axle {
+        attribute length : Length;
+        part wheel : Wheel[2];
+    }
+
+    part def Wheel {
+        attribute radius : Length;
+        attribute mass : Mass;
+        part lugBolt : LugBolt[4..6];
+        port wheelPort;
+    }
+
+    part def LugBolt {
+        attribute size : Length;
+    }
+
+    interface TorqueTransmission {
+        out torqueOut : Torque;
+        in torqueIn : Torque;
+    }
+
+    // Connecting transmission torque output to axle assembly
+    connect Vehicle::Transmission.transmissionOutput to AxleAssembly::frontAxle.wheel[1].wheelPort 
+        via TorqueTransmission;
+    connect Vehicle::Transmission.transmissionOutput to AxleAssembly::rearAxle.wheel[1].wheelPort 
+        via TorqueTransmission;
+}
+```

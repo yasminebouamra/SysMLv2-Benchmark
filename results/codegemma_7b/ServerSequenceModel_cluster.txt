@@ -1,0 +1,40 @@
+```sysmlv2
+type Subscribe {
+	topic: String
+}
+
+type Publish {
+	topic: String
+	content: String
+}
+
+type Deliver {
+	content: String
+}
+
+entity Publisher {
+	publishes(publish: Publish)
+}
+
+entity Subscriber {
+	subscribes(subscribe: Subscribe)
+	delivers(deliver: Deliver)
+}
+
+entity Server {
+	subscribes(subscribe: Subscribe)
+	publishes(publish: Publish)
+	delivers(deliver: Deliver)
+}
+
+sequence {
+	Subscriber.subscribes(subscribe)
+	Server.subscribes(subscribe)
+
+	Publisher.publishes(publish)
+	Server.publishes(publish)
+
+	Server.delivers(deliver)
+	Subscriber.delivers(deliver)
+}
+```

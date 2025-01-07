@@ -1,0 +1,62 @@
+```sysmlv2
+package SequentialParallel {
+
+    part def InitialAction1 {
+        action execute;
+    }
+
+    part def InitialAction2 {
+        action execute;
+    }
+
+    part def SynchronizationPoint {
+        attribute completed : Boolean := false;
+    }
+
+    part def ParallelPath1 {
+        action a1;
+        action a2;
+    }
+
+    part def ParallelPath2 {
+        action b1;
+        action b2;
+    }
+
+    state def System {
+        part initialAction1 : InitialAction1;
+        part initialAction2 : InitialAction2;
+        part synchronizationPoint : SynchronizationPoint;
+        part parallelPath1 : ParallelPath1;
+        part parallelPath2 : ParallelPath2;
+
+        entry
+            do initialAction1.execute;
+            do initialAction2.execute;
+            wait;
+
+        then state synchronized;
+        accept initialAction1.execute
+            then synchronize;
+        accept initialAction2.execute
+            then synchronize;
+
+        state synchronized {
+            do assign synchronizationPoint.completed := true;
+        }
+
+        then state parallel;
+        when synchronizationPoint.completed
+            then split;
+
+        state parallel {
+            fork
+                do parallelPath1.a1;
+                do parallelPath1.a2;
+            fork
+                do parallelPath2.b1;
+                do parallelPath2.b2;
+        }
+    }
+}
+```

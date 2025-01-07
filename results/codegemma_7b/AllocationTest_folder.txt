@@ -1,0 +1,59 @@
+```sysmlv2
+model SystemArchitectureFramework {
+
+	// Logical components
+	part def LogicalComponent {
+		attribute name : String;
+	}
+
+	part logicalComponent1 : LogicalComponent;
+	part logicalComponent2 : LogicalComponent;
+
+	// Physical assemblies
+	part def PhysicalAssembly {
+		attribute name : String;
+	}
+
+	part physicalAssembly1 : PhysicalAssembly;
+	part physicalAssembly2 : PhysicalAssembly;
+
+	// Generic allocation definition
+	allocation def GenericAllocation {
+		part source : LogicalComponent;
+		part target : PhysicalAssembly;
+	}
+
+	allocation genericAllocation : GenericAllocation {
+		source : logicalComponent1;
+		target : physicalAssembly1;
+	}
+
+	// Specific allocation definition
+	allocation def SpecificAllocation {
+		part source : LogicalComponent;
+		part target : PhysicalAssembly;
+		attribute property : String;
+	}
+
+	allocation specificAllocation : SpecificAllocation {
+		source : logicalComponent2;
+		target : physicalAssembly2;
+		property : "memory";
+	}
+
+	// Implicit allocation
+	part implicitAllocation : LogicalComponent {
+		part physicalAssembly : PhysicalAssembly;
+	}
+
+	// Explicit allocation
+	part explicitAllocation : LogicalComponent {
+		part physicalAssembly : PhysicalAssembly;
+	}
+
+	// Direct allocation between component parts
+	part directAllocation : LogicalComponent {
+		part physicalPart : PhysicalAssembly.part;
+	}
+}
+```

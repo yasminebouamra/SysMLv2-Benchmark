@@ -1,0 +1,23 @@
+ ```kotlin
+    package Camera_System {
+        private import PictureTaking::*;
+
+        part def Camera_System;
+
+        subsystem def Focusing_Subsystem{
+            part focusElement: Exposure;
+            action adjustFocus: Focus[0..1];
+        }
+
+        subsystem def Imaging_Subsystem{
+            part imageCapture: Exposure;
+            action captureImage: Shoot[0..1];
+        }
+
+        action takePicture {
+            action adjustFocus: Focus[1] in Focusing_Subsystem;
+            flow adjustFocus.xrsl to captureImage.xsf in Imaging_Subsystem;
+            action captureImage: Shoot[1] in Imaging_Subsystem;
+        }
+    }
+   ```

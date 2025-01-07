@@ -1,0 +1,71 @@
+```SysML
+package LocalCloudSystems {
+
+    package SystemOfSystems {
+        part def CloudSystem {
+            doc /* High-level description of a local cloud system involved in the system-of-systems. */
+
+            reference cloudServices: Service[1..*];
+        }
+
+        part def Service {
+            doc /* Defines a service in the local cloud system, including service interfaces and protocols. */
+
+            port def ServiceInterface {
+                doc /* Interface through which the services communicate. */
+            }
+
+            attribute protocol:ProtocolType;
+        }
+
+        attribute def ProtocolType {
+            doc /* Enumerates possible communication protocols for service interfaces. */
+            value http, https, ftp, tcp, udp;
+        }
+
+        part model localCloudSystem:CloudSystem {
+            part cloudDatabaseService: Service {
+                port serviceInterface : ServiceInterface;
+                attribute protocol = ProtocolType::https; 
+            }
+
+            part cloudComputeService: Service {
+                port serviceInterface : ServiceInterface;
+                attribute protocol = ProtocolType::tcp; 
+            }
+        }
+    }
+
+    package SemanticMetadata {
+        annotation def Role {
+            tag roleName: String;
+        }
+
+        annotation def Meaning {
+            tag semanticDescription: String;
+        }
+
+        connector def Interaction {
+            tag interactionPurpose: String;
+        }
+
+        connector def UnifiedInteraction(linkedCloudSystems: SystemOfSystems::CloudSystem[*]) -> Interaction;
+        
+        annotation Role linkRole to SystemOfSystems::Service {
+            roleName = "Primary data processor";
+        }
+
+        annotation Role linkRole to SystemOfSystems::Service {
+            roleName = "Secondary data backup service";
+        }
+
+        annotation Meaning linkMeaning to SystemOfSystems::CloudSystem {
+            semanticDescription = "This system orchestrates critical cloud services for regional data management.";
+        }
+
+        annotation Meaning linkMeaning to SystemOfSystems::Service {
+            semanticDescription = "This service handles all user data transactions in a secure and efficient manner.";
+        }
+    }
+}
+```

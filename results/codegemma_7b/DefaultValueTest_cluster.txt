@@ -1,0 +1,26 @@
+```
+package SysMLV2Model {
+
+	part def MyPart {
+		attribute attr1 : Integer = 10;
+		attribute attr2 : String = "Hello";
+		attribute attr3 : Boolean = true;
+	}
+
+	part myPart1 : MyPart {
+		attribute attr2 : String = "World";
+	}
+
+	part myPart2 : MyPart {
+		attribute attr1 : Integer = 20;
+	}
+
+	part def DerivedPart : MyPart {
+		attribute attr3 : Boolean = attr1 > 15;
+	}
+
+	part derivedPart : DerivedPart {
+		// Attribute attr3 will be set to true based on MyPart's attr1 value
+	}
+}
+```

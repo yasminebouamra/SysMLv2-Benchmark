@@ -1,0 +1,81 @@
+```sysml
+package PublishSubscribeSystem {
+
+    part def Subscriber;
+    part def Publisher;
+    part def Server;
+
+    signal def Subscribe {
+        attribute topic : String;
+    }
+
+    signal def Publish {
+        attribute topic : String;
+        attribute content : String;
+    }
+
+    signal def Deliver {
+        attribute topic : String;
+        attribute content : String;
+    }
+
+    part server : Server {
+        port inPort;
+        port outPort;
+    }
+    
+    part subscriber : Subscriber {
+        port subPort;
+    }
+    
+    part publisher : Publisher {
+        port pubPort;
+    }
+    
+    connect subscriber.subPort to server.inPort;
+    connect server.outPort to subscriber.subPort;
+    connect publisher.pubPort to server.inPort;
+
+    action def HandleSubscription {
+        accept s: Subscribe;
+        then Notify;
+    }
+    
+    action def Notify;
+    
+    action def HandlePublication {
+        accept p: Publish;
+        then DeliverContent;
+    }
+    
+    action def DeliverContent {
+        send d: Deliver(p.topic, p.content) to server.outPort;
+    }
+
+    state def SubscriberState {
+        entry;
+        do send Subscribe("news") to server.inPort;
+        accept d: Deliver if d.topic == "news";
+    }
+    
+    state def PublisherState {
+        entry;
+        do wait(5); // Simulated delay
+        then PublishContent;
+        
+        state PublishContent {
+            entry;
+            do send Publish("news", "Breaking News Content") to server.inPort;
+        }
+    }
+    
+    state def ServerState {
+        first Waiting;
+        
+        state Waiting {
+            transition on s: Subscribe to HandleSubscription;
+            transition on p: Publish to HandlePublication;
+        }
+    }
+}
+```

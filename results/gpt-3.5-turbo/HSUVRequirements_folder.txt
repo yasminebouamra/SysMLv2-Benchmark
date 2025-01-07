@@ -1,0 +1,35 @@
+package HybridSportUtilityVehicle {
+
+	part def HSUV {
+		attribute loadCapacity;
+		attribute ecoFriendliness;
+		attribute performance;
+		attribute ergonomics;
+		
+		requirement category LoadCapacity {
+			sub-requirement detailedLoadCapacity;
+			standard 2010KyotoAccordEmissions;
+		}
+		
+		requirement category EcoFriendliness {
+			sub-requirement detailedEcoFriendliness;
+			standard FuelEconomyBetterThan2004Cars;
+		}
+		
+		requirement category Performance {
+			sub-requirement detailedPerformance;
+		}
+		
+		requirement category Ergonomics {
+			sub-requirement detailedErgonomics;
+		}
+		
+		constraint FuelEconomyBetterThan2004Cars :> ScalarValues::Real {
+			value > 95%;
+		}
+		
+		constraint 2010KyotoAccordEmissions :> ScalarValues::Integer {
+			value <= 2010;
+		}
+	}
+}

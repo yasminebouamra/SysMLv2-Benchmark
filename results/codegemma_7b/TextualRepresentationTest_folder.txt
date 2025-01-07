@@ -1,0 +1,20 @@
+```sysmlv2
+package TextualRepresentationTest
+
+item def Item {
+	attribute value : Real;
+}
+
+action def UpdateValue {
+	in item : Item;
+	in newValue : Real;
+	
+	if newValue > 0 then {
+		item.value = newValue;
+		log("Value updated to " & newValue);
+	} else {
+		log("Invalid value. Value must be positive.");
+	}
+}
+
+```

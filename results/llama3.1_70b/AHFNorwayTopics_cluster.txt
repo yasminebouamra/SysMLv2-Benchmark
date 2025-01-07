@@ -1,0 +1,152 @@
+package ArrowheadFramework {
+	
+	library HTTPProtocol : Protocol {
+	}
+	
+	library MQTTProtocol : Protocol {
+	}
+	
+	library JSONProtocol : Protocol {
+	}
+		
+	struct ProductInformation : DataType {
+		attribute productID : String;
+		attribute quantity : Integer;
+		attribute unitPrice : Real;
+	}
+	
+	interface ProductService : ServiceInterface {
+		use protocol HTTPProtocol;
+		operation getProductInformation(request : GetProductRequest) : GetProductResponse;
+	}
+	
+	interface ProductPubSubService : ServiceInterface {
+		use protocol MQTTProtocol;
+	(operation publishItem(request : PublishItemRequest) : Acknowledgment;
+		operation subscribeItems(request : SubscribeItemsRequest) : ItemList;
+	}
+	
+	interface RemoteProcedureCallService : ServiceInterface {
+		use protocol HTTPProtocol;
+		operation remoteCall(request : RemoteCallRequest) : RemoteCallResponse;
+	}
+	
+	part TellUConsumer[1] {
+		port productPubSubPort : ~ProductPubSubService {
+			in ref :>> subscribeItems;
+			out ref :>> publishItem;
+		}
+		
+		port rpcPort : ~RemoteProcedureCallService {
+			out ref :>> remoteCall;
+		}
+		
+		flow product_pub_sub_request from TellUConsumerBehavior.productPubSub.request to productPubSubPort.subscribeItems;
+		flow product_pub_sub_response from productPubSubPort.publishItem to TellUConsumerBehavior.productPubSub.response;
+		flow rpc_request from TellUConsumerBehavior.remoteProcedureCall.request to rpcPort.remoteCall;
+		
+		perform action TellUConsumerBehavior {
+			action productPubSub {
+				out ref request : SubscribeItemsRequest = SubscribeItemsRequest(someTopic);
+			}
+			then action remoteProcedureCall {
+				in topic : String[1] = productPubSub.topic;
+				out ref request : RemoteCallRequest = RemoteCallRequest(topic, someRPCData);
+			}
+			then action productPubSubResponse {
+				in ref response : ItemList;
+			}
+		}
+	}
+	
+	part APISProducer[1] {
+		port productServicePort : ProductService {
+			in ref :>> getProductInformation;
+		}
+		
+		port rpcPort : RemoteProcedureCallService {
+			in ref :>> remoteCall;
+		}
+		
+		flow product_service_request from productServicePort.getProductInformation to APISProducerBehavior.productInfo.request;
+		flow rpc_response from APISProducerBehavior.remoteProcedureCall.response to rpcPort.remoteCall;
+		
+		perform action APISProducerBehavior {
+			action productInfo {
+				in ref request : GetProductRequest;
+				out attribute productID[1] = request.productID;
+				out attribute quantity[1] = request.quantity;
+				out attribute unitPrice[1] = request.unitPrice;
+			}
+			then action remoteProcedureCall {
+				in topic : String[1] = productInfo.topic;
+				in data : RPCData[1] = productInfo.data;
+				out ref response : RemoteCallResponse = RemoteCallResponse(topic, data);
+			}
+		}
+	}
+	
+	part APISConsumer[1] {
+		port productServicePort : ProductService {
+			out ref :>> getProductInformation;
+		}
+		
+		port rpcPort : ~RemoteProcedureCallService {
+			in ref :>> remoteCall;
+		}
+		
+		flow product_service_request from APISConsumerBehavior.productInfo.request to productServicePort.getProductInformation;
+		flow rpc_response from rpcPort.remoteCall to APISConsumerBehavior.remoteProcedureCall.response;
+		
+		perform action APISConsumerBehavior {
+			action productInfo {
+				out ref request : GetProductRequest = GetProductRequest(someProductID, someQuantity);
+			}
+			then action remoteProcedureCall {
+				in topic : String[1] = productInfo.topic;
+				in data : RPCData[1] = productInfo.data;
+				out ref response : RemoteCallResponse = RemoteCallResponse(topic, data);
+			}
+		}
+	}
+	
+	interface publication_interface : ProductPubSubService connect TellUConsumer.productPubSubPort to APISProducer.productPubSubPort {
+		flow product_pub_sub_request from publication_interface.source.subscribeItems to publication_interface.target.publishItem;
+	}
+	
+	interface rpc_interface_1 : RemoteProcedureCallService connect TellUConsumer.rpcPort to APISProducer.rpcPort {
+		flow rpc_request from rpc_interface_1.source.remoteCall to rpc_interface_1.target.remoteCall;
+	}
+	
+	interface rpc_interface_2 : RemoteProcedureCallService connect APISProducer.rpcPort to APISConsumer.rpcPort {
+		flow rpc_response from rpc_interface_2.target.remoteCall to rpc_interface_2.source.remoteCall;
+	}
+	
+	part local_cloud_configuration[1] {
+		use interface publication_interface;
+		use interface rpc_interface_1;
+		use interface rpc_interface_2;
+	}
+	
+.part realization : ArrowheadFrameworkSequence {
+		part :>> tellu_consumer :> TellUConsumer {
+			event tellu_consumer_behavior.productPubSub.request : ProductPubSubRequest;
+			event tellu_consumer_behavior.remoteProcedureCall.request : RemoteCallRequest;
+		}
+		
+		part :>> apis_producer :> APISProducer {
+			event apis_producer_behavior.productInfo.request : GetProductRequest;
+			event apis_producer_behavior.remoteProcedureCall.response : RemoteCallResponse;
+		}
+		
+		part :>> apis_consumer :> APISConsumer {
+			event apis_consumer_behavior.productInfo.request : GetProductRequest;
+			event apis_consumer_behavior.remoteProcedureCall.response : RemoteCallResponse;
+		}
+		
+		flow product_pub_sub_request from tellu_consumer.productPubSub.request to local_cloud_configuration.publication_interface.subscribeItems;
+		flow rpc_request_1 from tellu_consumer.remoteProcedureCall.request to local_cloud_configuration.rpc_interface_1.remoteCall;
+		flow rpc_response_1 from apis_producer.remoteProcedureCall.response to local_cloud_configuration.rpc_interface_2.remoteCall;
+	}
+	
+}

@@ -1,0 +1,18 @@
+package RiskMetadataExample {
+
+	package Metadata {
+		public import PredefinedMetadata::*;
+		public import RiskLevels::*;
+	
+		part def EnginePart;
+		
+		attribute overallRiskLevel : RiskLevels::Level;
+		attribute technicalRiskLevel : RiskLevels::Level;
+		attribute scheduleRiskLevel : RiskLevels::Level;
+	
+		part detailedAssessment {
+			attribute probability : RiskLevels::Probability;
+			attribute impact : RiskLevels::Impact;
+		}
+	}
+}

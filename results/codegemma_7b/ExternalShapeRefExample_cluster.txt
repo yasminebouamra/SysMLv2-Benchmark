@@ -1,0 +1,15 @@
+```sysmlv2
+part BatteryUnit {
+    externalRepresentation : ExternalRepresentation {
+        file = "battery_unit.step";
+        format = STEP;
+    }
+    internalRepresentation : InternalRepresentation {
+        shape = Box {
+            width = 100mm;
+            height = 200mm;
+            depth = 50mm;
+        }
+    }
+}
+```

@@ -1,0 +1,56 @@
+```sysmlv2
+package ServerSequenceModel {
+
+	part def Producer {
+		event publish_message : MessageTransfer {
+			source = publicationPort;
+			target = server.publicationPort;
+		}
+	}
+
+	part def Server {
+		event subscribe_message : MessageTransfer {
+			source = subscriptionPort;
+			target = server.subscriptionPort;
+		}
+
+		event publish_message : MessageTransfer {
+			source = server.publicationPort;
+			target = consumer.subscriptionPort;
+		}
+
+		event deliver_message : MessageTransfer {
+			source = server;
+			target = consumer.subscriptionPort;
+		}
+
+		state initial;
+		transition publish after publish_message;
+		transition subscribe after subscribe_message;
+		state published;
+		transition deliver after publish;
+	}
+
+	part def Consumer {
+		event subscribe_message : MessageTransfer {
+			source = consumer.subscriptionPort;
+			target = server.subscriptionPort;
+		}
+
+		event deliver_message : MessageTransfer {
+			source = server;
+			target = consumer.subscriptionPort;
+		}
+	}
+
+	interface PublicationPort {
+		bind source = Producer.publicationPort;
+		bind target = Server.publicationPort;
+	}
+
+	interface SubscriptionPort {
+		bind source = Server.subscriptionPort;
+		bind target = Consumer.subscriptionPort;
+	}
+}
+```

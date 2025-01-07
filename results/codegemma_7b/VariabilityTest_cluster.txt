@@ -1,0 +1,86 @@
+```sysmlv2
+package VariabilityTest {
+
+  part def P {
+    attribute n : ScalarValues::Integer = 5;
+  }
+
+  part a[1];
+  part b[0..2] : P;
+  part c : P[2..*];
+  part d[*];
+
+  part e[n];
+  part f[n..*];
+  part g[1..n];
+
+  attribute def A {
+    attribute i : ScalarValues::Integer;
+    attribute x : A[i];
+  }
+
+  use case uc1 {
+    description : "Variability in Use Case";
+    precondition : n > 2;
+    postcondition : f[n] == true;
+  }
+
+  action def action1 {
+    description : "Variability in Action";
+    in n : ScalarValues::Integer;
+    out x : Boolean = n > 2;
+  }
+
+  analysis def an1 {
+    description : "Variability in Analysis";
+    model : P;
+    constraint c1 : n > 3;
+  }
+
+  verification def ver1 {
+    description : "Variability in Verification";
+    test : action1;
+    expected : true;
+  }
+
+  requirement req1 {
+    description : "Variability in Requirement";
+    when : n > 3;
+    implies : f[n] == true;
+  }
+
+  variant v1 {
+    part a : P;
+    part b : P;
+  }
+
+  variant v2 {
+    part c : P[2..*];
+    part d : P[1..*];
+  }
+
+  instantiation inst1 {
+    variant v : v1;
+    part a : v.a;
+    part b : v.b;
+  }
+
+  instantiation inst2 {
+    variant v : v2;
+    part c : v.c;
+    part d : v.d;
+  }
+
+  variational action variationalAction {
+    description : "Variational Action";
+    in n : ScalarValues::Integer;
+    out x : Boolean = n > 3;
+  }
+
+  variational use case variationalUseCase {
+    description : "Variational Use Case";
+    precondition : n > 3;
+    postcondition : f[n] == true;
+  }
+}
+```

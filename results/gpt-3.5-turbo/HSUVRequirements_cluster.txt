@@ -1,0 +1,28 @@
+```sysml
+package HybridSportUtilityVehicleModel {
+	
+	requirement category LoadCapacity {
+		sub-requirement maxCargoVolume;
+		sub-requirement towingCapacity;
+	}
+	
+	requirement category EcoFriendliness {
+		sub-requirement emissionsStandards : 2010_KyotoAccord;
+		sub-requirement fuelEconomy : BetterThan95PercentOfCars2004;
+	}
+	
+	requirement category Performance {
+		sub-requirement acceleration;
+		sub-requirement topSpeed;
+	}
+	
+	requirement category Ergonomics {
+		sub-requirement driverComfort;
+		sub-requirement passengerSpace;
+	}
+	
+	standard 2010_KyotoAccord;
+	standard BetterThan95PercentOfCars2004;
+	
+}
+```  

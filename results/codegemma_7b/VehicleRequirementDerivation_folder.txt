@@ -1,0 +1,42 @@
+```
+package VehicleMassModel {
+
+	part def VehiclePart {
+		attribute m : MassValue;
+	}
+
+	part def Vehicle : VehiclePart {
+		part chassis : VehiclePart;
+		part engine : VehiclePart;
+	}
+
+	constraint massLimitation {
+		mass : MassValue;
+		massLimit : MassValue;
+		mass < massLimit;
+	}
+
+	assert not massLimitation {
+		:>> mass = vehicle.m;
+		:>> massLimit = 2000; // Example maximum mass limit
+	}
+
+	calc def TotalMass {
+		in partMasses : MassValue[0..*];
+		return totalMass : MassValue = sum(partMasses);
+	}
+
+	calc vehicleMass : TotalMass {
+		in partMasses = (vehicle.chassis.m, vehicle.engine.m);
+		return totalMass;
+	}
+}
+```
+
+**Explanation:**
+
+* The model defines three parts: `VehiclePart`, `Vehicle`, and `Engine`.
+* Each part has an `m` attribute to represent its mass.
+* The `massLimitation` constraint defines the generic mass requirement, with a maximum limit of 2000.
+* The `vehicleMass` calculation derives the total mass of the vehicle by summing the masses of its chassis and engine.
+* The derivation connection shows that the specific mass requirements for the chassis and engine are linked to the overall vehicle mass requirement.

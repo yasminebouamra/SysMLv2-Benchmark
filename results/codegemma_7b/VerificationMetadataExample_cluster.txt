@@ -1,0 +1,35 @@
+```sysmlv2
+package VerificationFramework {
+
+    # VerificationType enumeration
+    enum def VerificationType : Natural {
+        Testing,
+        Demonstration,
+        Analysis
+    }
+
+    # VerificationMethod structure
+    struct VerificationMethod {
+        kind : VerificationType;
+    }
+
+    # VerificationAction structure
+    struct VerificationAction {
+        description : String;
+        method : VerificationMethod;
+    }
+
+    # VehicleMassVerification structure
+    struct VehicleMassVerification {
+        vehicle : Vehicle;
+        targetMass : Real;
+        actions : VerificationAction[];
+    }
+
+    # Vehicle structure
+    struct Vehicle {
+        mass : Real;
+    }
+
+}
+```

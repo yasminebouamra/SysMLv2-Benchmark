@@ -1,0 +1,80 @@
+```sysml
+model LocalCloudArchitecture
+
+	type System {
+		name: String
+		description: String
+		components: Set<System>
+		services: Set<Service>
+	}
+
+	type Service {
+		name: String
+		description: String
+		interface: Interface
+	}
+
+	type Interface {
+		name: String
+		operations: Set<Operation>
+	}
+
+	type Operation {
+		name: String
+		parameters: Set<Parameter>
+	}
+
+	type Parameter {
+		name: String
+		type: DataType
+	}
+
+	type DataType {
+		name: String
+	}
+
+	type Protocol {
+		name: String
+	}
+
+	type Interaction {
+		name: String
+		source: System
+		target: System
+		protocols: Set<Protocol>
+	}
+
+	type Metadata {
+		key: String
+		value: String
+	}
+
+	system LocalCloud {
+		systems: Set<System>
+		services: Set<Service>
+		interactions: Set<Interaction>
+
+		model {
+			// Define high-level system-of-systems descriptions
+			System(name="Local Cloud", description="A collection of interconnected systems and services")
+
+			// Define detailed individual system and service definitions
+			System(name="Inventory Management System", description="Manages inventory of goods and services")
+			Service(name="Get Item", description="Retrieves information about a specific item")
+
+			// Define service interfaces and protocols
+			Interface(name="InventoryService", operations=[GetItem])
+			Protocol(name="REST")
+
+			// Define system interactions
+			Interaction(name="GetItemInteraction", source=LocalCloud, target=InventoryManagementSystem, protocols=[REST])
+		}
+
+		metadata {
+			Metadata(key="semantic_model", value="Local Cloud Architecture")
+		}
+	}
+}
+```
+
+**Note:** This model provides a foundational structure and metadata for representing local cloud systems and services. You can further extend this model by adding more details and specific annotations based on your needs.

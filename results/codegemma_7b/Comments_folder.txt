@@ -1,0 +1,29 @@
+```
+package Comments {
+
+	-- Documentation comment for the package
+	-- This package showcases the use of packages, parts, and comments in SysMLv2
+	-- It includes various examples of documentation comments and named comments
+
+	part MyPart {
+		-- Documentation comment for the part
+		-- This part provides an example of a documented part
+	}
+
+	-- Named comment
+	-- Example of a named comment for the part
+	#MyPart
+
+	-- Comment about another comment
+	-- This comment refers to the previous named comment
+	#MyPart : My comment about the part
+
+	-- Comment linked to a specific element
+	-- This comment refers to the MyPart element
+	#MyPart : My comment about the MyPart element
+
+	-- Comment about the package
+	-- This comment describes the package
+	#Comments
+}
+```

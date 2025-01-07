@@ -1,0 +1,38 @@
+```SysMLV2
+package DataPacketSystem {
+    // Base packet structure definitions
+    item def BasePacket {
+        attribute packetId : ScalarValues::Integer;
+        attribute timestamp : Time::DateTime;
+    }
+    
+    item def Header {
+        attribute source : ScalarValues::String;
+        attribute destination : ScalarValues::String;
+    }
+    
+    item def DataField {
+        attribute dataSize : ScalarValues::Integer;
+        attribute dataContent : ScalarValues::Binary;
+    }
+    
+    // Specific packet templates for thermal data transmission 
+    item def ThermalPacket :> BasePacket {
+        attribute temperature : ScalarValues::Float;
+        attribute urgency : ScalarValues::String;
+    }
+    
+    item def ThermalHeader :> Header {
+        attribute protocol : ScalarValues::String = "Thermal";
+    }
+    
+    item def ThermalData :> DataField {
+        attribute temperatureData : ScalarValues::Float[*];
+    }
+    
+    part def ThermalDataPacket {
+        part header : ThermalHeader;
+        part data : ThermalData;
+    }
+}
+```

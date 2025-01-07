@@ -1,0 +1,29 @@
+```sysmlv2
+package VehicleDefinitions {
+
+    doc
+    /*
+     * This model encapsulates a simplistic structure of a vehicle's mechanical components.
+     */
+
+    private import SI::N;
+    private import SI::m;
+    private import ScalarFunctions::*;
+
+    public import VehicleDefinitions::*;
+
+    /* VALUES */
+    T1 = 10.0 [N * m];
+    T2 = 20.0 [N * m];
+
+    /* PARTS */
+    part NarrowRimWheel: Wheel {
+        doc /* Narrow-rim wheel configuration with 4 to 5 lugbolts. */
+
+        part lugbolt: Lugbolt[4..5];
+    }
+
+    ...
+
+}
+```

@@ -1,0 +1,95 @@
+```
+package VehicleComponents {
+
+	private import Time::DateTime;
+	private import SI::kg;
+
+	package PartDefinitions {
+
+		part def Wheel {
+			doc /* The basic definition of a Wheel. */
+			attribute lugBoltCount : Integer;
+			attribute torqueApplication : Torque;
+		}
+
+		part def WheelHub {
+			doc /* The basic definition of a WheelHub. */
+			interface def mounting : Mounting;
+		}
+
+		part def Axle {
+			doc /* The basic definition of an Axle. */
+			attribute length : Length;
+		}
+
+		part def AxleMount {
+			doc /* The basic definition of an AxleMount. */
+			interface def mounting : Mounting;
+		}
+
+		part def AxleAssembly {
+			doc /* The basic definition of an AxleAssembly. */
+			attribute frontAxle : Axle;
+			attribute rearAxle : Axle;
+		}
+
+		part def Vehicle {
+			doc /* The basic definition of a Vehicle. */
+			attribute mass : Mass;
+		}
+	}
+
+	package InterfaceDefinitions {
+
+		interface def Mounting {
+			doc /* The definition of the interface for mounting a Wheel to an Axle. */
+			end axleMount: AxleMount;
+			end hub: WheelHub;
+
+			flow axleMount.transferredTorque to hub.appliedTorque;
+		}
+
+		interface def Torque {
+			doc /* The interface for applying torque to a Wheel. */
+			attribute value : Real;
+		}
+	}
+
+	package IndividualConfigurations {
+
+		individual part vehicle1_C1 : Vehicle {
+			doc /* A basic configuration of a Vehicle with 4 wheels. */
+			attribute mass = 1800 [kg];
+		}
+
+		snapshot part vehicle1_C1_t0 : Vehicle :> vehicle1_C1, vehicle1_t0 {
+			doc /* A snapshot of vehicle1_C1 at time t0. */
+			attribute t = t0;
+		}
+
+		snapshot part vehicle1_C2 : Vehicle :> vehicle1_C1, vehicle1_C2_t0 {
+			doc /* A more specialized configuration of vehicle1_C1 with upgraded wheels. */
+			snapshot leftFrontWheel_t0: Wheel :>> leftFrontWheel {
+				attribute lugBoltCount = 8;
+				attribute torqueApplication : Torque { value = 200 [Nm] };
+			}
+
+			snapshot rightFrontWheel_t0: Wheel :>> rightFrontWheel {
+				attribute lugBoltCount = 8;
+				attribute torqueApplication : Torque { value = 200 [Nm] };
+			}
+		}
+
+		snapshot part vehicle1_C2_t1 : Vehicle :> vehicle1_C2, vehicle1_C2_t0.done {
+			doc /* A snapshot of vehicle1_C2 at time t1 with different torque applications. */
+			snapshot leftFrontWheel_t1: Wheel :>> leftFrontWheel {
+				attribute torqueApplication : Torque { value = 250 [Nm] };
+			}
+
+			snapshot rightFrontWheel_t1: Wheel :>> rightFrontWheel {
+				attribute torqueApplication : Torque { value = 250 [Nm] };
+			}
+		}
+	}
+}
+```

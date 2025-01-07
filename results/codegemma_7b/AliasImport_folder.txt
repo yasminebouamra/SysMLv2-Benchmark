@@ -1,0 +1,42 @@
+```sysmlv2
+package Vehicle
+
+package VehicleComponents {
+	package Tires {
+		part def TireBead;
+		part def TireMountingRim;
+		part def InflationValve;
+		part def BalanceWeight;
+	}
+
+	part def Wheel {
+		diameter :> length;
+		width :> length;
+	}
+
+	connection def PressureSeat {
+		end : Tires.TireBead[1];
+		end : Tires.TireMountingRim[1];
+	}
+
+	part def WirelessTirePressureMonitor {
+		action transmitPressure;
+	}
+
+	part def Car {
+		alias Vehicle;
+	}
+}
+
+package VehicleSystem {
+	part def Car : VehicleComponents.Car {
+		part wheelHubAssembly : VehicleComponents.WheelHubAssembly;
+	}
+}
+
+package VehicleComponents.WheelHubAssembly {
+	part def Wheel;
+	part def LugBoltJoint;
+	part def Hub;
+}
+```

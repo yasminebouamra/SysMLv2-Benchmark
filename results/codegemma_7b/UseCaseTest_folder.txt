@@ -1,0 +1,36 @@
+```sysmlv2
+package UseCaseTest {
+
+	part def System {
+		-- System parts and attributes here
+	}
+
+	part def User {
+		-- User parts and attributes here
+	}
+
+	usecase def UseSystem {
+		subject System;
+		actor User;
+
+		objective -- Unspecified objectives
+		
+		step UC1 {
+			-- UC1 steps here
+		}
+
+		step uc2 {
+			-- Inline uc2 steps here
+		}
+	}
+
+	-- Instantiate user and system parts
+	part user : User;
+	part system : System;
+
+	-- UseSystem within system context
+	usecase UseSystem within system {
+		-- UseSystem steps within system context
+	}
+}
+```

@@ -1,0 +1,70 @@
+ ```
+   package 'FuelEconomyAnalysis' {
+       extensionDefinitions
+       {
+           contextNote 'Custom Units'
+           attribute 'MilesPerGallon';
+       }
+
+       package 'VehicleQuantities' {
+           part 'VehicleModel' {
+               attribute 'Weight';
+               attribute 'WheelBaseLength';
+               attribute 'FuelCapacity';
+               attribute 'DragCoefficient';
+           }
+       }
+
+       package 'VehicleModels' {
+           class 'Vehicle' stereotype '<ActiveClassifier>' {
+               subvertex 'Components' {
+                   note about 'FuelTank, Wheels, etc.'
+                   part 'FuelTank';
+                   part 'Wheel1';
+                   part 'Wheel2';
+                   // Add more components as needed
+               }
+           }
+       }
+
+       package 'FuelEconomyRequirements' {
+           part 'DrivingConditions' {
+               attribute 'AverageSpeed';
+               attribute 'GradePercentage';
+               attribute 'RoadType';
+           }
+           class 'FuelEconomyRequirement' stereotype '<Constraint>' {
+               note about 'Requires fuel economy to meet certain standards for different driving conditions.'
+               operation 'CheckCompliance' {
+                   // Implement logic to check compliance with fuel economy requirements based on driving conditions and vehicle model.
+               }
+           }
+       }
+
+       package 'DynamicsModeling' {
+           class 'VehicleDynamics' stereotype '<ActiveClassifier>' {
+               attribute 'Acceleration';
+               attribute 'Velocity';
+               operation 'CalculateAcceleration' {
+                   // Implement logic to calculate acceleration based on vehicle model, driving conditions, and other factors.
+               }
+               operation 'CalculateVelocity' {
+                   // Implement logic to calculate velocity based on acceleration and time.
+               }
+           }
+       }
+
+       package 'FuelEconomyAnalysis' {
+           part 'Scenario' {
+               note about 'Analyze specific scenarios to ensure compliance with fuel economy standards.'
+               classifier 'ScenarioInstance' stereotype '<ObjectFlow>' {
+                   attribute 'Vehicle' : 'VehicleModels'::'Vehicle';
+                   attribute 'DrivingCondition' : 'FuelEconomyRequirements'::'DrivingConditions';
+               }
+               operation 'AnalyzeScenario' {
+                   // Implement logic to analyze the fuel economy of a specific scenario based on the vehicle model and driving condition.
+               }
+           }
+       }
+   }
+   ```

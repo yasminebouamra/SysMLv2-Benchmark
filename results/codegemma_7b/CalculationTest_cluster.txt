@@ -1,0 +1,38 @@
+```sysmlv2
+package VehicleMassCalculation {
+
+	type MassValue is Quantity[kg];
+
+	part Engine {
+		attribute m : MassValue;
+	}
+
+	part Transmission {
+		attribute m : MassValue;
+	}
+
+	part Vehicle {
+		attribute m : MassValue = eng.m + trans.m;
+
+		part eng : Engine {
+			attribute :>> m : MassValue;
+		}
+
+		part trans : Transmission {
+			attribute :>> m : MassValue;
+		}
+	}
+
+	constraint MassConstraint {
+		in totalMass : MassValue;
+		in partMasses : MassValue[0..*];
+
+		totalMass == sum(partMasses)
+	}
+
+	attribute sum : Function[MassValue, MassValue] {
+		in values : MassValue[0..*];
+		out result : MassValue = sum(values);
+	}
+}
+```

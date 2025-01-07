@@ -1,0 +1,39 @@
+```sysmlv2
+package RequirementTest {
+
+  // Requirements
+  requirement req1;
+  requirement req2;
+
+  // Constraints
+  constraint c1;
+  constraint c2;
+
+  // Parts
+  part p1;
+  part p2;
+
+  // Inheritance
+  part p3 extends p1;
+
+  // Satisfaction
+  satisfaction s1 satisfies req1;
+  satisfaction s2 satisfies req2;
+
+  // Assertions
+  assertion a1;
+  assertion a2;
+
+  // Assertions on requirements
+  assertion req1_assert satisfies req1;
+  assertion req2_assert satisfies req2;
+
+  // Assertions on constraints
+  assertion c1_assert satisfies c1;
+  assertion c2_assert satisfies c2;
+
+  // Assertions on parts
+  assertion p1_assert satisfies p1;
+  assertion p2_assert satisfies p2;
+}
+```

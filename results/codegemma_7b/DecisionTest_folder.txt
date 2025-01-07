@@ -1,0 +1,40 @@
+```sysmlv2
+package DecisionTest
+
+attribute x : Integer := 0
+
+if x == 1 then
+    action a1
+elseif x > 1 then
+    action a2
+else
+    action a3
+endif
+
+if true then
+    action b1
+elseif false then
+    action b2
+endif
+
+when x == 1 then
+    action c1
+when x > 1 then
+    action c2
+when x < 1 then
+    action c3
+endwhen
+
+loop {
+    action d1
+} until x > 1
+
+while x > 1 {
+    action d2
+}
+
+for n in 1..3 {
+    action e1
+}
+
+```

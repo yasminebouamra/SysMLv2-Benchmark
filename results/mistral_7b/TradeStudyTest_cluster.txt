@@ -1,0 +1,42 @@
+ ```SysMLV2
+   package TradeStudyComparison {
+      Model TradeStudyModel {
+         Context RootContext {
+            Property Objective: Real;
+            Property Engine1: Engine;
+            Property Engine2: Engine;
+         }
+
+         Class Engine {
+            Attribute PartType: String;
+            Attribute Weight: Real;
+            Attribute FuelEfficiency: Real;
+            Attribute PowerOutput: Real;
+            Attribute Cost: Real;
+         }
+
+         AnalysisAction EvaluateEnginePerformance {
+            Input PartType: String;
+            Input Weight: Real;
+            Input FuelEfficiency: Real;
+            Input PowerOutput: Real;
+            Input Cost: Real;
+            Output PerformanceScore: Real;
+         }
+
+         Function EvaluationFunction(PartType: String, Weight: Real, FuelEfficiency: Real, PowerOutput: Real, Cost: Real) : Real {
+            return (FuelEfficiency + PowerOutput - Cost); // Modify this expression to fit your specific evaluation function
+         }
+
+         AnalysisAction PerformTradeStudy {
+            Input Engine1: Engine;
+            Input Engine2: Engine;
+            Output RecommendedEngine: String;
+            Constraint {
+               PerformanceScore1 = EvaluateEnginePerformance(Engine1.PartType, Engine1.Weight, Engine1.FuelEfficiency, Engine1.PowerOutput, Engine1.Cost) > PerformanceScore2 = EvaluateEnginePerformance(Engine2.PartType, Engine2.Weight, Engine2.FuelEfficiency, Engine2.PowerOutput, Engine2.Cost);
+               RecommendedEngine = (PerformanceScore1 > PerformanceScore2) ? Engine1.PartType : Engine2.PartType;
+            }
+         }
+      }
+   }
+   ```

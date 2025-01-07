@@ -1,0 +1,64 @@
+```sysmlv2
+package ViewTest {
+
+	// Define parts
+	part def System {
+		// Attributes and operations of the system
+	}
+
+	part def User {
+		// Attributes and operations of the user
+	}
+
+	// Define concerns
+	concern def SystemConcern {
+		// Statements related to the system concern
+	}
+
+	concern def UserConcern {
+		// Statements related to the user concern
+	}
+
+	// Define viewpoints
+	viewpoint def SystemViewpoint {
+		// Statements related to the system viewpoint
+	}
+
+	viewpoint def UserViewpoint {
+		// Statements related to the user viewpoint
+	}
+
+	// Define renderings
+	rendering def SystemRendering {
+		// Visual representation of the system
+	}
+
+	rendering def UserRendering {
+		// Visual representation of the user
+	}
+
+	// Define views
+	view def SystemView {
+		// Statements related to the system view
+	}
+
+	view def UserView {
+		// Statements related to the user view
+	}
+
+	// Instantiate parts, concerns, viewpoints, renderings, and views
+	part system : System;
+	part user : User;
+	concern systemConcern : SystemConcern;
+	concern userConcern : UserConcern;
+	viewpoint systemViewpoint : SystemViewpoint;
+	viewpoint userViewpoint : UserViewpoint;
+	rendering systemRendering : SystemRendering;
+	rendering userRendering : UserRendering;
+	view systemView : SystemView;
+	view userView : UserView;
+
+}
+```
+
+**Note:** The specific details of the parts, concerns, viewpoints, renderings, and views will need to be tailored to the specific requirements of the system being modeled.

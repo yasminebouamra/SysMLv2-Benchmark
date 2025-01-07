@@ -1,0 +1,45 @@
+```sysml
+package AssignmentTest {
+    part def Counter {
+        attribute count : ScalarValues::Integer = 0;
+        
+        function incCount(by : ScalarValues::Integer) {
+            count = count + by;
+        }
+        
+        action increment {
+            do incCount(1);
+        }
+        
+        action decrement {
+            do count = count - 1;
+        }
+        
+        state def CounterStateMachine {
+            state incrementing {
+                entry;
+                do increment;
+                then decrementing;
+            }
+            
+            state decrementing {
+                entry;
+                do decrement;
+                then incrementing;
+            }
+            
+            transition triggerDecrement
+                from incrementing
+                accept trigger decrementTrig
+                then decrementing;
+                
+            transition triggerIncrement
+                from decrementing
+                accept trigger incrementTrig
+                then incrementing;
+        }
+        
+        stateMachine MyCounter : CounterStateMachine;
+    }
+}
+```

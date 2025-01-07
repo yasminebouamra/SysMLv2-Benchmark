@@ -1,0 +1,38 @@
+```sysmlv2
+package FlashlightSystem
+
+part def User {
+	attribute command : OnOffCommand;
+}
+
+part def Flashlight {
+	attribute light : Light;
+	
+	port onOff : Inport<OnOffCommand>;
+	port illuminates : Outport<Light>;
+}
+
+part def ReflectingSurface {
+	attribute reflectedLight : Light;
+	
+	port receives : Inport<Light>;
+	port reflects : Outport<Light>;
+}
+
+flow :>> deliverOnOffCommand from User.onOff to Flashlight.onOff {
+	event User.sendOnOffCommand[1];
+	then event Flashlight.onOff[1];
+}
+
+flow :>> deliverLight from Flashlight.illuminates to ReflectingSurface.receives {
+	event Flashlight.light[1];
+	then event ReflectingSurface.receives[1];
+}
+
+flow :>> deliverReflectedLight from ReflectingSurface.reflects to User.reflectedLight {
+	event ReflectingSurface.reflectedLight[1];
+	then event User.reflectedLight[1];
+}
+
+end
+```

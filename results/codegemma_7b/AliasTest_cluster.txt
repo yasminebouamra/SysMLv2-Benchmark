@@ -1,0 +1,37 @@
+```sysmlv2
+package AliasTest
+
+part def Vehicle {
+  port engine : Port;
+  port frontAxle : Port;
+  port rearAxle : Port;
+}
+
+part vehicle1 : Vehicle {
+  port engine1 : Port alias engine;
+  port frontAxle1 : Port alias frontAxle;
+  port rearAxle1 : Port alias rearAxle;
+}
+
+part vehicle2 : Vehicle {
+  port engine2 : Port alias engine;
+  port frontAxle2 : Port alias frontAxle;
+  port rearAxle2 : Port alias rearAxle;
+}
+
+connect vehicle1.engine1 to vehicle2.engine2;
+connect vehicle1.frontAxle1 to vehicle2.frontAxle2;
+connect vehicle1.rearAxle1 to vehicle2.rearAxle2;
+```
+
+**Explanation:**
+
+* The `Vehicle` part defines the common ports for both vehicles.
+* `vehicle1` and `vehicle2` are instances of the `Vehicle` part, with aliases for the ports.
+* The `connect` statements establish connections between the ports using the aliases.
+
+**Benefits of Using Aliases:**
+
+* Enhanced readability and maintainability by providing alternative references to ports.
+* Increased flexibility in connecting parts, as the aliases can be used interchangeably.
+* Reduced need to repeat port names in multiple statements.

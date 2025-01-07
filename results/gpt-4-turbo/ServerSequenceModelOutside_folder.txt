@@ -1,0 +1,59 @@
+```sysml
+package PubSubModel {
+
+    block def Producer;
+    block def Server;
+    block def Consumer;
+
+    action def PublishMessage;
+    action def SubscribeRequest;
+    action def DeliverMessage;
+    action def AcknowledgeSubscription;
+    action def CompleteDelivery;
+
+    part producer : Producer;
+    part server : Server;
+    part consumer : Consumer;
+
+    connector producer_to_server : PublishMessage;
+    connector server_to_consumer : DeliverMessage;
+    connector consumer_to_server : SubscribeRequest;
+    connector server_to_consumer_ack : AcknowledgeSubscription;
+    connector consumer_to_server_complete : CompleteDelivery;
+
+    state def PubSubSequence {
+        state Publish {
+            do action PublishMessage;
+            transition to ServerProcessing;
+        }
+
+        state ServerProcessing {
+            entry;
+            do action DeliverMessage;
+            transition to ConsumerReceiving;
+        }
+
+        state ConsumerReceiving {
+            entry;
+            do action CompleteDelivery;
+        }
+    }
+
+    state def PubSubSequenceOutside :> PubSubSequence {
+        transition from Publish to SubscribeAcknowledgment;
+        
+        state SubscribeAcknowledgment {
+            entry;
+            do action SubscribeRequest;
+            transition to Acknowledge;
+
+            state Acknowledge {
+                entry;
+                do action AcknowledgeSubscription;
+                transition to ServerProcessing;
+            }
+        }
+    }
+
+}
+```

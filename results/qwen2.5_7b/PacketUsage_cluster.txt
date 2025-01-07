@@ -1,0 +1,12 @@
+package 'ThermalDataManagement' {
+    
+    part def ThermalDataPacket {
+        attribute data : Array[ScalarValues::Real] = [0.0];
+    }
+    
+    part packet1 : ThermalDataPacket;
+    part packet2 : ThermalDataPacket;
+    part enhancedPacket : ThermalDataPacket {
+        attribute specializedData : Array[ScalarValues::Real] = [0.0, 0.0];
+    }
+}

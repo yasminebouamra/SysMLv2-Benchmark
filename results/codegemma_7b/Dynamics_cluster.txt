@@ -1,0 +1,37 @@
+```sysmlv2
+package Dynamics {
+
+    type Vehicle {
+        mass : Real;
+        initialSpeed : Real;
+        initialPosition : Real;
+        wheelPower : Real;
+        dragCoefficient : Real;
+        rollingResistanceCoefficient : Real;
+    }
+
+    type MotionState {
+        acceleration : Real;
+        velocity : Real;
+        position : Real;
+    }
+
+    action calculateDynamics : Vehicle -> MotionState {
+        in vehicle : Vehicle;
+        out state : MotionState;
+
+        state.acceleration := (vehicle.wheelPower - vehicle.dragCoefficient * vehicle.velocity^2 - vehicle.rollingResistanceCoefficient * vehicle.mass * vehicle.velocity) / vehicle.mass;
+        state.velocity := vehicle.initialSpeed + state.acceleration;
+        state.position := vehicle.initialPosition + state.velocity;
+    }
+
+    action simulateDynamics : MotionState -> MotionState {
+        in state : MotionState;
+        out nextState : MotionState;
+
+        nextState.acceleration := state.acceleration;
+        nextState.velocity := state.velocity + state.acceleration;
+        nextState.position := state.position + state.velocity;
+    }
+}
+```

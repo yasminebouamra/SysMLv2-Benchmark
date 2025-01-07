@@ -1,0 +1,53 @@
+```sysml
+package VehicleMassManagement
+
+goal VehicleMassManagementGoal {
+  description = "Ensure the total mass of the vehicle does not exceed a defined limit.";
+}
+
+require TotalVehicleMassRequirement : Requirement {
+  goal : VehicleMassManagementGoal;
+  description = "The total mass of the vehicle must be less than or equal to 2,500 kg.";
+  risk {
+    totalRisk = high;
+    technicalRisk = medium;
+    scheduleRisk = medium;
+  }
+  status = new;
+  originator = "Engineering Team";
+  owner = "Vehicle Design Manager";
+}
+
+require PayloadMassRequirement : Requirement {
+  goal : VehicleMassManagementGoal;
+  description = "The payload mass of the vehicle must be at least 500 kg.";
+  risk {
+    totalRisk = low;
+    technicalRisk = low;
+    scheduleRisk = low;
+  }
+  status = new;
+  originator = "Engineering Team";
+  owner = "Vehicle Design Manager";
+}
+
+constraint VehicleMassConstraint {
+  expression = TotalVehicleMassRequirement.value <= 2500;
+}
+
+association VehicleMassRequirement-PayloadMassRequirement {
+  source : TotalVehicleMassRequirement;
+  target : PayloadMassRequirement;
+  type = dependsOn;
+}
+
+```
+
+**Explanation:**
+
+* The model includes a goal called "VehicleMassManagementGoal" to define the overall objective.
+* Two requirements are defined: "TotalVehicleMassRequirement" and "PayloadMassRequirement".
+* Each requirement is linked to the goal using the "goal" attribute.
+* The "TotalVehicleMassRequirement" has a risk assessment and associated metadata for status, originator, and owner.
+* A constraint called "VehicleMassConstraint" ensures that the total vehicle mass does not exceed 2,500 kg.
+* The two requirements are linked by an association called "VehicleMassRequirement-PayloadMassRequirement".

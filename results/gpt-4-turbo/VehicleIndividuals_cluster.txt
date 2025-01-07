@@ -1,0 +1,32 @@
+package VehicleConfigurations {
+	import Time::DateTime;
+	import SI::kg;
+
+	individual part def Vehicle {
+		attribute mass : kg;
+	}
+
+	individual part def Wheel {
+		attribute diameter : ScalarValues::Real;
+	}
+
+	individual part def Axle {
+		association composedOf wheels : Wheel[2];
+	}
+
+	part snapshot VehicleSnapshot at DateTime {
+		part vehicle : Vehicle;
+		part wheels : Wheel[4];
+		part axle : Axle;
+	}
+
+	part timeslice VehicleConfiguration during DateTime {
+		part vehicle : Vehicle;
+		part wheels : Wheel[4];
+		part axle : Axle {
+		composedOf wheels :>> wheels;
+	}
+		attribute massSnapshot : kg = vehicle.mass;
+	}
+
+}

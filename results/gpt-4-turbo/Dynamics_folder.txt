@@ -1,0 +1,68 @@
+```SysMLV2
+package Dynamics {
+    attribute def Power;
+    attribute def Acceleration;
+    attribute def Velocity;
+    attribute def Position;
+
+    attribute def WheelPower;
+    attribute def DragCoefficient;
+    attribute def RollingResistanceCoefficient;
+    attribute def Mass;
+    attribute def InitialSpeed;
+    attribute def InitialPosition;
+
+    attribute def FinalAcceleration;
+    attribute def FinalSpeed;
+    attribute def FinalPosition;
+
+    action def CalculateDynamics {
+        in wheelPower : WheelPower;
+        in dragCoefficient : DragCoefficient;
+        in rollingResistanceCoefficient : RollingResistanceCoefficient;
+        in mass : Mass;
+        in initialSpeed : InitialSpeed;
+        in initialPosition : InitialPosition;
+        
+        out finalAcceleration : FinalAcceleration;
+        out finalSpeed : FinalSpeed;
+        out finalPosition : FinalPosition;
+
+        // Placeholder for behavioral code
+        do {
+            // Compute acceleration based on input forces and mass
+            finalAcceleration = (wheelPower - dragCoefficient * initialSpeed^2 - rollingResistanceCoefficient) / mass;
+            // Compute final speed based on initial speed and computed acceleration
+            finalSpeed = initialSpeed + finalAcceleration;
+            // Compute final position based on initial position, initial speed and computed acceleration
+            finalPosition = initialPosition + initialSpeed + 0.5 * finalAcceleration;
+        }
+    }
+
+    action def SimulateBehaviorOverTime {
+        in wheelPower : WheelPower;
+        in dragCoefficient : DragCoefficient;
+        in rollingResistanceCoefficient : RollingResistanceCoefficient;
+        in mass : Mass;
+        in initialSpeed : InitialSpeed;
+        in initialPosition : InitialPosition;
+        in timeStep : ScalarValues::Real;
+
+        out finalAcceleration : FinalAcceleration;
+        out finalSpeed : FinalSpeed;
+        out finalPosition : FinalPosition;
+
+        // Placeholder for behavioral code
+        do {
+            action simulateStep : CalculateDynamics {
+                in wheelPower, dragCoefficient, rollingResistanceCoefficient, mass, initialSpeed, initialPosition;
+                out finalAcceleration, finalSpeed, finalPosition;
+            }
+            // Update initial conditions for each time step
+            initialSpeed = finalSpeed;
+            initialPosition = finalPosition;
+            // Repeating the simulation for the given duration (not specified duration here)
+        }
+    }
+}
+```

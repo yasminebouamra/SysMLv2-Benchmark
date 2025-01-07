@@ -1,0 +1,14 @@
+```sysmlv2
+package AllocationTest {
+
+	part def LogicalComponent;
+	part def PhysicalAssembly;
+
+	allocation allocates {LogicalComponent} to {PhysicalAssembly};
+
+	allocation allocates {LogicalComponent[2]} to {PhysicalAssembly[2..3]};
+
+	allocation allocates {LogicalComponent} via {PhysicalAssembly} to {PhysicalAssembly};
+
+}
+```

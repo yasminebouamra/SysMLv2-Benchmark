@@ -1,0 +1,64 @@
+```plaintext
+package FlashlightSystem {
+	
+	// Define command type for on-off actions
+	typedef enum OnOffCommand { ON, OFF };
+	
+	// Define light intensity type
+	typedef ScalarValues::Integer LightIntensity;
+	
+	// Ports
+	port def UserPort :> OnOffCommand;
+	port def FlashlightPort :> LightIntensity;
+	port def SurfacePort :> LightIntensity;
+	
+	// Parts and their behaviors
+	part def User {
+		event on :> OnOffCommand = UserPort.on;
+		event off :> OnOffCommand = UserPort.off;
+		
+		action turnOn() { 
+			fire on; 
+		}
+		
+		action turnOff() { 
+			fire off; 
+		}
+	}
+	
+	part def Flashlight {
+		var attribute lightIntensity : LightIntensity := 0;
+		
+		event requestOn :> OnOffCommand = FlashlightPort.requestOn;
+		event requestOff :> OnOffCommand = FlashlightPort.requestOff;
+		
+		action activate() { 
+			if (requestOn) { 
+				assign lightIntensity := 100; // Example intensity
+			}
+			else if (requestOff) {
+				assign lightIntensity := 0;
+			}
+		}
+	}
+	
+	part def ReflectingSurface :> SurfacePort;
+	
+	// Flow of interactions
+	flow :>> command from User.on to Flashlight.requestOn {
+		event user.turnOn[1];
+		then event flashlight.activate[1];
+	}
+	
+	flow :>> command from User.off to Flashlight.requestOff {
+		event user.turnOff[1];
+		then event flashlight.activate[1];
+	}
+	
+	flow :>> reflectLight from Flashlight.lightIntensity to ReflectingSurface.reflectivity {
+		event flashlight.lightIntensity[1];
+		then event surface.reflectivity[1];
+	}
+}
+
+```

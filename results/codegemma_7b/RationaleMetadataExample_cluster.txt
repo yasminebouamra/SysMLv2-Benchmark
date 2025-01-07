@@ -1,0 +1,36 @@
+```sysmlv2
+package EngineSelectionModel {
+
+    part def Engine {
+        property engineType : String;
+        property power : Integer;
+        property fuelEfficiency : Float;
+        property emissionRating : Float;
+    }
+
+    part fourCylinderEngine : Engine {
+        engineType = "Four-Cylinder";
+        power = 150;
+        fuelEfficiency = 30;
+        emissionRating = 4;
+    }
+
+    part sixCylinderEngine : Engine {
+        engineType = "Six-Cylinder";
+        power = 250;
+        fuelEfficiency = 25;
+        emissionRating = 5;
+    }
+
+    metadata def rationale :> SemanticMetadata {
+        :>> baseType = fourCylinderEngine meta SysML::RequirementUsage;
+        content "Based on a trade study analysis, the four-cylinder engine was selected over the six-cylinder engine due to its lower fuel efficiency and lower emission rating."
+    }
+
+    #goal requirement engineSelection {
+        assume rationale;
+        require fourCylinderEngine;
+    }
+
+}
+```

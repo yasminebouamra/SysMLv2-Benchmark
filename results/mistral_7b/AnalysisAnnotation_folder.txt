@@ -1,0 +1,64 @@
+```sysml
+package VehicleDynamicsModel {
+    define Constants {
+        property power : Power;
+        property acceleration : Acceleration;
+        property timeStep : TimeDuration;
+        property dragCoefficient : DimensionlessQuantity;
+        property frictionCoefficient : DimensionlessQuantity;
+        property mass : Mass;
+        property initialVelocity : Velocity;
+        property initialPosition : Position;
+    }
+
+    define Artifact {
+        property name : String;
+        property description : String;
+    }
+
+    class ModelCenter extends Artifact {
+        operation computeDynamics(input: DynamicsInput) : DynamicsOutput;
+    }
+
+    class DynamicsAnalysis extends Analysis {
+        port operation input : DynamicsInput;
+        port operation output : DynamicsOutput;
+        operation dynamicsAnalysis() : DynamicsResult;
+    }
+
+    class DynamicsInput {
+        property power : PowerValue[1..*];
+        property acceleration : AccelerationValue[1..*];
+        property timeStep : TimeDurationValue;
+    }
+
+    class DynamicsOutput {
+        property position : PositionValue[1..*];
+        property velocity : VelocityValue[1..*];
+    }
+
+    class PowerValue extends QuantityValue {
+        operation power() : Power;
+    }
+
+    class AccelerationValue extends QuantityValue {
+        operation acceleration() : Acceleration;
+    }
+
+    class PositionValue extends QuantityValue {
+        operation position() : Position;
+    }
+
+    class VelocityValue extends QuantityValue {
+        operation velocity() : Velocity;
+    }
+
+    class TimeDurationValue extends QuantityValue {
+        operation timeDuration() : TimeDuration;
+    }
+
+    class DynamicsResult {
+        property acceleration : Acceleration;
+    }
+}
+```

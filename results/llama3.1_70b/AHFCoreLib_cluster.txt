@@ -1,0 +1,92 @@
+package DistributedSystemArchitecture {
+	private import ServiceDefinitions::*;
+	public import SystemDefinitions::*;
+
+	package ServiceDefinitions {
+	    item def DiscoveryService :> ServiceInterface;
+	    
+	    item def AuthorizationService :> ServiceInterface;
+	    
+	    interface ServicePort {
+	    	in ref request :>> Discover;
+	    	out ref response :>> Found;
+	    	
+	    	in ref request :>> Authorize;
+	    	out ref response :>> Authorized;
+	    }
+	}
+
+	package SystemDefinitions {
+	    part def DiscoverySystem {
+	        attribute protocols : List<String>;
+	        port discoveryPort : ServicePort;
+	        behavior serviceBehavior {
+	            action handleDiscover {
+	                in ref request : Discover;
+	                out ref response : Found;
+	            }
+	            then action handleAuthorize {
+	                in ref request : Authorize;
+	                out ref response : Authorized;
+	            }
+	        }
+	    }
+	    
+	    part def AuthorizationSystem {
+	        attribute protocols : List<String>;
+	        port authorizationPort : ServicePort;
+	        behavior serviceBehavior {
+	            action handleDiscover {
+	                in ref request : Discover;
+	                out ref response : Found;
+	            }
+	            then action handleAuthorize {
+	                in ref request : Authorize;
+	                out ref response : Authorized;
+	            }
+	        }
+	    }
+	}
+	
+	part def DistributedSystem :> SystemDefinitions {
+	    part discoveryProvider[1] :> DiscoverySystem {
+	        attribute protocols = ["http", "mqtt"];
+	        port discoveryPort : ServicePort;
+	        behavior serviceBehavior {
+	            action handleDiscover {
+	                in ref request : Discover;
+	                out ref response : Found;
+	            }
+	            then action handleAuthorize {
+	                in ref request : Authorize;
+	                out ref response : Authorized;
+	            }
+	        }
+	    }
+	    
+	    part authorizationProvider[1] :> AuthorizationSystem {
+	        attribute protocols = ["http", "mqtt"];
+	        port authorizationPort : ServicePort;
+	        behavior serviceBehavior {
+	            action handleDiscover {
+	                in ref request : Discover;
+	                out ref response : Found;
+	            }
+	            then action handleAuthorize {
+	                in ref request : Authorize;
+	                out ref response : Authorized;
+	            }
+	        }
+	    }
+	}
+	
+	interface discovery_service_interface : ServiceInterface connect discoveryProvider.discoveryPort to DistributedSystem.discoveryPort {
+		flow discover_request from discovery_service_interface.source.request to discovery_service_interface.target.handleDiscover;
+		flow found_response from discovery_service_interface.target.found to discovery_service_interface.source.response;
+	}
+	
+	interface authorization_service_interface : ServiceInterface connect authorizationProvider.authorizationPort to DistributedSystem.authorizationPort {
+		flow authorize_request from authorization_service_interface.source.request to authorization_service_interface.target.handleAuthorize;
+		flow authorized_response from authorization_service_interface.target.authorized to authorization_service_interface.source.response;
+	}
+}

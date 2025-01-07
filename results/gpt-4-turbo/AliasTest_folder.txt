@@ -1,0 +1,21 @@
+```SysML
+package AliasUsageExample {
+    part def MainSystem {
+        port def PortType;
+        port originalPort : PortType;
+        alias alternativePort for originalPort;
+    }
+
+    part systemInstance : MainSystem {
+        port alternativePort :>> alternativePort;
+    }
+
+    part def AuxiliarySystem {
+        port auxiliaryPort : MainSystem::PortType;
+    }
+
+    part auxiliaryInstance : AuxiliarySystem;
+    
+    connect systemInstance.alternativePort to auxiliaryInstance.auxiliaryPort;
+}
+```

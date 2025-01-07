@@ -1,0 +1,20 @@
+```sysmlv2
+package EngineSelectionModel {
+
+  part def Vehicle;
+  part def Engine;
+
+  // Define engine types
+  part def FourCylinderEngine;
+  part def SixCylinderEngine;
+
+  // Rationale metadata for engine selection
+  metadata def rationale : Rationale {
+    text = "After conducting a detailed trade study analysis, the four-cylinder engine was chosen over the six-cylinder engine due to its superior fuel efficiency and lower operating costs.";
+  }
+
+  // Connect engine to vehicle
+  connect Vehicle.engine to FourCylinderEngine;
+
+}
+```

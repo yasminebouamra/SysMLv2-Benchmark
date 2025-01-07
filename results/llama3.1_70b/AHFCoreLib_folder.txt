@@ -1,0 +1,43 @@
+```
+model AHFCore {
+
+    package ServiceInterfaces {
+        interface ServiceDiscoveryInterface : Interfaces::Interface discovery (
+            sd ::> DiscoveryPort.discovery) {}
+        
+        interface AuthorizationInterface : Interfaces::Interface authorization (
+            az ::> AuthorizationPort.authorization) {}
+        
+        port DiscoveryPort with required service discovery;
+        port AuthorizationPort with required service authorization;
+    }
+
+    package Systems {
+        system ServiceDiscoverySystem uses ServiceInterfaces::ServiceDiscoveryInterface {
+            part HTTPDiscovery {
+                // details for HTTP protocol handling
+            }
+            
+            part MQTTDiscovery {
+                // details for MQTT protocol handling
+            }
+        }
+
+        system AuthorizationSystem uses ServiceInterfaces::AuthorizationInterface {
+            part HTTPTokenExchange {
+                // details for token exchange over HTTP
+            }
+            
+            part MQTTTokenExchange {
+                // details for token exchange over MQTT
+            }
+        }
+    }
+
+    package DesignDescriptions {
+        design AHFCoreDD realizes ServiceDiscoverySystem, AuthorizationSystem {
+            // designs for discovery and authorization interactions using HTTP and MQTT protocols
+        }
+    }
+}
+```

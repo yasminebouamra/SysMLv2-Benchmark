@@ -1,0 +1,44 @@
+ ```SysMLV2
+   package TradeStudyComparison {
+
+      model EngineParts {
+         ClassifierRole EnginePart;
+         attribute Max_Thrust : Real;
+         attribute Specific_Fuel_Consumption : Real;
+         attribute Weight : Real;
+      }
+
+      ClassifierRole Engine {
+         Port EnginePort;
+         Operation EvaluationFunction();
+      }
+
+      ClassifierRole TradeStudy {
+         Part engine1: Engine[1..1];
+         Part engine2: Engine[1..1];
+         Attribute OptimizedEngine : Engine;
+         Operation MaximizeObjective(Engine p);
+      }
+
+      Operation EvaluationFunction(self : Engine) : Real {
+         Expression max_thrust = self.Max_Thrust;
+         Expression specific_fuel_consumption = self.Specific_Fuel_Consumption;
+         Expression weight = self.Weight;
+         // Calculate the evaluation function as per the required criteria.
+         return (max_thrust * max_thrust) - (specific_fuel_consumption * weight);
+      }
+
+      Operation MaximizeObjective(self : TradeStudy, Engine engine) {
+         Expression evaluation = self.EvaluationFunction(engine);
+         If (evaluation > OptimizedEngine.EvaluationFunction()) {
+            self.OptimizedEngine = engine;
+         }
+      }
+
+      PackageContext TradeStudyComparison_Ctx {
+         ClassifierRole TradeStudyComparison {
+            Part tradeStudy: TradeStudy[1..1];
+         }
+      }
+   }
+```

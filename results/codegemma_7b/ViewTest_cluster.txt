@@ -1,0 +1,48 @@
+```sysmlv2
+package ViewTest {
+
+	concern def SystemView {
+		viewpoint def SystemComponents;
+		viewpoint def StakeholderInterests;
+		viewpoint def SystemPerspective;
+	}
+
+	concern def BusinessView {
+		viewpoint def BusinessComponents;
+		viewpoint def BusinessProcesses;
+		viewpoint def BusinessStakeholders;
+	}
+
+	viewpoint def SystemComponents {
+		rendering def SystemDiagram;
+	}
+
+	viewpoint def StakeholderInterests {
+		rendering def StakeholderMatrix;
+	}
+
+	viewpoint def SystemPerspective {
+		rendering def SystemArchitecture;
+	}
+
+	viewpoint def BusinessComponents {
+		rendering def BusinessProcessMap;
+	}
+
+	viewpoint def BusinessProcesses {
+		rendering def BusinessWorkflowDiagram;
+	}
+
+	viewpoint def BusinessStakeholders {
+		rendering def StakeholderRelationshipDiagram;
+	}
+
+	part def System {
+		include concern SystemView;
+	}
+
+	part def Business {
+		include concern BusinessView;
+	}
+}
+```

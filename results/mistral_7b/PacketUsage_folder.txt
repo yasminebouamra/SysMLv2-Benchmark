@@ -1,0 +1,35 @@
+ Package ThermalDataPackets {
+
+       Import ScalarValues::*;
+       Import Time::DateTime;
+
+       Package ThermalDataPacketTypes {
+           Type ThermalDataPacket : Thing {
+               Property 'packet primary header' as Packets::'packet primary header';
+               Property redefines Packets::'packet data field';
+           }
+
+           Type StandardThermalDataPacket : ThermalDataPacket {
+               Property redefines ThermalDataPacket::'packet data field' {
+                   Property 'packet secondary header' redefines 'packet header' {
+                       Attribute 'packet timestamp': DateTime;
+                       Attribute 'telemetry packet type': String;
+                   }
+                   Property 'user data field' redefines ThermalDataPacket::'user data field' {
+                       Attribute timestamp: DateTime;
+                       Attribute temperature: Real;
+                   }
+               }
+           }
+
+           Type SpecializedThermalDataPacket : Extends StandardThermalDataPacket {
+               Property redefines ThermalDataPacket::'user data field' {
+                   Property 'specialized data field': String;
+               }
+           }
+       }
+
+       Part ThermalDataPacket: ThermalDataPacketTypes::ThermalDataPacket [3];
+       Part StandardThermalDataPacket: ThermalDataPacketTypes::StandardThermalDataPacket [2];
+       Part SpecializedThermalDataPacket: ThermalDataPacketTypes::SpecializedThermalDataPacket [1];
+   }

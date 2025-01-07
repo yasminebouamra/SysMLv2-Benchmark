@@ -1,0 +1,113 @@
+package VehicleFuelEconomyAnalysis {
+
+    import ScalarValues::*;
+    import Quantities::*;
+    import ISQ::*;
+    
+    // Custom Units and Quantities Package
+    package VehicleQuantities {
+        unit gallon = 231 * in^3;
+        unit mpg = mi / gallon; // miles per gallon for fuel economy
+        
+        quantity DistancePerVolumeUnit :> DerivedUnit;
+        quantity DistancePerVolume :> ScalarQuantityValue;
+    }
+    
+    // Vehicle Models Package
+    package VehicleModels {
+        part def Vehicle {
+            attribute weight : Mass;
+            attribute fuelEfficiency : VehicleQuantities::DistancePerVolume;
+            part fuelTank : FuelTank;
+            part wheel : Wheel[4];
+        }
+        
+        part def FuelTank {
+            attribute capacity : Volume;
+            attribute currentLevel : Volume;
+        }
+        
+        part def Wheel {
+            attribute diameter : Length;
+        }
+    }
+    
+    // Fuel Economy Requirements Package
+    package FuelEconomyRequirements {
+        requirement def FuelEconomyReq {
+            in attribute requiredEconomy : VehicleQuantities::DistancePerVolume;
+        }
+    }
+    
+    // Dynamics Modeling Package
+    package DynamicsModel {
+        calc def AccelerationCalc {
+            in mass : Mass;
+            in force : Force;
+            return acceleration : Acceleration = force / mass;
+        }
+        
+        calc def VelocityCalc {
+            in initialVelocity : Speed;
+            in acceleration : Acceleration;
+            in time : Time;
+            return velocity : Speed = initialVelocity + (acceleration * time);
+        }
+    }
+    
+    // Fuel Economy Analysis Package
+    package FuelEconomyAnalysis {
+        analysis def AnalyzeFuelEconomy {
+            in vehicle : VehicleModels::Vehicle;
+            in context : DrivingContext;
+            
+            calc {
+                in time : Time;
+                use DynamicsModel::AccelerationCalc;
+                use DynamicsModel::VelocityCalc;
+                out achievedEconomy : VehicleQuantities::DistancePerVolume;
+            }
+            
+            assert FuelEconomyRequirements::FuelEconomyReq {
+                require { vehicle.fuelEfficiency >= context.requiredEconomy };
+            }
+        }
+        
+        part def DrivingContext {
+            attribute requiredEconomy : VehicleQuantities::DistancePerVolume;
+            attribute timeFrame : Time;
+            attribute forceApplied : Force;
+        }
+    }
+    
+    // Applying the Model with a Scenario
+    package Scenarios {
+        import VehicleModels::*;
+        import FuelEconomyAnalysis::*;
+        
+        analysis {
+            part myVehicle : Vehicle {
+                ref fuelEfficiency = 30 `mpg`; // Example fuel efficiency value
+                ref weight = 1000 `kg`; // Example weight
+                part fuelTank {
+                    ref capacity = 15 `gallon`;
+                    ref currentLevel = 10 `gallon`;
+                }
+                part wheel {
+                    ref diameter = 0.5 `m`; // Example wheel diameter
+                }
+            }
+            
+            part myContext : DrivingContext {
+                ref requiredEconomy = 35 `mpg`; // Required fuel economy standard
+                ref timeFrame = 60 `min`; // Test time frame
+                ref forceApplied = 500 `N`; // Example force applied
+            }
+            
+            perform AnalyzeFuelEconomy {
+                vehicle = myVehicle;
+                context = myContext;
+            }
+        }
+    }
+}

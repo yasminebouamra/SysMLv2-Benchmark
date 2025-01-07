@@ -1,0 +1,83 @@
+```sysmlv2
+model PubSubSystem
+
+	part producer_3 {
+		port publicationPort : PublicationPort {
+			in ref :>> publish;
+		}
+		
+		perform action producerBehavior {
+			action publish {
+				out ref request : Publish = Publish(topic);
+			}
+		}
+	}
+
+	part server_3 {
+		port subscriptionPort : SubscriptionPort {
+			in ref :>> subscribe;
+			out ref :>> deliver;
+		}
+		
+		flow subscribe_request from subscriptionPort.subscribe to serverBehavior.subscribing.request;
+		flow publish_request from publicationPort.publish to serverBehavior.publishing.request;
+		flow deliver_response from serverBehavior.delivering.response to subscriptionPort.deliver;
+		
+		perform action serverBehavior {
+			action subscribing {
+				in ref request : Subscribe[1];
+				out attribute topic : String[1] = request.topic;
+			}
+			
+			then merge continuePublishing;			
+			then action publishing {
+				in ref request : Publish[1];
+				out attribute topic[1] = request.topic;
+				out ref publication[1] = request.publication;
+			}
+			
+			then decide;
+				if publishing.topic == subscribing.topic then delivering;
+				else continuePublishing;
+				
+			then action delivering {
+				in topic : String[1] = subscribing.topic;
+				in publication[1] = publishing.publication;
+				out ref response : Deliver = Deliver(publication);
+			}
+			then continuePublishing;
+			
+		}
+	}
+
+	part consumer_3 {
+		attribute myTopic : String;
+		port subscriptionPort : SubscriptionPort {
+			out ref :>> subscribe;
+			in ref :>> deliver;
+		}
+		
+		flow subscribe_request from consumerBehavior.subscribe.request to subscriptionPort.subscribe;
+		flow deliver_response from subscriptionPort.deliver to consumerBehavior.delivery.response;
+
+		perform action consumerBehavior {
+			action subscribe {
+				out ref request : Subscribe = Subscribe(myTopic);
+			}
+			then action delivery {
+				in ref response : Deliver;
+			}
+		}
+	}
+
+	interface subscription_interface : SubscriptionInterface connect consumer_3.subscriptionPort to server_3.subscriptionPort {
+		flow subscribe_request from subscription_interface.source.subscribe to subscription_interface.target.subscribe;
+		flow deliver_response from subscription_interface.target.deliver to subscription_interface.source.deliver;
+	}
+
+	interface publication_interface : PublicationInterface connect producer_3.publicationPort to server_3.publicationPort {
+		flow publish_request from publication_interface.source.publish to publication_interface.target.publish;
+	}
+
+```
+

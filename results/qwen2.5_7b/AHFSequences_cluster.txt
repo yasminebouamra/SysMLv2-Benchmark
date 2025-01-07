@@ -1,0 +1,84 @@
+```sysml
+package NorwegianScenario {
+	private import SystemArchitecture::SystemArchitecture;
+	private import SystemArchitecture::Component;
+	private import SystemArchitecture::Interface;
+	private import SystemArchitecture::Interaction;
+
+	part TellUConsumer : Component {
+		attribute telluConsumerAttribute1 : String;
+		perform action consumerBehavior {
+			action request send Request(telluConsumerAttribute1) to APISProducer.tellu;
+			then action delivery accept Delivery via APISConsumer.apisp;
+		}
+	}
+
+	part APISProducer : Component {
+		port publicationPort : Port;
+		perform action producerBehavior {
+			action publish send Publish("someTopic", "somePublication") via publicationPort;
+		}
+	}
+
+	part MQTTServer : Component {
+		port subscriptionPort : Port;
+		port publicationPort : Port;
+		interface subscriptionInterface to serverInterface {
+			bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+		}
+		perform action serverBehavior {
+			action subscribe send Subscribe("someTopic", MQTTServer) via subscriptionInterface;
+			then action publish accept Publish via publicationPort;
+			if "someTopic" == subscribing.subscription.topic
+			do send Deliver("somePublication") to subscribing.subscriber
+			then waitForPublication;
+		}
+	}
+
+	part APISConsumer : Component {
+		port subscriptionPort : Port;
+		perform action consumerBehavior {
+			action subscribe send Subscribe("someTopic", APISConsumer) via MQTTServer.subscriptionInterface;
+			then action delivery accept Deliver via subscriptionPort;
+		}
+	}
+
+	interface TellUConsumer.publicationPort to APISProducer.tellu {
+		bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+	}
+
+	interface APISProducer.publicationPort to MQTTServer.subscriptionInterface {
+		bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+	}
+
+	interface MQTTServer.publicationPort to APISConsumer.subscriptionPort {
+		bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+	}
+
+	message :>> publishMessage: MessageTransfer {
+		end :>> source = APISProducer;
+		end :>> target = MQTTServer;
+	}
+	message :>> subscribeMessage: MessageTransfer {
+		end :>> source = TellUConsumer;
+		end :>> target = MQTTServer;
+	}
+	message :>> deliverMessage: MessageTransfer {
+		end :>> source = MQTTServer;
+		end :>> target = APISConsumer;
+	}
+
+	event TellUConsumer.consumerBehavior.request[1] :>> requestSourceEvent;
+	event APISProducer.producerBehavior.publish[1] :>> publishSourceEvent;
+	event MQTTServer.serverBehavior.subscribe[1] :>> subscribeSourceEvent;
+	event MQTTServer.serverBehavior.deliver[1] :>> deliverTargetEvent;
+	event APISConsumer.consumerBehavior.delivery[1] :>> deliveryTargetEvent;
+
+	/* Binding sent/accept messages to specification model messages. */
+	bind APISProducer.producerBehavior.publish.sentMessage = publishMessage;
+	bind TellUConsumer.consumerBehavior.request.sentMessage = requestSourceEvent;
+	bind MQTTServer.serverBehavior.subscribe.acceptedMessage = subscribeMessage;
+	bind MQTTServer.serverBehavior.deliver.effect.sentMessage = deliverMessage;
+	bind APISConsumer.consumerBehavior.delivery.acceptedMessage = deliveryTargetEvent;
+}
+```

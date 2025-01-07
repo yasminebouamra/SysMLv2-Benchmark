@@ -1,0 +1,60 @@
+```sysmlv2
+package LocalCloudModel {
+
+    private import ScalarValues::String;
+
+    part System {
+        name : String;
+        description : String;
+        services : List<Service>;
+        systems : List<System>;
+    }
+
+    part Service {
+        name : String;
+        description : String;
+        interface : Interface;
+        operations : List<Operation>;
+    }
+
+    part Interface {
+        name : String;
+        operations : List<Operation>;
+    }
+
+    part Operation {
+        name : String;
+        parameters : List<Parameter>;
+    }
+
+    part Parameter {
+        name : String;
+        type : String;
+    }
+
+    link System_has_Services {
+        source : System;
+        target : Service;
+    }
+
+    link System_has_Systems {
+        source : System;
+        target : System;
+    }
+
+    link Service_has_Interface {
+        source : Service;
+        target : Interface;
+    }
+
+    link Interface_has_Operations {
+        source : Interface;
+        target : Operation;
+    }
+
+    link Operation_has_Parameters {
+        source : Operation;
+        target : Parameter;
+    }
+}
+```

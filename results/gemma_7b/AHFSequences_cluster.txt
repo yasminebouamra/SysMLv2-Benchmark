@@ -1,0 +1,45 @@
+```sysmlv2
+part TellUConsumer[1] {
+	port requestPort : String;
+	port responsePort : String;
+}
+
+part APISProducer[1] {
+	port requestPort : String;
+	port responsePort : String;
+}
+
+part MQTTServer[1] {
+	port requestPort : String;
+	port responsePort : String;
+}
+
+part APISConsumer[1] {
+	port requestPort : String;
+	port responsePort : String;
+}
+
+interface requestPortToMQTTServer {
+	bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+}
+
+interface responsePortToMQTTServer {
+	bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+}
+
+sequenceDiagram {
+	participant TellUConsumer
+	participant APISProducer
+	participant MQTTServer
+	participant APISConsumer
+
+	TellUConsumer->>APISProducer: requestPort
+	activate APISProducer
+	APISProducer->>MQTTServer: requestPort
+	activate MQTTServer
+	MQTTServer->>APISConsumer: responsePort
+	deactivate MQTTServer
+	deactivate APISProducer
+	APISConsumer->>TellUConsumer: responsePort
+}
+```

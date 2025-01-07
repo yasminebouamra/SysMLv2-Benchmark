@@ -1,0 +1,25 @@
+```sysmlv2
+package CircularImport {
+    package P1 {
+        part def A;
+        private import P2::*;
+        part b : B;
+    }
+
+    package P2 {
+        part def B;
+        private import P1::*;
+        part a : A;
+    }
+
+    package Test1 {
+        part p1 : P1::A;
+        part p2 : P2::B;
+    }
+
+    package Test2 {
+        part p1 : P1::B;
+        part p2 : P2::A;
+    }
+}
+```

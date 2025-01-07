@@ -1,0 +1,17 @@
+ ```SysMLV2
+   package TextualRepresentationTest;
+
+   class Item {
+      attribute RealNumber value; // Attribute for the real number
+   };
+
+   action UpdateValue(inout Item item) {
+      if (item.value <= 0) then
+         logEvent("Error: Value must be positive.");
+         return false;
+      endif
+      item.value = item.value + 1; // Update the value by adding 1
+      logEvent("Operation: Updated value of Item."); // Log the operation message
+      return true;
+   };
+```

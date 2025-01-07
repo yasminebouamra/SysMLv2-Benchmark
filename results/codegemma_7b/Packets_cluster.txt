@@ -1,0 +1,41 @@
+```
+## SysMLV2 Model for Data Packet Structure
+
+```
+package DataPacketStructure {
+
+  // Base template for packet headers
+  class Header {
+    attribute version : Integer;
+    attribute sequenceNumber : Integer;
+  }
+
+  // Base template for data fields
+  class DataField {
+    attribute dataType : String;
+    attribute data : String;
+  }
+
+  // Specific template for thermal data packets
+  class ThermalDataPacket {
+    include Header;
+    attribute timestamp : Integer; // Unix timestamp in milliseconds
+    attribute temperature : Real;
+    include DataField;
+  }
+}
+```
+
+**Explanation:**
+
+* The model includes three classes:
+    * `Header`: Defines the common header fields for all data packets.
+    * `DataField`: Defines a generic data field with type and data.
+    * `ThermalDataPacket`: Extends the `Header` class and includes an additional field for temperature and extends the `DataField` class.
+* The `ThermalDataPacket` class includes fields for version, sequence number, timestamp, temperature, and a generic data field.
+* This structure provides a base for further customization and specialization for different data transmission scenarios.
+
+**Note:**
+
+* This model provides a basic structure and may require further expansion depending on specific needs.
+* Additional classes and attributes can be added for additional data fields and functionalities.

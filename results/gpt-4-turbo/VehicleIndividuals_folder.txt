@@ -1,0 +1,56 @@
+```SysML
+package VehicleConfigurationModel {
+    import SI::kg;
+    import Time::DateTime;
+    
+    part def Vehicle {
+        attribute mass : kg;
+        part axleAssembly : AxleAssembly;
+        part wheels[4] : Wheel;
+    }
+
+    part def Wheel {
+        attribute diameter : ScalarValues::Real;
+    }
+
+    part def AxleAssembly {
+        attribute type : String;
+    }
+
+    individual part def IndividualVehicle1 :> Vehicle {
+        attribute mass = 1200[kg];
+        part axleAssembly = IndividualAxleAssembly1;
+        part wheels = IndividualWheelSet1;
+    }
+
+    individual part def IndividualWheel :> Wheel {
+        attribute diameter = 0.7; // meters
+    }
+
+    individual part def IndividualAxleAssembly :> AxleAssembly {
+        attribute type = "Type-A Standard";
+    }
+
+    individual part IndividualWheelSet1[4] :> Wheel;
+
+    individual part IndividualAxleAssembly1 :> AxleAssembly;
+
+    timestep def ConfigurationTimeSlice {
+        attribute timestamp : DateTime;
+        part vehicleConfiguration : Vehicle;
+    }
+
+    timestep ConfigurationSnapshot1 :> ConfigurationTimeSlice {
+        attribute timestamp = "2023-10-03T12:00:00Z";
+        part vehicleConfiguration = IndividualVehicle1 {
+            attribute mass = 1200[kg];
+            port axle = IndividualAxleAssembly1 {
+                attribute type = "Type-A Standard";
+            }
+            part wheels[4] = IndividualWheelSet1 {
+                attribute diameter = 0.7; // meters
+            }
+        }
+    }
+}
+```

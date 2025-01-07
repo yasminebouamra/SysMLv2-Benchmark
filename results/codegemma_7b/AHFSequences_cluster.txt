@@ -1,0 +1,34 @@
+```sysmlv2
+import TellUConsumer;
+import APISProducer;
+import MQTTServer;
+import APISConsumer;
+
+part Scenario {
+	part :>> tellu_consumer :> TellUConsumer;
+	part :>> apis_producer :> APISProducer;
+	part :>> mqtt_server :> MQTTServer;
+	part :>> apis_consumer :> APISConsumer;
+
+	message :>> request_message: Transfers::MessageTransfer {
+		end :>> source = tellu_consumer.requestPort;
+		end :>> target = mqtt_server.requestPort;
+	}
+	message :>> forward_message: Transfers::MessageTransfer {
+		end :>> source = mqtt_server.forwardPort;
+		end :>> target = apis_producer.publishPort;
+	}
+	message :>> response_message: Transfers::MessageTransfer {
+		end :>> source = apis_consumer.responsePort;
+		end :>> target = mqtt_server.responsePort;
+	}
+
+	bind tellu_consumer.requestBehavior.request.sentMessage = request_message;
+	bind mqtt_server.forwardBehavior.forward.sentMessage = forward_message;
+	bind apis_producer.publishBehavior.publish.sentMessage = forward_message;
+	bind mqtt_server.responseBehavior.response.sentMessage = response_message;
+	bind apis_consumer.responseBehavior.accept.acceptedMessage = response_message;
+}
+```
+
+**Note:** This code assumes the availability of the necessary parts and interfaces from the provided imports.

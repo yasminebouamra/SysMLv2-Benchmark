@@ -1,0 +1,47 @@
+```sysmlv2
+package StructuredControlTest {
+
+  action def Example {
+    var integer i = 0;
+
+    if (i < 5) {
+      i = i + 1;
+    } else {
+      i = i - 1;
+    }
+
+    while (i > 0) {
+      i = i - 1;
+    }
+
+    loop {
+      i = i + 1;
+      if (i == 10) {
+        break;
+      }
+    }
+
+    for (integer j in 1..5) {
+      i = i + j;
+    }
+
+    assert i == 15;
+  }
+}
+```
+```
+
+**Explanation:**
+
+* The `Example` action element showcases the structured control flow techniques.
+* Initial variable `i` is defined with a value of 0.
+* An `if-else` statement checks if `i` is less than 5. If true, it increments `i` by 1; otherwise, it decrements it by 1.
+* A `while` loop continues until `i` becomes 0, decrementing `i` in each iteration.
+* A generic `loop` iterates until an `if` statement with a `break` statement is encountered, incrementing `i` in each iteration until it reaches 10.
+* A `for` loop iterates from 1 to 5, adding each integer value to `i`.
+* Finally, an assertion verifies that `i` equals 15, demonstrating the successful execution of the control flow elements.
+
+**Note:**
+
+* The `sysmlv2` code uses the `integer` type for integers.
+* The `assert` statement is used to verify the final value of `i`.

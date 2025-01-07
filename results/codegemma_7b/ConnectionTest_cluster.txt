@@ -1,0 +1,32 @@
+```sysmlv2
+package ConnectionTest {
+
+	part def Part1 {
+		attribute x;
+	}
+
+	part def Part2 {
+		attribute y;
+	}
+
+	abstract connection def AbstractConnection {
+		part source;
+		part target;
+	}
+
+	abstract flow def AbstractFlow {
+		part source;
+		part target;
+	}
+
+	connection def Connection1 : AbstractConnection {
+		part source : Part1;
+		part target : Part2;
+	}
+
+	flow def Flow1 : AbstractFlow {
+		part source : Part1;
+		part target : Part1;
+	}
+}
+```

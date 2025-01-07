@@ -1,0 +1,34 @@
+```sysml
+package CameraSystem {
+    private import PictureTaking::*;
+
+    package CameraModelLibrary{
+        // Subsystems for the Camera system
+        part def FocusingSubsystem {
+            action focus: Focus[1];
+        }
+        
+        part def ImagingSubsystem {
+            action shoot: Shoot[1];
+        }
+    }
+
+    package CameraSystemModel {
+        // Main camera model that utilizes focusing and imaging subsystems
+        private import CameraModelLibrary::*;
+        private import PictureTaking::*;
+
+        part cameraContext{
+            part focusSys: FocusingSubsystem;
+            part imgSys: ImagingSubsystem;
+
+            flow focusSys.focus.xrsl to shoot.xsf;
+            
+            action takePicture {
+                action focusSys.focus[1];
+                action imgSys.shoot[1];
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,41 @@
+```
+package InterfaceCompatibilityExample {
+
+    interface Engine {
+        port ClutchPort : Port;
+    }
+
+    interface Transmission {
+        port DrivePwrPort : Port;
+    }
+
+    part EngineComponent : Engine {
+        interface EngineInterface : Engine {
+            port ClutchPort : Port;
+        }
+    }
+
+    part TransmissionComponent : Transmission {
+        interface TransmissionInterface : Transmission {
+            port DrivePwrPort : Port;
+        }
+    }
+
+    metadata def InterfaceCompatibility {
+        ref engineInterface : EngineInterface;
+        ref transmissionInterface : TransmissionInterface;
+        issue : InterfaceCompatibilityIssue;
+    }
+
+    enum InterfaceCompatibilityIssue {
+        PORT_TYPE_MISMATCH,
+        FUNCTIONALITY_CONFLICT
+    }
+
+    interfaceCompatibility InterfaceCompatibility {
+        engineInterface = EngineComponent.EngineInterface;
+        transmissionInterface = TransmissionComponent.TransmissionInterface;
+        issue = InterfaceCompatibilityIssue.PORT_TYPE_MISMATCH;
+    }
+}
+```

@@ -1,0 +1,37 @@
+```sysmlv2
+package EnumerationTest {
+
+	enum Color {
+		Red = 1,
+		Green = 2,
+		Blue = 3,
+		OptionalColor = ?
+	}
+
+	part def Vehicle {
+		color : Color;
+	}
+
+	part vehicle1 :> Vehicle {
+		bind color = Red;
+	}
+
+	part vehicle2 :> Vehicle {
+		bind color = Green;
+	}
+
+	part vehicle3 :> Vehicle {
+		bind color = OptionalColor;
+	}
+
+	constraint def ColorRestriction {
+		in color : Color;
+		color != OptionalColor
+	}
+
+	part vehicle4 :> Vehicle {
+		assert constraint : ColorRestriction;
+		bind color = Blue;
+	}
+}
+```

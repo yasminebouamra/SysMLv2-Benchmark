@@ -1,0 +1,16 @@
+package RiskMetadataExample {
+
+    import MetadataDefinitions::RiskLevels::*;
+    import MetadataDefinitions::RiskAssessment::*;
+    
+    part def FourCylinderEngine {
+        metadata overallRisk : OverallRiskLevel;
+        metadata technicalRisk : TechnicalRiskLevel;
+        metadata scheduleRisk : ScheduleRiskLevel;
+        
+        part riskAssessment : RiskAssessment {
+            attribute probability;
+            attribute impact;
+        }
+    }
+}

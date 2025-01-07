@@ -1,0 +1,75 @@
+```sysmlv2
+package Dynamics {
+
+    type PowerValue is Real;
+    type AccelerationValue is Real;
+    type VelocityValue is Real;
+    type PositionValue is Real;
+
+    type Vehicle {
+        wheelDiameter : Length;
+        driveTrainEfficiency : Real;
+        mass : Mass;
+        fuelEconomy_city : DistancePerVolumeValue;
+        fuelEconomy_highway : DistancePerVolumeValue;
+    }
+
+    type NominalScenario {
+        t : Time;
+        s : State;
+        samples : TimeStateRecord[];
+    }
+
+    type TimeStateRecord {
+        t : Time;
+        s : State;
+    }
+
+    type State {
+        position : PositionValue;
+        velocity : VelocityValue;
+    }
+
+    type StraightLineDynamicsEquations {
+        p : PowerValue;
+        m : Mass;
+        dt : Time;
+        x_i : PositionValue;
+        v_i : VelocityValue;
+        x_f : PositionValue;
+        v_f : VelocityValue;
+        a : AccelerationValue;
+    }
+
+    action dynamicsAnalysis {
+        in sc : NominalScenario;
+        out power : PowerValue[];
+        out acceleration : AccelerationValue[];
+
+        assert constraint straightLineDynamics {
+            (1..sc.n-1)->forAll { in i: Integer;
+                StraightLineDynamicsEquations(
+                    p = power[i],
+                    m = vehicle.mass,
+                    dt = sc.samples[i+1].t - sc.samples[i].t,
+                    x_i = sc.samples[i].s.position,
+                    v_i = sc.samples[i].s.velocity,
+                    x_f = sc.samples[i+1].s.position,
+                    v_f = sc.samples[i+1].s.velocity,
+                    a = acceleration[i]
+                )
+            }
+        }
+    }
+
+    action fuelConsumptionAnalysis {
+        in power : PowerValue[];
+        in acceleration : AccelerationValue[];
+        out fuelEconomy : DistancePerVolumeValue;
+
+        assert constraint {
+            fuelEconomy = calculatedFuelEconomy
+        }
+    }
+}
+```

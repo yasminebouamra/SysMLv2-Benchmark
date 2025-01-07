@@ -1,0 +1,78 @@
+```sysmlv2
+package PrivateAndPublicImports {
+
+	package P1 {
+		part def A;
+	}
+
+	package P2 {
+		part y: P2::A;
+	}
+
+	private import P2::*;
+
+	package P3 {
+		part z: B;
+	}
+
+	package P4 {
+		part z1: A;
+	}
+
+	part x: P1::A;
+	part y: P1::B;
+}
+
+package QualifiedNameImportTest {
+
+	package P1 {
+		part def A;
+	}
+
+	package P2 {
+		package P2a {
+			part x: P2a::A;
+		}
+	}
+}
+
+package CircularImport {
+
+	package P1 {
+		part x: A;
+	}
+
+	package P2 {
+		part y: B;
+	}
+
+	part x: P1::A;
+	part y: P1::B;
+}
+
+package ImportTest {
+
+	package Pkg1 {
+		part p11: Pkg211::P211;
+	}
+
+	package Pkg2 {
+		package Pkg21 {
+			package Pkg211 {
+				part def P211 :> P12;
+			}
+		}
+	}
+}
+
+package AliasImport {
+
+	package Definitions {
+		alias Car for Vehicle;
+	}
+
+	package Usages {
+		part vehicle : Car;
+	}
+}
+```

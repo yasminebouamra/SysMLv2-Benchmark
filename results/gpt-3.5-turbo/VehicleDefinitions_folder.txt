@@ -1,0 +1,17 @@
+package VehicleDefinitions {
+	part def Vehicle;
+	part def Transmission;
+	part def AxleAssembly;
+	part def Axles;
+	part def Wheels;
+	part def Lugbolts;
+
+	import Measurements::Mass;
+	import Measurements::Torque;
+
+	port def TorqueTransmission;
+
+	interface def VehicleDynamics {
+		connect Axles::AxleAssembly::Axles::Wheels::Lugbolts::TorqueTransmission;
+	}
+}

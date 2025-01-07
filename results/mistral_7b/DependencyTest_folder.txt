@@ -1,0 +1,40 @@
+ ```SysMLV2
+    package SystemArchitecture {
+        part def ApplicationLayer {
+            attribute layerName : ScalarValues::String;
+            attribute userInterface : String;
+        }
+
+        part def ServiceLayer {
+            attribute layerName : ScalarValues::String;
+            attribute businessLogic : String;
+        }
+
+        part def DataLayer {
+            attribute layerName : ScalarValues::String;
+            attribute dataPersistence : String;
+        }
+
+        part Application : ApplicationLayer {
+            attribute userInterface: "GUI";
+        }
+
+        part Service : ServiceLayer {
+            attribute businessLogic: "Transaction Processing";
+        }
+
+        part Data : DataLayer {
+            attribute dataPersistence: "Database";
+        }
+
+        internal behavior Application_to_Service {
+            association Application_to_Service_DataFlow;
+            association Application_to_Service_ControlFlow;
+        }
+
+        internal behavior Service_to_Data {
+            association Service_to_Data_DataFlow;
+            association Service_to_Data_ControlFlow;
+        }
+    }
+    ```

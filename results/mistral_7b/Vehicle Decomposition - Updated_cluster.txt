@@ -1,0 +1,44 @@
+ ```sysml
+   package VehicleModel {
+       extend BlockDefinition;
+
+       class ChassisAssembly {
+           attribute : numCylinders { Integer (1 to 8) };
+           attribute : rollBarType { String ("Roll Bar", "Cage Roll Bar") };
+       }
+
+       class Engine {
+           attribute : numCylinders { Integer (4, 6, 8) };
+       }
+
+       class Wheel {
+           attribute : wheelSize { Real (15 to 28) };
+       }
+
+       class Vehicle {
+           part ChassisAssembly chassis;
+           part Engine engine;
+           part Wheel[] wheels;
+
+           operation configureVehicle(in ChassisAssemblyType: ChassisAssembly, in EngineType: Engine): Vehicle;
+       }
+
+       class SportCar : Vehicle {
+           extend Vehicle;
+           attribute : topSpeed { Real (120 to 300) };
+           attribute : numDoors { Integer (2 to 4) };
+       }
+
+       class Sedan : Vehicle {
+           extend Vehicle;
+           attribute : trunkSpace { Real (12 to 24) };
+           attribute : numDoors { Integer (4 to 5) };
+       }
+
+       class SUV : Vehicle {
+           extend Vehicle;
+           attribute : towingCapacity { Real (3500 to 8000) };
+           attribute : seatCount { Integer (5 to 7) };
+       }
+   }
+```

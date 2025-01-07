@@ -1,0 +1,23 @@
+```sysmlv2
+package SecurityClassification {
+
+    // Define an enumeration for security classifications
+    enumeration SecurityClassification {
+        UNCLASSIFIED, CONFIDENTIAL, SECRET
+    }
+
+    // Annotate system components with their security classifications using metadata
+    part SystemComponent {
+        @SecurityClassification classification : SecurityClassification;
+    }
+
+    // Example usage:
+    part Engine : SystemComponent {
+        classification = CONFIDENTIAL;
+    }
+
+    part Transmission : SystemComponent {
+        classification = SECRET;
+    }
+}
+```

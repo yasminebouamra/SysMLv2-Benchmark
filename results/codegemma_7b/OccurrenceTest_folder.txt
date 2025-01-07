@@ -1,0 +1,43 @@
+```sysmlv2
+package OccurrenceTest
+
+-- Template for generic occurrences
+template Occurrence {
+    -- Attributes, references, items, parts, etc.
+}
+
+-- Template for individual occurrences
+template IndividualOccurrence {
+    -- Attributes, references, items, parts, states, periods, etc.
+}
+
+-- Instantiate generic occurrences
+part genericOccurrence1 : Occurrence {}
+part genericOccurrence2 : Occurrence {}
+
+-- Instantiate individual occurrences
+part individualOccurrence1 : IndividualOccurrence {}
+part individualOccurrence2 : IndividualOccurrence {}
+
+-- Interconnect occurrences and individual occurrences
+relation connects {
+    part genericOccurrence1 : Occurrence
+    part individualOccurrence1 : IndividualOccurrence
+}
+
+-- Create snapshots
+part snapshot1 : Occurrence {
+    -- Attributes, references, items, parts, etc.
+}
+part snapshot2 : Occurrence {
+    -- Attributes, references, items, parts, etc.
+}
+
+-- Create timeslices
+part timeslice1 : Occurrence {
+    -- Attributes, references, items, parts, etc.
+}
+part timeslice2 : Occurrence {
+    -- Attributes, references, items, parts, etc.
+}
+```

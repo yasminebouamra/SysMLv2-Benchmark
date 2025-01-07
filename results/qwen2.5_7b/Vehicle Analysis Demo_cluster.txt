@@ -1,0 +1,131 @@
+```plaintext
+model 'Vehicle Fuel Economy Analysis' {
+    package 'Vehicle Quantities' {
+        unit 'Gallons' redefines UML::Unit::Dimension { baseQuantity = "Volume"; }
+        
+        unit 'MilesPerGallon' redefines UML::Unit::Measure {
+            valueKind = 'Rational';
+            numerator = 'Mile';
+            denominator = 'Gallons';
+        }
+    }
+
+    package 'Vehicle Models' {
+        part def 'Fuel Tank' {
+            attribute capacity :> ISQ::volume;
+        }
+
+        part def 'Wheel' {
+            attribute diameter :> ISQ::length;
+            attribute circumference :> ISQ::length { calc = diameter * 3.14; }
+        }
+
+        part def 'Vehicle' {
+            part fuelTank : Fuel Tank;
+            part wheels : Array of Wheel;
+
+            attribute fuelConsumptionRate :> ISQ::volumePerTime;
+            attribute maxSpeed :> ISQ::speed;
+            attribute acceleration :> ISQ::acceleration;
+        }
+    }
+
+    package 'Fuel Economy Requirements' {
+        part def 'DrivingCondition' {
+            attribute speed :> ISQ::speed;
+            attribute fuelConsumptionRate :> ISQ::volumePerTime;
+        }
+
+        part def 'Fuel Economy Standard' {
+            attribute requiredMilesPerGallon :> Vehicle Fuel Economy Analysis::MilesPerGallon;
+            association def 'Compliance' with 'DrivingCondition' and 'Vehicle';
+        }
+    }
+
+    package 'Dynamics Modeling' {
+        action def 'Acceleration Calculation' {
+            in vehicle: Vehicle;
+            out accelerationResult :> ISQ::acceleration;
+
+            calc :>> result { 
+                // Simplified formula for acceleration
+                accelerationResult = (vehicle.fuelConsumptionRate * 3600) / vehicle.capacity;
+            }
+        }
+
+        action def 'Velocity Calculation' {
+            in vehicle: Vehicle;
+            out velocityResult :> ISQ::speed;
+
+            calc :>> result { 
+                // Simplified formula for velocity
+                velocityResult = (vehicle.fuelConsumptionRate * 3600) / (vehicle.wheels[0].circumference);
+            }
+        }
+    }
+
+    package 'Fuel Economy Analysis' {
+        part def 'Scenario' {
+            part vehicle : Vehicle;
+            part drivingConditions : Array of DrivingCondition;
+            part fuelEconomyStandard : Fuel Economy Standard;
+
+            action analyzeCompliance : Boolean { 
+                in vehicle: Vehicle; 
+                in standard: Fuel Economy Standard;
+                in conditions: Array of DrivingCondition;
+
+                calc :>> result {
+                    var compliant = true;
+                    
+                    foreach (condition in conditions) {
+                        var accelerationCalc = 'Acceleration Calculation'({ vehicle });
+                        var velocityCalc = 'Velocity Calculation'({ vehicle });
+
+                        if ((velocityCalc / condition.speed) < standard.requiredMilesPerGallon) {
+                            compliant = false;
+                            break;
+                        }
+                    }
+
+                    return compliant;
+                }
+            }
+        }
+    }
+
+    model context {
+        part scenario : Scenario {
+            attribute fuelTankCapacity : ISQ::volume;
+            attribute wheelDiameter : ISQ::length;
+
+            part vehicle : Vehicle { 
+                capacity = fuelTankCapacity; 
+                wheels.0.diameter = wheelDiameter; 
+            }
+
+            part drivingCondition1 : DrivingCondition { 
+                speed = 60 * ISQ::milesPerHour;
+                fuelConsumptionRate = 0.25 * ISQ::gallonsPerHour;
+            }
+
+            part drivingCondition2 : DrivingCondition { 
+                speed = 30 * ISQ::milesPerHour;
+                fuelConsumptionRate = 0.15 * ISQ::gallonsPerHour;
+            }
+
+            part standard : Fuel Economy Standard {
+                requiredMilesPerGallon = 30;
+            }
+        }
+
+        action checkCompliance : Boolean { 
+            in scenario: Scenario;
+
+            calc :>> result {
+                return scenario.analyzeCompliance({ vehicle, standard, [drivingCondition1, drivingCondition2] });
+            }
+        }
+    }
+}
+```

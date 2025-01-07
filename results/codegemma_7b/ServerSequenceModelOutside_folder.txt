@@ -1,0 +1,37 @@
+```sysmlv2
+type PubSubSequenceOutside : PubSubSequence {
+
+	part :>> producer :> producer_3 {
+		event producerBehavior.publish[1] :>> publish_source_event;
+	}
+
+	part :>> server :> server_3 {
+		event serverBehavior.subscribing[1] :>> subscribe_target_event;
+		event serverBehavior.publishing[1] :>> publish_target_event;
+		event serverBehavior.delivering[1] :>> deliver_source_event;
+	}
+
+	part :>> consumer :> consumer_3 {
+		event consumerBehavior.subscribe[1] :>> subscribe_source_event;
+		event consumerBehavior.delivery[1] :>> deliver_target_event;
+	}
+
+	flow :>> publish_message from producer.producerBehavior.publish.request to server.serverBehavior.publishing.request {
+		event producer.publish_request[1];
+		then event publication_interface.publish_request[1];
+		then event server.publish_request[1];
+	}
+
+	flow :>> subscribe_message from consumer.consumerBehavior.subscribe.request to server.serverBehavior.subscribing.request {
+		event consumer.subscribe_request[1];
+		then event subscription_interface.subscribe_request[1];
+		then event server.subscribe_request[1];
+	}
+
+	flow :>> deliver_message from server.serverBehavior.delivering.response to consumer.consumerBehavior.delivery.response {
+		event server.deliver_response[1];
+		then event subscription_interface.deliver_response[1];
+		then event consumer.deliver_response[1];
+	}
+}
+```

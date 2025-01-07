@@ -1,0 +1,43 @@
+```sysmlv2
+package AssignmentTest {
+    
+    structure def Counter {
+        attribute count : ScalarValues::Integer = 0;
+        
+        function increment : ScalarValues::Integer {
+            return count + 1;
+        }
+        
+        function decrement : ScalarValues::Integer {
+            return count - 1;
+        }
+        
+        state def CounterStateMachine {
+            state incrementing {
+                do action incrementCount;
+                transition decrementing when trigger decrementTrigger;
+            }
+            
+            state decrementing {
+                do action decrementCount;
+                transition incrementing when trigger incrementTrigger;
+            }
+            
+            action incrementCount {
+                count = count + 1;
+            }
+            
+            action decrementCount {
+                count = count - 1;
+            }
+        }
+    }
+    
+    action doIncrement {
+        Counter c;
+        
+        c.incrementCount(); // Increment direct
+        c.increment(); // Increment through function
+    }
+}
+```

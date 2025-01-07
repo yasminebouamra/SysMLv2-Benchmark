@@ -1,0 +1,41 @@
+```sysmlv2
+package VehicleDesign {
+
+    // Base design elements
+    part def Vehicle {
+        part redefines chs;
+        part redefines eng;
+        part redefines trm;
+        part redefines sfr;
+        action generateTorque;
+        action amplifyTorque;
+        constraint validConfiguration;
+    }
+
+    // Vehicle parts
+    part def Chassis;
+    part def Engine {
+        part redefines cyl;
+        action startEngine;
+    }
+    part def Transmission;
+    part def Sunroof;
+
+    // Constraints
+    constraint Vehicle.validConfiguration {
+        Vehicle.chs.eng.cyl >= 4;
+        Vehicle.chs.trm.gears >= 6;
+        Vehicle.sfr.isOpen;
+    }
+
+    // Vehicle instance
+    part vehicle : Vehicle {
+        part chs : Chassis;
+        part eng : Engine;
+        part trm : Transmission;
+        part sfr : Sunroof;
+        action generateTorque = eng.startEngine;
+        action amplifyTorque = trm.shiftGears;
+    }
+}
+```

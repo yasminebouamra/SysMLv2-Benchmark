@@ -1,0 +1,27 @@
+```sysmlv2
+package ConjugationTest
+
+part B {
+  port p : P;
+  port ~p : ~P;
+}
+
+connection A {
+  port p : P;
+  port ~p : ~P;
+}
+
+interface I {
+  port p : P;
+  port ~p : ~P;
+}
+
+part B1 {
+  part B2 {
+    port p : P;
+    port ~p : ~P;
+  }
+  connection a : A{p=B2.p; ~p=B2.~p};
+  interface i : I{p=B2.p; ~p=B2.~p};
+}
+```

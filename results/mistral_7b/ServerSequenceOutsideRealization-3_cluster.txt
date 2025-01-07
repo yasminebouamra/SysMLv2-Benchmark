@@ -1,0 +1,129 @@
+ ```
+package PubSubSystem {
+	public import UML::Actions::*;
+	public import UML::ActivityGraphs::ActivityParticipant::*;
+	public import UML::Activities::ActivityFinalNode::*;
+	public import UML::Activities::ActivityPartition::*;
+	public import UML::Activities::ControlNodes::ActionNode::*;
+	public import UML::Activities::DataTypes::String::*;
+	public import UML::Classes::Classifier::*;
+	public import UML::CommonBehavior::Communications::MessageEvent::*;
+	public import UML::CommonBehavior::Communications::Port::*;
+	public import UML::Interactions::InteractionUse::*;
+	public import UML::Interfaces::Interface::*;
+	public import UML::StructuredClasses::ClassifierRole::*;
+
+	ActivityParticipant producer : Producer {
+		Attribute publishTopic : String;
+	}
+
+	ActivityParticipant server : Server {
+		Attribute subscribers : List<Consumer>;
+		Attribute topics : Set<String>;
+	}
+
+	ActivityParticipant consumer : Consumer {
+		Attribute myTopic : String;
+	}
+
+	Interface SubscriptionPort {
+		Operation sendSubscribe(topic : String, subscriber : Consumer);
+		Operation acceptDeliver();
+	}
+
+	ClassifierRole producer_2 : Producer.producerBehavior {
+		Operation publish(message : Message);
+	}
+
+	ClassifierRole consumer_2 : Consumer.consumerBehavior {
+		Operation subscribe();
+		Operation delivery();
+	}
+
+	ClassifierRole server_2 : Server.serverBehavior {
+		Operation delivering(message : Message);
+		Operation subscribing(subscriber : SubscriptionPort);
+	}
+
+	Message publish_message;
+	Message subscribe_message;
+	Message deliver_message;
+
+	bind producer_2.publish.outputPin = publish_message.source;
+	bind consumer_2.subscribe.inputPin = subscribe_message.target;
+	bind server_2.subscribing.effect = subscribe_message.source;
+	bind server_2.delivering.effect.outputPin = deliver_message.target;
+	bind consumer_2.delivery.acceptedMessage = subscribe_message;
+	bind server_2.serverBehavior.delivering.accepter.acceptedMessage = publish_message;
+
+	InitialNode startNode;
+	ActionNode subscriberSubscribes(consumer : Consumer) {
+		Operation subscribe(topic : String, subscriber : Consumer);
+	}
+	ActionNode serverMatchesTopicAndSendsDeliver(message : Message) {
+		Condition messageMatchesTopic;
+		then ActionNode deliverToSubscriber(message : Message, subscriber : Consumer);
+	}
+	FinalNode endNode;
+
+	Action subscribe {
+		subscriberSubscribes(consumer);
+	}
+
+	Action publish {
+		Operation publish(message : Message);
+	}
+
+	Action deliverToSubscriber {
+		Condition messageMatchesTopic;
+		ActionNode serverSendsDeliver(message : Message, subscriber : Consumer);
+	}
+
+	ActivityParticipant publisher : Producer {
+		InputPin publishMessageInput;
+		OutputPin publishTopicOutput;
+		Action publish;
+	}
+
+	ActivityParticipant server_publisher : Server {
+		InputPin subscribeMessageInput;
+		OutputPin deliverMessageOutput;
+		ActionNode subscriberSubscribes;
+		ActionNode serverMatchesTopicAndSendsDeliver;
+	}
+
+	ActivityParticipant consumer_subscriber : Consumer {
+		InputPin subscribeMessageInput;
+		OutputPin publishTopicInput;
+		Action subscribe;
+		Action delivery;
+	}
+
+	Port publisherPort(type : SubscriptionPort);
+	Port serverPort(type : SubscriptionPort);
+	Port consumerPort(type : SubscriptionPort);
+
+	bind producer.producerBehavior = publisher;
+	bind server.subscriptionPort = server_publisher;
+	bind consumer.subscriptionPort = consumer_subscriber;
+
+	ActivityParticipant publisherServer : Server {
+		Action publish;
+	}
+
+	ActivityParticipant serverConsumer : Consumer {
+		ActionNode deliverToSubscriber;
+	}
+
+	Activities pubSubSystem {
+		InitialNode startNode;
+		InputPin input1(type : String);
+		OutputPin output1(type : Message);
+		publisherServer.publish;
+		serverConsumer.deliverToSubscriber;
+		FinalNode endNode;
+	}
+}
+```
+
+This is the UML Activity Diagram for the given state diagram, it includes all the required classes, interfaces, and activity participants to represent the provided state machine in a structured way. The bindings establish the connections between the different components and the ports. The Activity Partition `pubSubSystem` describes the complete behavior of the system.

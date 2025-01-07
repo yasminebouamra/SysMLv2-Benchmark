@@ -1,0 +1,82 @@
+**SysMLv2 Code:**
+
+```
+package VehicleModel {
+
+    part def Vehicle {
+        attribute chassis : Chassis;
+        attribute engine : Engine;
+        attribute wheels : Array { :>> dimensions = 4; :>> elements : Wheel };
+    }
+
+    part def Chassis {
+        attribute rollBar : RollBar;
+        attribute suspension : Suspension;
+        attribute frame : Frame;
+    }
+
+    part def Engine {
+        attribute cylinders : Integer = 4;
+        attribute displacement : Real;
+        attribute transmission : Transmission;
+    }
+
+    part def Wheel {
+        attribute size : Real;
+        attribute tires : Array { :>> dimensions = 4; :>> elements : Tire };
+    }
+
+    part def RollBar {
+        attribute material : String;
+        attribute strength : Real;
+    }
+
+    part def Suspension {
+        attribute type : String;
+        attribute damping : Real;
+    }
+
+    part def Frame {
+        attribute material : String;
+        attribute weight : Real;
+    }
+
+    part def Transmission {
+        attribute type : String;
+        attribute ratio : Real;
+    }
+
+    part def Tire {
+        attribute material : String;
+        attribute pressure : Real;
+    }
+
+    part vehicle : Vehicle {
+        attribute chassis : Chassis {
+            attribute rollBar : RollBar { :>> material = "Aluminum" };
+            attribute suspension : Suspension { :>> type = "MacPherson strut" };
+            attribute frame : Frame { :>> material = "Steel" };
+        };
+        attribute engine : Engine { :>> cylinders = 6 };
+        attribute wheels : Array { :>> dimensions = 4; :>> elements : Wheel {
+            attribute size : 17;
+            attribute tires : Array { :>> dimensions = 4; :>> elements : Tire { :>> material = "Rubber" } };
+        }
+    }
+}
+```
+
+**Explanation:**
+
+* The model is organized into packages for clarity and organization.
+* Each part is defined with its attributes and relationships.
+* The `Vehicle` part represents the overall vehicle with references to chassis, engine, and wheels.
+* The `Chassis` part includes the roll bar, suspension, and frame.
+* The `Engine` part specifies the number of cylinders, displacement, and transmission.
+* The `Wheel` part defines the wheel size and tire composition.
+* The `vehicle` instance provides an example configuration with specific component attributes.
+
+**Note:**
+
+* This code provides a basic structure and example. You can extend it further by adding more parts, attributes, and constraints to represent the desired level of detail and complexity.
+* The specific values and configurations can be modified as needed.

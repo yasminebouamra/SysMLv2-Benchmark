@@ -1,0 +1,27 @@
+```
+// Define logical components
+component def LogicalComponent1 {}
+component def LogicalComponent2 {}
+
+// Define physical assemblies
+assembly def PhysicalAssembly1 {}
+assembly def PhysicalAssembly2 {}
+
+// Allocate logical components to physical assemblies
+allocation def Allocation1 {
+  logicalComponent: LogicalComponent1,
+  physicalAssembly: PhysicalAssembly1
+}
+
+// Allocate specific logical component to physical assembly
+allocation def Allocation2 {
+  logicalComponent: LogicalComponent2,
+  physicalAssembly: PhysicalAssembly2
+}
+
+// Allocate logical component part to physical assembly part
+allocation def Allocation3 {
+  logicalComponentPart: LogicalComponent1.Part1,
+  physicalAssemblyPart: PhysicalAssembly1.Part2
+}
+```

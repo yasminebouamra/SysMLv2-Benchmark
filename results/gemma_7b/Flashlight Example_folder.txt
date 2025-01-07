@@ -1,0 +1,61 @@
+```sysmlv2
+package FlashlightSystem
+
+part def User {
+	attribute cmd : OnOffCommand;
+	
+	action sendOnCommand {
+		event event.onCommand;
+	}
+	
+	action sendOffCommand {
+		event event.offCommand;
+	}
+}
+
+part def Flashlight {
+	attribute light : Light;
+	
+	action turnOn {
+		assign light := Light.on;
+	}
+	
+	action turnOff {
+		assign light := Light.off;
+	}
+	
+	event event.onCommand;
+	event event.offCommand;
+}
+
+part def ReflectingSurface {
+	attribute reflectedLight : Light;
+	
+	action reflectLight {
+		assign reflectedLight := light;
+	}
+	
+	event event.light;
+}
+
+flow :>> sendOnCommand from User to Flashlight {
+	event User.sendOnCommand;
+	then event Flashlight.event.onCommand;
+}
+
+flow :>> sendOffCommand from User to Flashlight {
+	event User.sendOffCommand;
+	then event Flashlight.event.offCommand;
+}
+
+flow :>> turnOn from Flashlight to ReflectingSurface {
+	event Flashlight.event.onCommand;
+	then event ReflectingSurface.event.light;
+}
+
+flow :>> reflectLight from ReflectingSurface to Flashlight {
+	event ReflectingSurface.event.light;
+	then event Flashlight.light = ReflectingSurface.reflectedLight;
+}
+
+```

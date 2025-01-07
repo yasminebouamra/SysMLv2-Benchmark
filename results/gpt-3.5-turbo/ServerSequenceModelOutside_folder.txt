@@ -1,0 +1,22 @@
+package PubSubSequence {
+	
+	part producer;
+	part server;
+	part consumer;
+	
+	sequence def PubSubSequenceOutside extends Standard::PubSubSequence {
+		
+		formal event messagePublished;
+		formal event subscriptionAcknowledged;
+		formal event messageDelivered;
+		
+		step publishMessage : producer.publishMessage -> server.processMessage;
+		step acknowledgeSubscription : server.acknowledgeSubscription -> consumer.receiveMessage;
+		step deliverMessage : server.deliverMessage -> consumer.receiveMessage;
+		
+		event messagePublished raised by producer.publishMessage;
+		event subscriptionAcknowledged raised by server.acknowledgeSubscription;
+		event messageDelivered raised by server.deliverMessage;
+	}
+	
+}

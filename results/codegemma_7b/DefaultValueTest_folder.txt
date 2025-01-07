@@ -1,0 +1,22 @@
+```
+package DefaultAndInheritance {
+
+    part def VehiclePart {
+        attribute m : MassValue;
+        attribute color : Color = Color::blue;
+    }
+
+    part def Vehicle :> VehiclePart {
+        attribute v : VelocityValue = 80.0;
+    }
+
+    part vehicle : Vehicle {
+        attribute ::> m = 1500.0;
+        attribute ::> v = 120.0;
+    }
+
+    part vehicle2 : Vehicle {
+        attribute ::> m = 1800.0;
+    }
+}
+```

@@ -1,0 +1,47 @@
+package AllocationExample {
+
+    part def LogicalComponent {
+        attribute id: String;
+    }
+
+    part def PhysicalAssembly {
+        attribute id: String;
+    }
+
+    part logicalComponent1: LogicalComponent {
+        attribute :>> id = "LC1";
+    }
+
+    part logicalComponent2: LogicalComponent {
+        attribute :>> id = "LC2";
+    }
+
+    part physicalAssembly1: PhysicalAssembly {
+        attribute :>> id = "PA1";
+    }
+
+    part physicalAssembly2: PhysicalAssembly {
+        attribute :>> id = "PA2";
+    }
+
+    allocation def GenericAllocation {
+        end logical : LogicalComponent;
+        end physical : PhysicalAssembly;
+    }
+
+    allocation specificAllocation1: GenericAllocation allocate logicalComponent1 to physicalAssembly1;
+
+    allocation def DirectAllocation {
+        ref part source : LogicalComponent;
+        ref part target : PhysicalAssembly;
+    }
+
+    // Using explicit allocation syntax
+    DirectAllocation allocation2 {
+        source = logicalComponent2;
+        target = physicalAssembly2;
+    }
+
+    // Using implicit allocation syntax
+    allocate logicalComponent1 to physicalAssembly2;
+}

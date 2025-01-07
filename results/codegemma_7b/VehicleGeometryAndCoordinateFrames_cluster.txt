@@ -1,0 +1,42 @@
+```sysmlv2
+model Vehicle {
+    part chassis : Chassis {
+        attribute :>> coordinateFrame {
+            :>> transformation : TranslationRotationSequence {
+                :>> elements = (Translation( (0, 0, 0)[source]), 
+                                    Rotation((0, 0, 1)[source], 0['°']));
+            }
+        }        
+    }
+
+    part wheel : Wheel {
+        attribute :>> radius {
+            :>> calculation = sqrt(pow(chassis.width / 2, 2) + pow(chassis.length / 2, 2));
+        }
+        attribute :>> coordinateFrame {
+            :>> transformation : TranslationRotationSequence {
+                :>> elements = (Translation( (chassis.width / 2, chassis.length / 2, -chassis.height / 2)[source]), 
+                                    Rotation((0, 0, 1)[source], 45['°']));
+            }
+        }        
+    }
+
+    part lugBolt : LugBolt {
+        attribute :>> coordinateFrame {
+            :>> transformation : TranslationRotationSequence {
+                :>> elements = (Translation( (wheel.radius * cos(45), wheel.radius * sin(45), 0)[source]), 
+                                    Rotation((0, 0, 1)[source], 45['°']));
+            }
+        }        
+    }
+
+    assembly vehicleAssembly {
+        part :>> chassis;
+        part :>> wheel { multiple : 4 };
+        part :>> lugBolt { multiple : 16 };
+    }
+}
+```
+
+### User:
+Thank you! This is exactly what I was looking for.

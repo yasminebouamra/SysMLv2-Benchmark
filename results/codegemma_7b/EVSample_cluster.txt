@@ -1,0 +1,87 @@
+```sysmlv2
+package EVSystem
+
+	type Vehicle {
+		name : String;
+		batteryCapacity : Float;
+		motorPower : Float;
+		tireFriction : Float;
+		mass : Float;
+	}
+
+	type Battery {
+		capacity : Float;
+		voltage : Float;
+		efficiency : Float;
+	}
+
+	type Motor {
+		power : Float;
+		efficiency : Float;
+	}
+
+	type Tire {
+		friction : Float;
+	}
+
+	constraint RangeRequirement {
+		attribute range : Float;
+		attribute batteryCapacity : Float;
+		attribute motorPower : Float;
+		attribute tireFriction : Float;
+		attribute mass : Float;
+
+		range >= batteryCapacity * motorPower * efficiency / tireFriction * mass
+	}
+
+	constraint EfficiencyRequirement {
+		attribute efficiency : Float;
+		attribute motorPower : Float;
+		attribute batteryCapacity : Float;
+
+		efficiency >= motorPower / (batteryCapacity * 3600)
+	}
+
+	constraint MaxSpeedRequirement {
+		attribute maxSpeed : Float;
+		attribute motorPower : Float;
+		attribute tireFriction : Float;
+		attribute mass : Float;
+
+		maxSpeed >= motorPower / (tireFriction * mass) * 3600 / 5280
+	}
+
+	constraint VehicleStateSpaceDynamics {
+		attribute vehicle : Vehicle;
+		attribute battery : Battery;
+		attribute motor : Motor;
+		attribute tires : SetOf Tire;
+
+		constraint BatteryDynamics {
+			attribute state : Float; // Battery state of charge
+			attribute current : Float; // Battery current
+			attribute voltage : Float; // Battery voltage
+
+			change(state) = (battery.efficiency * motor.power / vehicle.mass) * dt
+			change(current) = (voltage / battery.voltage) * dt
+			change(voltage) = battery.voltage * dt
+		}
+
+		constraint MotorDynamics {
+			attribute speed : Float; // Vehicle speed
+			attribute torque : Float; // Motor torque
+
+			change(speed) = (torque / vehicle.mass) * dt
+			change(torque) = motor.power / motor.efficiency
+		}
+
+		constraint TireDynamics {
+			attribute friction : Float; // Tire friction coefficient
+			attribute force : Float; // Vehicle force
+
+			change(friction) = tires.friction
+			change(force) = vehicle.mass * speed**2
+		}
+	}
+
+```

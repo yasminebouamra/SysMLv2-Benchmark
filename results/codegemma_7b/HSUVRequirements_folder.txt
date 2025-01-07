@@ -1,0 +1,65 @@
+```
+package HybridSUVRequirementModel {
+
+    private import RequirementDerivation::*;
+
+    part hybridSUV {
+        attribute loadCapacity :> ISQ::mass;
+        attribute fuelEconomy :> ISQ::fuelEconomy;
+        attribute emissions : ISQ::emissions;
+        attribute performance : ISQ::performance;
+        attribute ergonomics : ISQ::ergonomics;
+    }
+
+    requirement def LoadCapacityRequirement {
+        subject loadCapacity :> ISQ::mass;
+        attribute maximumLoadCapacity :> ISQ::mass;
+        require constraint { loadCapacity <= maximumLoadCapacity }
+    }
+
+    requirement hybridSUVLoadCapacityRequirement : LoadCapacityRequirement {
+        subject :>> loadCapacity = hybridSUV.loadCapacity;
+    }
+
+    requirement def EcoFriendlinessRequirement {
+        attribute emissions : ISQ::emissions;
+        attribute emissionsTarget : ISQ::emissions;
+        require constraint { emissions <= emissionsTarget }
+    }
+
+    requirement hybridSUVEmissionsRequirement : EcoFriendlinessRequirement {
+        subject :>> emissions = hybridSUV.emissions;
+        attribute emissionsTarget : ISQ::emissions = 2010 Kyoto Accord;
+    }
+
+    requirement def PerformanceRequirement {
+        attribute performance : ISQ::performance;
+        attribute performanceTarget : ISQ::performance;
+        require constraint { performance >= performanceTarget }
+    }
+
+    requirement hybridSUVPerformanceRequirement : PerformanceRequirement {
+        subject :>> performance = hybridSUV.performance;
+        attribute performanceTarget : ISQ::performance = "95% of cars built in 2004";
+    }
+
+    requirement def ErgonomicsRequirement {
+        attribute ergonomics : ISQ::ergonomics;
+        attribute ergonomicsTarget : ISQ::ergonomics;
+        require constraint { ergonomics >= ergonomicsTarget }
+    }
+
+    requirement hybridSUVErgonomicsRequirement : ErgonomicsRequirement {
+        subject :>> ergonomics = hybridSUV.ergonomics;
+        attribute ergonomicsTarget : ISQ::ergonomics = "5-star rating by NHTSA";
+    }
+
+    #derivation connection {
+        end #original ::> hybridSUVLoadCapacityRequirement;
+        end #original ::> hybridSUVEmissionsRequirement;
+        end #original ::> hybridSUVPerformanceRequirement;
+        end #original ::> hybridSUVErgonomicsRequirement;
+    }
+
+}
+```

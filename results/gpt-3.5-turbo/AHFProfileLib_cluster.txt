@@ -1,0 +1,38 @@
+package LocalCloudModel {
+	
+	package SystemDesign {
+		abstract part def LocalCloudSystem {
+			part systemOfSystems;
+			part individualSystem[1..*];
+		}
+		
+		abstract part def SystemDesignLevels {
+			part highLevelDescription;
+			part detailedDescription;
+		}
+	}
+	
+	package ServiceDefinition {
+		part def Service {
+			part serviceInterfaces[1..*];
+			attribute protocols;
+			part systemInteractions[1..*];
+		}
+	}
+	
+	package Metadata {
+		part def SemanticAnnotations {
+			attribute meanings;
+			attribute roles;
+		}
+		
+		part def CoherentSemanticModel {
+			part architecture;
+			part intendedSemantics;
+		}
+	}
+	
+	concern def SystemServiceMetadata {
+		stakeholder localCloudStakeholder;
+	}
+}

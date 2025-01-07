@@ -1,0 +1,24 @@
+package Dynamics {
+	
+	package BehaviorModel {
+		attribute def Power;
+		attribute def Acceleration;
+		attribute def Velocity;
+		attribute def Position;
+	}
+	
+	package Calculations {
+		attribute def WheelPower;
+		attribute def DragCoefficient;
+		attribute def RollingResistanceCoefficient;
+		attribute def Mass;
+		attribute def InitialSpeed;
+		attribute def InitialPosition;
+	}
+	
+	package Actions {
+		action def CalculateAcceleration;
+		action def SimulateDynamics;
+	}
+	
+}

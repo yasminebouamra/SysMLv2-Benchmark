@@ -1,0 +1,56 @@
+```sysmlv2
+package VehicleMassManagement {
+
+  part def VehicleComponent {
+    attribute mass : ISQ::MassValue;
+  }
+
+  part def Vehicle {
+    part chassis : VehicleComponent;
+    part engine : VehicleComponent;
+    part transmission : VehicleComponent;
+
+    attribute totalMass : ISQ::MassValue {
+      calc { return chassis.mass + engine.mass + transmission.mass; }
+    }
+  }
+
+  calc def MassSum {
+    in vehicleMasses : Vehicle.totalMass[0..*];
+    return totalMass : ISQ::MassValue = sum(vehicleMasses);
+  }
+
+  requirement def MassConstraint {
+    subject vehicle : Vehicle;
+    attribute massLimit : ISQ::MassValue;
+    require constraint { vehicle.totalMass <= massLimit }
+  }
+
+  requirement massConstraint : MassConstraint {
+    in vehicle : Vehicle = Vehicle { chassis, engine, transmission };
+  }
+
+  part vehicle1 : Vehicle {
+    part chassis { mass : 1000 kg }
+    part engine { mass : 500 kg }
+    part transmission { mass : 200 kg }
+  }
+
+  part vehicle2 : Vehicle {
+    part chassis { mass : 1200 kg }
+    part engine { mass : 600 kg }
+    part transmission { mass : 250 kg }
+  }
+
+  requirement def MassComparisonConstraint {
+    subject vehicle1 : Vehicle;
+    subject vehicle2 : Vehicle;
+    require constraint { vehicle1.totalMass <= vehicle2.totalMass }
+  }
+
+  requirement massComparisonConstraint : MassComparisonConstraint {
+    in vehicle1 : Vehicle = vehicle1
+    in vehicle2 : Vehicle = vehicle2
+  }
+}
+```

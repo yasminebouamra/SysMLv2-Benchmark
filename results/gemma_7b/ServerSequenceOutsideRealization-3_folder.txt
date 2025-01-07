@@ -1,0 +1,37 @@
+```sysmlv2
+package PubSubSystem {
+
+	part :>> producer :> Producer {
+		event publish[1] :>> publish_request;
+	}
+
+	part :>> server :> Server {
+		event subscribing[1] :>> subscribe_request;
+		event publishing[1] :>> publish_request;
+		event delivering[1] :>> deliver_response;
+	}
+
+	part :>> consumer :> Consumer {
+		event subscribe[1] :>> subscribe_request;
+		event delivery[1] :>> deliver_response;
+	}
+
+	flow :>> publish_message from producer.publish to server.publishing {
+		event producer.publish_request[1];
+		then event publication_interface.publish_request[1];
+		then event server.publish_request[1];
+	}
+
+	flow :>> subscribe_message from consumer.subscribe to server.subscribing {
+		event consumer.subscribe_request[1];
+		then event subscription_interface.subscribe_request[1];
+		then event server.subscribe_request[1];
+	}
+
+	flow :>> deliver_message from server.delivering to consumer.delivery {
+		event server.deliver_response[1];
+		then event subscription_interface.deliver_response[1];
+		then event consumer.deliver_response[1];
+	}
+}
+```

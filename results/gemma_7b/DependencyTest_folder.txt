@@ -1,0 +1,19 @@
+```sysmlv2
+package SystemArchitecture {
+
+	layer def Application {
+		depends on ServiceLayer;
+		depends on DataLayer;
+	}
+
+	layer def ServiceLayer {
+		depends on DataLayer;
+	}
+
+	layer def DataLayer;
+
+	attribute def DataFlow;
+	attribute def ControlFlow;
+
+}
+```

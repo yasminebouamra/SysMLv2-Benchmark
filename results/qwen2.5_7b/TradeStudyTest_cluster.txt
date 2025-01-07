@@ -1,0 +1,65 @@
+```plaintext
+package TradeStudy {
+	private import ScalarValues::Real;
+	private import ISQ::*;
+	
+	// Define EnginePart interface
+	interface EnginePart {
+		in attribute power : PowerValue;
+		in attribute efficiency : Real;
+		out attribute performance : Real;
+	}
+	
+	// Define EvaluationFunction
+	calc def evaluationFunction {
+		in engine1: EnginePart; in engine2: EnginePart;
+		return result: Real = if (engine1.performance > engine2.performance) then 1 else 0;
+	}
+
+	// Define two engine parts
+	calc def engineA : EnginePart {
+		in attribute power: PowerValue = 500kW;
+		in attribute efficiency: Real = 0.85;
+		return performance: Real = power * efficiency;
+	}
+	
+	calc def engineB : EnginePart {
+		in attribute power: PowerValue = 600kW;
+		in attribute efficiency: Real = 0.82;
+		return performance: Real = power * efficiency;
+	}
+
+	// Define TradeStudyAction
+	action tradeStudy {
+		
+		in attribute criteria1: Real;
+		in attribute criteria2: Real;
+		
+		out attribute recommendation: String;
+		
+		assert constraint {
+			criteria1 == evaluationFunction(engineA, engineB) &
+			if (criteria1 > 0.5) then 
+				recommendation = "Engine A is more suitable" 
+			else
+				recommendation = "Engine B is more suitable"
+		}
+	}
+	
+	// Instantiation of engines for analysis
+	action analyzeEngineA : tradeStudy {
+		calc performanceA: Real = engineA.performance;
+		calc performanceB: Real = engineB.performance;
+		
+		out attribute result: Real = evaluationFunction(engineA, engineB);
+	}
+	
+	action analyzeEngineB : tradeStudy {
+		calc performanceA: Real = engineA.performance;
+		calc performanceB: Real = engineB.performance;
+		
+		out attribute result: Real = evaluationFunction(engineB, engineA);
+	}
+}
+
+```

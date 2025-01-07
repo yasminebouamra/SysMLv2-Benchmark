@@ -1,0 +1,71 @@
+package DynamicsComputationModel {
+	private import ScalarValues::Real;
+	private import ModelCenterInterface::*;
+	
+	part def EntityDynamics {
+		attribute mass :> ISQ::mass;
+		attribute initialVelocity :> ISQ::speed;
+		attribute initialPosition :> ISQ::length;
+		
+		action dynamicsComputation : DiscreteStateSpaceDynamics {
+			in timeStep : Real;
+			in power : PowerValue;
+			out acceleration : AccelerationValue;
+			out velocity : SpeedValue;
+			out position : LengthValue;
+		}
+	}
+
+	part def Vehicle :> EntityDynamics {
+		attribute dragCoefficient :> ISQ::dragCoefficient;
+		attribute frictionCoefficient :> ISQ::frictionCoefficient;
+		
+		action dynamicsComputation : DiscreteStateSpaceDynamics {
+			in timeStep : Real;
+			in power : PowerValue;
+			out acceleration : AccelerationValue;
+			out velocity : SpeedValue;
+			out position : LengthValue;
+		}
+	}
+
+	part modelCenter : ModelCenterInterface;
+
+	flow entityDynamics.dynamicsComputation to modelCenter.runModel;
+
+	context dynamicsContext {
+		part entity : EntityDynamics {
+			attribute mass = 1000[kg];
+			attribute initialVelocity = 10[m/s];
+			attribute initialPosition = 50[m];
+		}
+		
+		part vehicle : Vehicle {
+			attribute dragCoefficient = 0.2;
+			attribute frictionCoefficient = 0.5;
+		}
+		
+		flow vehicle.dynamicsComputation to modelCenter.runModel;
+
+		action computeDynamics : DiscreteStateSpaceDynamics {
+			in timeStep : Real = 0.1[s];
+			in power : PowerValue = 500[hp];
+			out acceleration : AccelerationValue;
+			out velocity : SpeedValue;
+			out position : LengthValue;
+		}
+		
+		flow computeDynamics to vehicle.dynamicsComputation;
+
+		action modelCenterRun : DiscreteStateSpaceDynamics {
+			in input;
+			out output : ModelCenterOutput;
+			calc :>> getOutput {
+				ModelCenterOutput(modelCenter.runModel(input))
+			}
+		}
+		
+		flow modelCenterRun to entity.dynamicsComputation;
+	}
+
+}

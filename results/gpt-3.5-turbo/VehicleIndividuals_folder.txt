@@ -1,0 +1,24 @@
+package VehicleIndividuals {
+	private import Time::*;
+
+	package IndividualDefinitions {
+
+		individual part def Vehicle;
+		individual part def Wheel;
+		individual part def AxleAssembly;
+
+		individual part Snapshot {
+			attribute timestamp : DateTime;
+			part vehicle :> Vehicle;
+			part wheel[4] : Wheel;
+			part axleAssembly[2] : AxleAssembly;
+		}
+
+		individual part TimeSlice {
+			attribute timestamp : DateTime;
+			part vehicle : Vehicle;
+			part wheel[4] : Wheel;
+			part axleAssembly[2] : AxleAssembly;
+		}
+	}
+}

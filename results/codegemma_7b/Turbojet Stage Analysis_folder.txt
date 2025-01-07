@@ -1,0 +1,63 @@
+```sysmlv2
+package TurbojetStages
+
+    package ThermodynamicFunctions
+        type IdealGasLaw
+            property R : Real; // Universal gas constant
+            property M : Real; // Molecular mass
+            property T : Real; // Temperature
+            property P : Real; // Pressure
+            function calculatePressure(T : Real, P : Real) : Real {
+                return P * (T / T0)^(-R/M)
+            }
+        end IdealGasLaw
+
+        type ReversibleAdiabaticCompression
+            property gamma : Real; // Adiabatic index
+            property P1 : Real; // Inlet pressure
+            property T1 : Real; // Inlet temperature
+            property P2 : Real; // Outlet pressure
+            function calculatePressureRatio() : Real {
+                return P2 / P1
+            }
+        end ReversibleAdiabaticCompression
+
+        type TotalEnthalpy
+            property P : Real; // Pressure
+            property T : Real; // Temperature
+            function calculateTotalEnthalpy() : Real {
+                return P * T / (R * gamma) + 0.5 * gamma * T
+            }
+        end TotalEnthalpy
+    end ThermodynamicFunctions
+
+    package GasParcel
+        type IdealGas
+            property R : Real; // Universal gas constant
+            property M : Real; // Molecular mass
+            property T : Real; // Temperature
+            property P : Real; // Pressure
+            property V : Real; // Volume
+        end IdealGas
+
+        type MovingGasParcel
+            extends GasParcel
+            property velocity : Real; // Velocity of the gas parcel
+        end MovingGasParcel
+    end GasParcel
+
+    package LowPressureCompressorAnalysis
+        type InletGas
+            extends GasParcel.MovingGasParcel
+            property pressure : Real; // Inlet pressure
+        end InletGas
+
+        type Analysis
+            property inletGas : InletGas; // Inlet gas analysis
+            property compressor : ThermodynamicFunctions.ReversibleAdiabaticCompression; // Compressor model
+            function calculateOutletPressure() : Real {
+                return inletGas.pressure * compressor.calculatePressureRatio()
+            }
+        end Analysis
+    end LowPressureCompressorAnalysis
+```

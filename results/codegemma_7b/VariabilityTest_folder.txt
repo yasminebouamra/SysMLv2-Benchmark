@@ -1,0 +1,123 @@
+```
+package VariabilityTest {
+
+	// Define variable parts
+	part def P1;
+	part def P2;
+	part def P3;
+
+	// Define variable actions
+	action def A1;
+	action def A2;
+	action def A3;
+
+	// Define variable use cases
+	use case def UC1;
+	use case def UC2;
+	use case def UC3;
+
+	// Define analysis activities
+	analysis activity def AA1;
+	analysis activity def AA2;
+	analysis activity def AA3;
+
+	// Define verification activities
+	verification activity def VA1;
+	verification activity def VA2;
+	verification activity def VA3;
+
+	// Define requirements
+	requirement def R1;
+	requirement def R2;
+	requirement def R3;
+
+	// Inherit attributes between parts
+	part P2 inherits P1 {
+		attribute a : Integer;
+	}
+
+	// Define variant mappings
+	variant mapping vm1 {
+		part P1 in P2;
+	}
+	variant mapping vm2 {
+		action A1 in A2;
+	}
+	variant mapping vm3 {
+		use case UC1 in UC2;
+	}
+
+	// Instantiate variant parts
+	part p1 : P1 inherits P2;
+	part p2 : P2 inherits P1;
+
+	// Define variational actions
+	action a1 : A1 {
+		in x;
+	}
+	action a2 : A2 {
+		in y;
+	}
+	action a3 : A3 {
+		in z;
+	}
+
+	// Define variational use cases
+	use case uc1 : UC1 {
+		objective {
+			/* Goal 1 */
+		}
+	}
+	use case uc2 : UC2 {
+		objective {
+			/* Goal 2 */
+		}
+	}
+	use case uc3 : UC3 {
+		objective {
+			/* Goal 3 */
+		}
+	}
+
+	// Connect parts and actions
+	connect p1.a to a1;
+	connect p2.a to a2;
+	connect p3.a to a3;
+
+	// Connect parts and use cases
+	connect p1.uc to uc1;
+	connect p2.uc to uc2;
+	connect p3.uc to uc3;
+
+	// Define analysis and verification activities
+	activity aa1 : AA1 {
+		in p1;
+	}
+	activity aa2 : AA2 {
+		in p2;
+	}
+	activity aa3 : AA3 {
+		in p3;
+	}
+	activity va1 : VA1 {
+		in p1;
+	}
+	activity va2 : VA2 {
+		in p2;
+	}
+	activity va3 : VA3 {
+		in p3;
+	}
+
+	// Define requirements
+	requirement r1 : R1 {
+		in p1;
+	}
+	requirement r2 : R2 {
+		in p2;
+	}
+	requirement r3 : R3 {
+		in p3;
+	}
+}
+```

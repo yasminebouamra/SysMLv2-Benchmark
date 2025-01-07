@@ -1,0 +1,31 @@
+ ```bash
+   package PartTest {
+       container PartTest : RootBlock;
+
+       part def BasePart {
+           portDef def inputPort[1..*];
+           portDef def outputPort[0..*];
+           feature DefiningBehavior;
+       }
+
+       part abstract def SubsetablePart :> BasePart;
+
+       part def ComplexPart :> BasePart {
+           partDef subSet1[1..*] : SubsetablePart;
+           partDef subSet2[0..*] : SubsetablePart;
+           feature RecursiveRelationship;
+       }
+
+       part def InterfacePart :> BasePart {
+           portDef interfacePort[1];
+       }
+
+       part def HierarchicalPart :> ComplexPart {
+           partDef subSetA[1] : SubsetablePart;
+           partDef subSetB[0..*] : SubsetablePart;
+       }
+
+       InterfacePart interfaceI;
+       HierarchicalPart hierarchicalP;
+   }
+```

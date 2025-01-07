@@ -1,0 +1,66 @@
+```sysmlv2
+model VehicleModel {
+
+    part Vehicle : Vehicle {
+        attribute :>> modelType {
+            enumeration : VehicleType {
+                enumLiteral : "Basic", "Sport", "Offroad", "Truck"
+            }
+        }
+        attribute :>> engine : Engine {
+            attribute :>> power : PowerValue = 250[kW]
+            attribute :>> torque : TorqueValue = 400[Nm]
+        }
+        attribute :>> transmission : Transmission {
+            attribute :>> gearRatio : RatioValue = 1.5
+        }
+        attribute :>> wheelBase : LengthValue = 2.8[m]
+        attribute :>> trackWidth : LengthValue = 1.5[m]
+
+        part frontAxle : Axle {
+            attribute :>> lugBoltCount : Integer = 4
+            attribute :>> wheel : Wheel {
+                attribute :>> diameter : LengthValue = 0.38[m]
+            }
+        }
+        part rearAxle : Axle {
+            attribute :>> lugBoltCount : Integer = 4
+            attribute :>> wheel : Wheel {
+                attribute :>> diameter : LengthValue = 0.38[m]
+            }
+        }
+    }
+
+    part Engine : Part {
+        attribute :>> power : PowerValue
+        attribute :>> torque : TorqueValue
+    }
+
+    part Transmission : Part {
+        attribute :>> gearRatio : RatioValue
+    }
+
+    part Axle : Part {
+        attribute :>> lugBoltCount : Integer
+        part wheel : Wheel
+    }
+
+    part Wheel : Part {
+        attribute :>> diameter : LengthValue
+    }
+
+    part Camera : Part {
+        attribute :>> fieldOfView : AngleValue
+    }
+
+    part Light : Part {
+        attribute :>> type : LightType {
+            enumeration : LightType {
+                enumLiteral : "Headlight", "Taillight", "Brakelight"
+            }
+        }
+    }
+}
+```
+
+</start_of_turn>

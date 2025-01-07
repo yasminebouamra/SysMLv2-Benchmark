@@ -1,0 +1,16 @@
+```sysmlv2
+package QualifiedNameImportTest {
+
+    package P1 {
+        part def A;
+    }
+
+    package P2 {
+        private import P1::*;
+
+        package P2a {
+            part x : P1::A;
+        }
+    }
+}
+```

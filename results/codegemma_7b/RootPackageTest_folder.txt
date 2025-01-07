@@ -1,0 +1,19 @@
+```sysmlv2
+package Package1 {
+	part def PartType {
+		attribute value : Integer;
+	}
+}
+
+package Package2 {
+	private import Package1::*;
+
+	part instancePart : PartType;
+}
+
+package Package3 {
+	part def SpecializedPart : Package2.PartType {
+		attribute additionalValue : Real;
+	}
+}
+```

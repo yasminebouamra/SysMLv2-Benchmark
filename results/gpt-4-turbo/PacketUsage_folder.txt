@@ -1,0 +1,14 @@
+package ThermalDataManagement {
+    import Packets::*;
+    
+    part def 'Thermal Data Packet' :> Packets::'Thermal Data Packet' {
+        attribute 'special thermal data';
+    }
+    
+    part packet1 : 'Thermal Data Packet';
+    part packet2 : 'Thermal Data Packet';
+    
+    part packet3 : 'Thermal Data Packet' {
+        attribute 'special thermal data' = "Unique Thermal Data Structure";
+    }
+}

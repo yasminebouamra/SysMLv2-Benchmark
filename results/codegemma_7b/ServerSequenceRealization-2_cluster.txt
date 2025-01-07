@@ -1,0 +1,48 @@
+```sysmlv2
+package PubSubSystem
+
+part producer {
+  port publishPort : ~PublishPort {
+    out ref :>> publish;
+  }
+  
+  perform action publish {
+    out ref request : Publish = Publish("topic", "message");
+  }
+}
+
+part server {
+  port subscriptionPort : ~SubscriptionPort {
+    in ref :>> subscribe;
+    out ref :>> deliver;
+  }
+  
+  perform action subscribe {
+    in ref request : Subscribe = Subscribe("topic");
+  }
+  
+  perform action deliver {
+    in ref response : Deliver = Deliver("message");
+  }
+}
+
+part consumer {
+  port subscriptionPort : ~SubscriptionPort {
+    in ref :>> deliver;
+  }
+  
+  perform action consume {
+    in ref response : Deliver;
+  }
+}
+
+flow :>> publish_message {
+  from producer.publishPort.publish to server.subscriptionPort.subscribe;
+  then event server.subscribing.done;
+}
+
+flow :>> deliver_message {
+  from server.subscriptionPort.deliver to consumer.subscriptionPort.deliver;
+  then event consumer.consuming.done;
+}
+```

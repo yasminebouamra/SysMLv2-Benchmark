@@ -1,0 +1,24 @@
+ ```
+package CameraSystem {
+       private import PictureTaking::*;
+
+       part def CameraSystem;
+
+       subsystem FocusingSubsystem{
+            action focus: Focus[1];
+       }
+
+       subsystem ImagingSubsystem{
+            action shoot: Shoot[1];
+       }
+
+       action takePicture {
+             sequence{
+                action focus: Focus[1];
+                flow focus.xrsl to shoot.xsf;
+                action shoot: Shoot[1];
+             }
+       }
+   }
+   ```
+ This code defines a CameraSystem package with two subsystems, FocusingSubsystem and ImagingSubsystem. The FocusingSubsystem performs the focus action, while the ImagingSubsystem carries out the shoot action. Both actions are imported from the PictureTaking namespace. The takePicture action is defined as a sequence of the focus and shoot actions, with the result from focus being passed to shoot through a flow.

@@ -1,0 +1,18 @@
+```
+part def PubSubSequence {
+	part :>> producer {
+		event publish_source_event = publish_message.start;
+	}
+	
+	part :>> server {
+		event subscribe_target_event = subscribe_message.done;
+		then event publish_target_event = publish_message.done;
+		then event deliver_source_event = deliver_message.start;
+	}
+	
+	part :>> consumer {
+		event subscribe_source_event = subscribe_message.start;
+		then event deliver_target_event = deliver_message.done;
+	}
+}
+```

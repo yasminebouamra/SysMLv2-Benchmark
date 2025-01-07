@@ -1,0 +1,69 @@
+```
+package ConnectionTest {
+  part def P1 {
+    part nested : P2;
+  }
+
+  part def P2 {
+    part nested : P3;
+  }
+
+  part def P3 {
+    part nested : P4;
+  }
+
+  part def P4 {
+    part nested : P5;
+  }
+
+  part def P5 {
+    part nested : P1;
+  }
+
+  connection def C {
+    part start;
+    part end;
+  }
+
+  flow def F {
+    part source;
+    part target;
+  }
+
+  part p1 : P1;
+  part p2 : P2;
+  part p3 : P3;
+  part p4 : P4;
+  part p5 : P5;
+
+  connection c1 : C {
+    start = p1.nested.nested.nested.nested;
+    end = p2.nested.nested.nested;
+  }
+
+  connection c2 : C {
+    start = p2.nested.nested.nested;
+    end = p3.nested.nested.nested;
+  }
+
+  connection c3 : C {
+    start = p3.nested.nested.nested;
+    end = p4.nested.nested.nested;
+  }
+
+  connection c4 : C {
+    start = p4.nested.nested.nested;
+    end = p5.nested.nested.nested;
+  }
+
+  connection c5 : C {
+    start = p5.nested.nested.nested;
+    end = p1.nested.nested.nested;
+  }
+
+  flow f1 : F {
+    source = p1.nested.nested.nested;
+    target = p1.nested.nested.nested;
+  }
+}
+```

@@ -1,0 +1,34 @@
+```sysmlv2
+package EnumerationTest {
+
+	enum Color {
+		Red(1), Green(2), Blue(3), White
+	}
+
+	enum Shape {
+		Circle, Square, Triangle
+	}
+
+	part Person {
+		attribute name: String;
+		attribute age: Integer;
+		attribute favoriteColor: Color;
+	}
+
+	part Product {
+		attribute name: String;
+		attribute price: Real;
+		attribute shape: Shape;
+	}
+
+	action PurchaseProduct {
+		in customer: Person;
+		in product: Product;
+		
+		if product.price > customer.budget then
+			return 'Insufficient funds';
+		else
+			return 'Purchase successful';
+	}
+}
+```

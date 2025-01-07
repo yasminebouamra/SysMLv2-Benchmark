@@ -1,0 +1,41 @@
+```sysml
+package PublishSubscribeSystem {
+	part def Publisher;
+	part def Subscriber;
+	part def Server;
+
+	signal def Subscribe;
+	signal def Publish;
+	signal def Deliver;
+
+	action SubscriptionRequest {
+		send Subscribe from Subscriber to Server;
+	}
+	
+	action PublicationEvent {
+		send Publish from Publisher to Server;
+	}
+	
+	action ContentDelivery {
+		send Deliver from Server to Subscriber;
+	}
+	
+	interaction SubscriptionProcess {
+		publisher : Publisher;
+		subscriber : Subscriber;
+		server : Server;
+	
+		step "Subscriber expresses interest in a topic" {
+			execute SubscriptionRequest with publisher, subscriber, server;
+		}
+		
+		step "Publisher posts content on the topic" {
+			execute PublicationEvent with publisher, subscriber, server;
+		}
+		
+		step "Server delivers content to the subscribed consumer" {
+			execute ContentDelivery with publisher, subscriber, server;
+		}
+	}
+}
+```

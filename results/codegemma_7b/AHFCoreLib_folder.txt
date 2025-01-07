@@ -1,0 +1,104 @@
+```sysmlv2
+model ArrowheadFramework {
+
+	interface Discovery_interface : Interfaces::Interface connect (
+		dsu ::> AHFNorway_LocalCloudDD.DiscoveryServiceUnit.discovery.discovery_sysd,
+		dsg ::> AHFNorway_LocalCloudDD.DiscoveryServiceUnit.discovery.discovery_design) {
+		
+		message discover of Discover
+		from dsu to dsg;
+		message discovered of Discovered
+		from dsg to dsu;
+	}
+
+	interface Authorization_interface : Interfaces::Interface connect (
+		au ::> AHFNorway_LocalCloudDD.AuthorizationUnit.authorization.authorization_sysd,
+		aug ::> AHFNorway_LocalCloudDD.AuthorizationUnit.authorization.authorization_design) {
+		
+		message authorize of Authorize
+		from au to aug;
+		message authorized of Authorized
+		from aug to au;
+	}
+	
+	interface System_interface : Interfaces::Interface connect (
+		ds ::> AHFNorway_LocalCloudDD.System.system.system_sysd,
+		dsp ::> AHFNorway_LocalCloudDD.System.system.system_design) {
+		
+		message registerSystem of RegisterSystem
+		from ds to dsp;
+		message registered of Registered
+		from dsp to ds;
+	}
+	
+	interface Service_interface : Interfaces::Interface connect (
+		ss ::> AHFNorway_LocalCloudDD.Service.service.service_sysd,
+		ssg ::> AHFNorway_LocalCloudDD.Service.service.service_design) {
+		
+		message registerService of RegisterService
+		from ss to ssg;
+		message registered of Registered
+		from ssg to ss;
+	}
+	
+	interface API_interface : Interfaces::Interface connect (
+		apisu ::> AHFNorway_LocalCloudDD.API.api.api_sysd,
+		apisu_design ::> AHFNorway_LocalCloudDD.API.api.api_design) {
+		
+		message registerAPI of RegisterAPI
+		from apisu to apisu_design;
+		message registered of Registered
+		from apisu_design to apisu;
+	}
+	
+	interface API_Transfer_interface : Interfaces::Interface connect (
+		apisu ::> AHFNorway_LocalCloudDD.API.api.api_sysd,
+		apisu_design ::> AHFNorway_LocalCloudDD.API.api.api_design,
+		apisc ::> AHFNorway_LocalCloudDD.API.api.api_sysd,
+		apisc_design ::> AHFNorway_LocalCloudDD.API.api.api_design) {
+		
+		message transferAPI of TransferAPI
+		from apisu to apisc_design;
+		message transferred of Transferred
+		from apisc_design to apisu;
+	}
+	
+	interface HTTP_interface : Interfaces::Interface connect (
+		hsu ::> AHFNorway_LocalCloudDD.HTTPServer.http.http_sysd,
+		hsg ::> AHFNorway_LocalCloudDD.HTTPServer.http.http_design) {
+		
+		message request of Request
+		from hsu to hsg;
+		message response of Response
+		from hsg to hsu;
+	}
+	
+	interface MQTT_interface : Interfaces::Interface connect (
+		mqu ::> AHFNorway_LocalCloudDD.MQTTServer.mqtt.mqtt_sysd,
+		mqg ::> AHFNorway_LocalCloudDD.MQTTServer.mqtt.mqtt_design) {
+		
+		message publish of Publish
+		from mqu to mqg;
+		message subscribe of Subscribe
+		from mqg to mqu;
+	}
+	
+	interface TellU_interface : Interfaces::Interface connect (
+		tlu ::> AHFNorway_LocalCloudDD.TellUConsumer.apisp.APIS_HTTP,
+		apsph ::> AHFNorway_LocalCloudDD.APISProducer.tellu.APIS_HTTP,
+		apspm ::> AHFNorway_LocalCloudDD.APISProducer.apisc.APIS_MQTT,
+		apsc ::> AHFNorway_LocalCloudDD.APISConsumer.apisp.APIS_MQTT,
+		mqget ::> AHFNorway_LocalCloudDD.MQTTServer.getTopic,
+		mqgive ::> AHFNorway_LocalCloudDD.MQTTServer.giveTopic) {
+		
+		message call_getItems of CallGiveItems[1]
+		from tlu to apsph;
+		message returnallitems of Return_AllItems
+		from apsph to mqgive;
+		message result of Result
+		from mqgive to tlu;
+	}
+}
+```
+
+**Note:** This model provides a basic framework for the Arrowhead Framework and includes interfaces for the Discovery, Authorization, System, Service, API, API Transfer, HTTP, MQTT, and TellU components. You can further expand this model by adding additional interfaces and components to represent the specific functionalities of the framework.

@@ -1,0 +1,35 @@
+```sysmlv2
+package AnalysisTest {
+
+	part def A {
+		measurable attribute x : Integer;
+	}
+
+	part a : A;
+
+	requirement def Objective {
+		doc "Analyze the value of attribute x.";
+	}
+
+	analysis def AnalysisCase1 {
+		subject a : A;
+		objective {
+			verify attribute x of a equals 10;
+		}
+	}
+
+	analysis def AnalysisPlan {
+		subject a : A;
+		objective {
+			verify analysisCase1;
+		}
+		analysis analysisCase1 : AnalysisCase1;
+	}
+
+	part analysisContext {
+		analysis analysisPlan : AnalysisPlan {
+			subject a = a;
+		}
+	}
+}
+```

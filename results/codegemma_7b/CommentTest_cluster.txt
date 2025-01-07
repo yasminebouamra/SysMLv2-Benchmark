@@ -1,0 +1,34 @@
+```
+package CommentTest {
+
+	comment This package demonstrates the use of comments in SysMLv2.
+	comment It showcases various types of comments including lexical comments, documentation comments, and named comments.
+
+	comment Examples of how to document elements within the model.
+	comment Set localization.
+	comment Reference comments within comments.
+
+	comment Define parts with comments.
+	comment Illustrate how to apply comments at different levels of model detail.
+	comment Within part definitions and about the package itself.
+
+	part def A {
+		comment This is a part definition.
+		comment It contains attributes, ports, and operations.
+
+		attribute x;
+		port y;
+		operation z;
+	}
+
+	comment This is a lexical comment.
+	comment It is not associated with any specific element.
+
+	comment This is a documentation comment.
+	comment It is associated with the package.
+
+	comment This is a named comment.
+	comment It is associated with the part "A".
+	comment It provides additional information about the part.
+}
+```

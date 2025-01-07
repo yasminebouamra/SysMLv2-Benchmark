@@ -1,0 +1,81 @@
+```sysml
+library package NorwegianScenario {
+	private import Metaobjects::SemanticMetadata;
+	private import AHFProfileLib::*;
+
+	doc "Illustrates the interactions and sequences within the Norwegian scenario of the Arrowhead Framework for local cloud data distribution."
+
+	part def TellUConsumer {
+		doc "Consumer part that requests data from the API."
+	}
+
+	part def APISProducer {
+		doc "Service provider part that offers APIs to produce data."
+	}
+
+	part def MQTTServer {
+		doc "MQTT server facilitating message forwarding and protocol-specific communication."
+	}
+
+	part def APISConsumer {
+		doc "Consumer part that consumes data produced by the API."
+	}
+
+	port def TellUConsumerAPI :> SD[1..*] {
+		doc "API service provided by TellUConsumer."
+		attribute serviceDefinition default "Service definition for data request" meta SysML::Property;
+		attribute serviceURL default "http://localhost:8080/tellu/api/datarequest" meta SysML::Property;
+	}
+
+	port def APISProducerAPI :> SD[1..*] {
+		doc "API service provided by APISProducer."
+		attribute serviceDefinition default "Service definition for data production" meta SysML::Property;
+		attribute serviceURL default "http://localhost:8080/apis/api/dataproduction" meta SysML::Property;
+	}
+
+	port def MQTTServerMQTT :> SD[1..*] {
+		doc "MQTT service provided by MQTTServer."
+		attribute serviceDefinition default "Service definition for MQTT protocol" meta SysML::Property;
+		attribute serviceURL default "mqtt://localhost:1883" meta SysML::Property;
+	}
+
+	port def APISConsumerAPI :> SD[1..*] {
+		doc "API service provided by APISConsumer."
+		attribute serviceDefinition default "Service definition for data consumption" meta SysML::Property;
+		attribute serviceURL default "http://localhost:8080/apis/api/dataconsumption" meta SysML::Property;
+	}
+
+	part def LocalCloudDataDistribution {
+		doc "Local Cloud Data Distribution setup"
+		part :>> TellUConsumer meta SysML::PartUsage;
+		part :>> APISProducer meta SysML::PartUsage;
+		part :>> MQTTServer meta SysML::PartUsage;
+		part :>> APISConsumer meta SysML::PartUsage;
+
+		port :>> TellUConsumerAPI meta SysML::PortUsage;
+		port :>> APISProducerAPI meta SysML::PortUsage;
+		port :>> MQTTServerMQTT meta SysML::PortUsage;
+		port :>> APISConsumerAPI meta SysML::PortUsage;
+	}
+
+	metadata def <local_cloud_data_distribution> LocalCloudDataDistributionMetadata :> SemanticMetadata {
+		:>> baseType = LocalCloudDataDistribution meta SysML::PartUsage;
+	}
+
+	metadata def <tellu_consumer_api> TellUConsumerAPIMetadata :> SDMetadata {
+		:>> baseType = LocalCloudDataDistribution::TellUConsumerAPI meta SysML::PortUsage;
+	}
+
+	metadata def <apis_producer_api> APISProducerAPIMetadata :> SDMetadata {
+		:>> baseType = LocalCloudDataDistribution::APISProducerAPI meta SysML::PortUsage;
+	}
+
+	metadata def <mqtt_server_mqtt> MQTTServerMQTTMetadata :> SDMetadata {
+		:>> baseType = LocalCloudDataDistribution::MQTTServerMQTT meta SysML::PortUsage;
+	}
+
+	metadata def <apis_consumer_api> APISConsumerAPIMetadata :> SDMetadata {
+		:>> baseType = LocalCloudDataDistribution::APISConsumerAPI meta SysML::PortUsage;
+	}
+}
+```

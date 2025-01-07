@@ -1,0 +1,30 @@
+```sysmlv2
+package AllocationTest {
+
+	part def LogicalComponent;
+	part def PhysicalAssembly;
+
+	allocation allocates LogicalComponent to PhysicalAssembly;
+
+	allocation allocatesSpecific {
+		LogicalComponent l;
+		PhysicalAssembly p;
+		select l.name = p.name;
+	}
+
+	allocation implicit {
+		LogicalComponent l;
+		PhysicalAssembly p;
+		l.physicalAssembly = p;
+	}
+
+	part a {
+		allocation allocates;
+	}
+
+	part b {
+		allocation allocatesSpecific;
+	}
+
+}
+```

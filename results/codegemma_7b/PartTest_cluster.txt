@@ -1,0 +1,57 @@
+```sysmlv2
+package PartTest
+
+part def P1 {
+    doc /* Description of part P1 */
+    part ref P2[2];
+}
+
+part def P2 {
+    doc /* Description of part P2 */
+    part ref P3[3];
+}
+
+part def P3 {
+    doc /* Description of part P3 */
+}
+
+abstract part def Template {
+    doc /* Abstract template for part definitions */
+    part ref Child;
+}
+
+part def Subset : Template {
+    doc /* Subset of the template */
+}
+
+action def Process {
+    doc /* Process behavior */
+    receive in port inport;
+    send out port outport;
+}
+
+interface def Interface {
+    doc /* Interface for port configuration */
+    port inport;
+    port outport;
+}
+
+part def Container {
+    doc /* Container for parts */
+    part ref P1;
+    part ref P2;
+    part ref P3;
+}
+```
+
+**Explanation:**
+
+* The model is structured within a package named `PartTest`.
+* It defines four parts with hierarchical relationships: `P1`, `P2`, `P3`, and `Container`.
+* `Template` is an abstract part template with a `Child` part reference.
+* `Subset` is a concrete part that extends the template.
+* `Process` is an action behavior with ports for input and output.
+* `Interface` defines an interface with the same ports as the `Process`.
+* `Container` includes references to all the parts in the hierarchy.
+
+This model captures the essential aspects of the description, demonstrating the concepts of part hierarchies, abstract templates, port configurations, and recursive part relationships.

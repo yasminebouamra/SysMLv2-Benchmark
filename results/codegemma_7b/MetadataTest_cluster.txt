@@ -1,0 +1,31 @@
+```sysmlv2
+package SystemSecurityClassification {
+
+    private enumeration ClassificationLevel {
+        unclassified, confidential, secret
+    }
+
+    abstract part SecurityMetadata {
+        classificationLevel : ClassificationLevel;
+    }
+
+    part SystemComponent {
+        @SecurityMetadata {
+            classificationLevel = ClassificationLevel.unclassified
+        }
+        name : String;
+    }
+
+    part ClassifiedComponent : SystemComponent {
+        @SecurityMetadata {
+            classificationLevel = ClassificationLevel.confidential
+        }
+    }
+
+    part SecretComponent : SystemComponent {
+        @SecurityMetadata {
+            classificationLevel = ClassificationLevel.secret
+        }
+    }
+}
+```

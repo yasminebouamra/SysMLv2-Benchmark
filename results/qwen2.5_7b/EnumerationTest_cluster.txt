@@ -1,0 +1,48 @@
+```plaintext
+package EnumerationTest {
+  part def Colors : Attribute {
+    attribute value : Enum;
+  }
+  
+  enum def BaseColor {
+    enum Red = {value: 1};
+    enum Green = {value: 2};
+    enum Blue = {value: 3};
+  }
+  
+  part def ColorfulObject : Attribute {
+    attribute color : Colors;
+  }
+  
+  part def RedObject : ColorfulObject {
+    bind color.value = BaseColor::Red.value;
+  }
+  
+  part def GreenObject : ColorfulObject {
+    bind color.value = BaseColor::Green.value;
+  }
+  
+  part def BlueObject : ColorfulObject {
+    bind color.value = BaseColor::Blue.value;
+  }
+  
+  part def OptionalKeywordObject : Attribute {
+    attribute value : Enum {optional true};
+  }
+  
+  part def RestrictedRealNumber : Attribute {
+    attribute value : Real {range: 0.0 to 1.0};
+  }
+  
+  part def ComplexObject : Attribute {
+    attribute color : Colors;
+    attribute realValue : Real {range: 0.0 to 1.0};
+  }
+  
+  part def OptionalComplexObject : ComplexObject {
+    bind color.value = BaseColor::Red.value;
+    bind realValue = 0.5;
+  }
+}
+
+```

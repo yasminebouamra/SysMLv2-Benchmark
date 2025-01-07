@@ -1,0 +1,52 @@
+package VehicleDefinitions {
+    import SI::kg;
+    import SI::NewtonMeter;
+
+    part def Vehicle {
+        attribute mass : kg;
+    }
+
+    part def Transmission {
+        attribute torqueOutput : NewtonMeter;
+    }
+
+    part def AxleAssembly {
+        attribute distributedTorque : NewtonMeter;
+    }
+
+    part def Axle {
+        attribute torque : NewtonMeter;
+    }
+
+    part def Wheel {
+        attribute rotationalTorque : NewtonMeter;
+    }
+
+    part def Lugbolt {
+        attribute stress : NewtonMeter; // Assuming a simplistic model for illustration
+    }
+
+    port def TorqueInterface {
+        out torqueOut : NewtonMeter;
+    }
+
+    part vehicle : Vehicle {
+        part transmission : Transmission;
+        part axleAssembly : AxleAssembly {
+            part axleFront : Axle;
+            part axleRear : Axle;
+            port torqueOutputPort :> TorqueInterface;
+        }
+
+        part wheelFrontLeft : Wheel;
+        part wheelFrontRight : Wheel;
+        part wheelRearLeft : Wheel;
+        part wheelRearRight : Wheel;
+
+        connect axleAssembly.torqueOutputPort.torqueOut to wheelFrontLeft.rotationalTorque;
+        connect axleAssembly.torqueOutputPort.torqueOut to wheelFrontRight.rotationalTorque;
+        connect axleAssembly.torqueOutputPort.torqueOut to wheelRearLeft.rotationalTorque;
+        connect axleAssembly.torqueOutputPort.torqueOut to wheelRearRight.rotationalTorque;
+
+    }
+}

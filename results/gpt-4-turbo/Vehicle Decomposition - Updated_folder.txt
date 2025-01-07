@@ -1,0 +1,83 @@
+```sysml
+package VehicleModeling {
+
+    part def Vehicle {
+        part chassis : Chassis;
+        part engine : Engine;
+        part wheels : Wheel[4];
+    }
+
+    part def Chassis {
+        attribute structureType : String;
+        part rollBar : RollBar;
+    }
+
+    part def Engine {
+        attribute cylinderCount : Integer;
+    }
+
+    part def Wheel {
+        attribute size : Real;
+    }
+
+    part def RollBar {
+        attribute material : String;
+    }
+
+    // Specialized Definitions
+    part def SportEngine :> Engine {
+        attribute cylinderCount default 6;
+    }
+
+    part def FamilyEngine :> Engine {
+        attribute cylinderCount default 4;
+    }
+
+    part def SteelRollBar :> RollBar {
+        attribute material default "Steel";
+    }
+
+    part def AluminumRollBar :> RollBar {
+        attribute material default "Aluminum";
+    }
+
+    // Example of instances and specialization
+    part vehicle1 : Vehicle {
+        part chassis : Chassis {
+            attribute structureType = "Unibody";
+            part rollBar : AluminumRollBar;
+        }
+        
+        part engine : SportEngine;
+    }
+
+    part vehicle2 : Vehicle {
+        part chassis : Chassis {
+            attribute structureType = "Ladder";
+            part rollBar : SteelRollBar;
+        }
+        
+        part engine : FamilyEngine;
+        
+        part wheels : Wheel {
+            attribute size = 15.0;
+        } [4];
+    }
+
+    // Example of variability
+    variation part def VehicleVariants :> Vehicle {
+        variant part v1 : FamilyEngine { // Extra constraint example
+            attribute cylinderCount redefines cylinderCount default 4;
+        }
+        
+        variant part v2 : SportEngine {
+            attribute cylinderCount redefines cylinderCount default 8;
+        }
+
+        variant part rollBar_variants : RollBar {
+            variant part steelOption : SteelRollBar;
+            variant part aluminumOption : AluminumRollBar;
+        }
+    }
+}
+```

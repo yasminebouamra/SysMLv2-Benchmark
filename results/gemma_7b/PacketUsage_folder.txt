@@ -1,0 +1,34 @@
+```sysmlv2
+package ThermalDataManagement {
+
+    part def 'Thermal Data Packet' :> Packets.'Data Packet' {
+        attribute 'packet primary header' redefines Packets::'Data Packet'::'packet header' {
+            attribute 'packet version number': Integer;
+            attribute 'packet identification': String;
+            attribute 'packet data length': Integer;
+        }
+        attribute redefines Packets::'Data Packet'::'packet data field';
+    }
+
+    part def 'Enhanced Thermal Data Packet' :> 'Thermal Data Packet' {
+        attribute 'packet data field' redefines Packets::'Thermal Data Packet'::'packet data field'{
+            attribute 'packet secondary header' redefines Packets::'Thermal Data Packet'::'packet header' {
+                attribute 'packet timestamp': Time::DateTime;
+                attribute 'telemetry packet type': String;
+            }
+
+            attribute 'user data field' redefines Packets::'Thermal Data Packet'::'packet data field'::'user data field' {
+                attribute timestamp: Time::DateTime;
+                attribute temperature: Real;
+            }
+        }
+    }
+
+    instance def ThermalDataInstances[3] : 'Enhanced Thermal Data Packet' {
+        instance.name = 'Standard Thermal Data Packet 1'
+        instance.name = 'Standard Thermal Data Packet 2'
+        instance.name = 'Enhanced Thermal Data Packet'
+    }
+
+}
+```

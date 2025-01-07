@@ -1,0 +1,47 @@
+```
+package AliasTest {
+
+	part def A {
+		port p1 : InFlow;
+		port p2 : OutFlow;
+	}
+
+	part a : A;
+
+	part def B {
+		port p1 : InFlow;
+		port p2 : OutFlow;
+	}
+
+	part b : B;
+
+	flow a.p1 to b.p2;
+
+	alias bport1 for b.p1;
+	alias bport2 for b.p2;
+
+	flow a.p1 to bport1;
+	flow a.p2 to bport2;
+
+}
+```
+
+**Explanation:**
+
+* The model includes two parts, `A` and `B`.
+* Each part has two ports, `p1` and `p2`.
+* The `flow` keyword is used to establish connections between ports.
+* The `alias` keyword is used to create alternative references to ports.
+* The aliases `bport1` and `bport2` are created for `b.p1` and `b.p2`, respectively.
+* The connections are updated to use the aliases instead of the original port references.
+
+**Benefits of Using Aliases:**
+
+* Increased readability and code maintainability.
+* Improved flexibility for port connections.
+* Enhanced modularity and code reuse.
+
+**Note:**
+
+* Aliases are only valid within the same package.
+* Aliases cannot be used to refer to parts or other elements outside of the package.

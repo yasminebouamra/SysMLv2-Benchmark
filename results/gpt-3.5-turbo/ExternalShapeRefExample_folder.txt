@@ -1,0 +1,24 @@
+package GeometryReferenceModel {
+
+    part def BatteryUnit {
+        external shape GeometryReferenceShape;
+        shape BoxShape {
+            outline BoxOutline;
+        }
+    }
+
+    shape def GeometryReferenceShape {
+        reference "file://StepFileLocation.stp";
+    }
+
+    shape def BoxOutline {
+        outlineShape Box;
+    }
+
+    outline def Box {
+        structure "Rectangular";
+        parameter "Length";
+        parameter "Width";
+        parameter "Height";
+    }
+}

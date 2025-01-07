@@ -1,0 +1,44 @@
+```sysmlv2
+package AllocationTest {
+	// Generic Component Definitions
+	part def LogicalComponent1;
+	part def PhysicalAssembly1;
+
+	// Specific Instances
+	part c1 : LogicalComponent1;
+	part a1 : PhysicalAssembly1;
+
+	// Allocation using implicit syntax
+	allocate c1 to a1;
+
+	// Specific Allocation Definitions
+	allocate def AllocatedComponent {
+		logical component L : LogicalComponent1;
+		physical assembly P : PhysicalAssembly1;
+	}
+
+	// Allocating specific instances using allocation definition
+	allocate comp1 : AllocatedComponent {
+		L = c1;
+		P = a1;
+	}
+	
+	part def LogicalComponent2;
+	part def PhysicalAssembly2;
+
+	part c2 : LogicalComponent2;
+	part a2 : PhysicalAssembly2;
+
+	// Allocation with explicit syntax
+	allocate c2 to a2 using AllocatedComponent;
+
+	// Direct allocation between component parts
+	part def LogicalPart1 :> LogicalComponent1;
+	part lpart1 : LogicalPart1;
+
+	part def PhysicalPart1 :> PhysicalAssembly1;
+	part ppart1 : PhysicalPart1;
+
+	allocate lpart1 to ppart1;
+}
+```

@@ -1,0 +1,18 @@
+```sysmlv2
+package CameraSystem{
+    private import PictureTaking::*;
+
+    action takePicture {
+        action focus: Focus[1];
+        flow focus.xrsl to shoot.xsf;
+        action shoot: Shoot[1];
+    }
+}
+
+package PictureTaking {
+    part def Exposure;
+
+    action def Focus { out xrsl: Exposure; }
+    action def Shoot { in xsf: Exposure; }
+}
+```

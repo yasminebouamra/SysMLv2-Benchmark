@@ -1,0 +1,38 @@
+```sysmlv2
+package StructuredControlTest
+
+part def P {
+	attribute counter : Natural = 0;
+	attribute threshold : Natural = 10;
+}
+
+action increment_counter {
+	P.counter = P.counter + 1;
+	if (P.counter == P.threshold) {
+		print("Threshold reached!");
+	} else {
+		if (P.counter % 2 == 0) {
+			print("Even number");
+		} else {
+			print("Odd number");
+		}
+	}
+
+	while (P.counter < 20) {
+		print("Incrementing counter");
+		P.counter = P.counter + 1;
+	}
+
+	loop {
+		print("Inside generic loop");
+		if (P.counter >= 25) {
+			exit;
+		}
+		P.counter = P.counter + 1;
+	}
+
+	for (i in 1..5) {
+		print("Iteration:", i);
+	}
+}
+```

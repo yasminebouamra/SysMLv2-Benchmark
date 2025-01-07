@@ -1,0 +1,68 @@
+```SysML
+package 'VehicleDefinitions' {
+    private import ISQ::*;
+
+    mass = amountOfSubstance;
+    torque = force * length;
+
+    part def Vehicle {
+        part transmission: Transmission[1];
+        part axleAssembly: AxleAssembly[1] {
+            connection : TorqueInput connect to transmission.outputTorque;
+        }
+        part leftAxle : Axle[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                attribute :>> transformation : TranslationRotationSequence {
+                    attribute :>> source = datum;
+                    attribute :>> elements = (Translation((-axleXShift, 0, axleZShift)[datum]), Rotation((0, 1, 0)[datum], 90['°']));
+                }
+            }
+        }
+        part rightAxle : Axle[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                attribute :>> transformation : TranslationRotationSequence {
+                    attribute :>> source = datum;
+                    attribute :>> elements = (Translation((axleXShift, 0, axleZShift)[datum]), Rotation((0, -1, 0)[datum], 90['°']));
+                }
+            }
+        }
+    }
+
+    part def Transmission {
+        outputTorque :> torque;
+    }
+
+    part def AxleAssembly {
+        part axles: Axle[2] {
+            ref redefines componentItems subsets (leftAxle, rightAxle);
+        }
+    }
+
+    part def Axle {
+        mass :> mass;
+        part lugBolts: LugBolt[4];
+        connection : TorqueOutput connect to axleAssembly.axles;
+    }
+
+    part def Wheel {
+        diameter :> length;
+        width :> length;
+        part rim : TireMountingRim[1];
+        part tire : Tire[1] {
+            part bead redefines Tire::bead;
+        }
+        part lugBolts: LugBolt[4];
+        connection : TorqueInput connect to axle;
+    }
+
+    part def LugBolt {
+        torque :> torque;
+        boltTension :> force;
+        ref mountingHole: LugBoltMountingHole[1];
+    }
+
+    part def Hub {
+        part lugBolts: LugBoltThreadableHole[4];
+    }
+}
+```

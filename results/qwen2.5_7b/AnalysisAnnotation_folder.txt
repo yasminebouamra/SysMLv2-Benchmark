@@ -1,0 +1,37 @@
+```plaintext
+package DynamicsComputationSystem {
+    stereotype DynamicsAnalysis;
+    stereotype SimulationToolIntegration;
+
+    part modelCenterIntegration : SimulationToolIntegration {
+        property externalToolName "ModelCenter";
+    }
+
+    part timeStep : RealValue;
+    part powerInput : PowerValue;
+    part dragCoefficient : RealValue;
+    part frictionCoefficient : RealValue;
+    part mass : MassValue;
+    part initialVelocity : VelocityValue;
+    part initialPosition : DistanceValue;
+
+    action dynamicsComputation {
+        in timeStep: RealValue;
+        in powerInput: PowerValue;
+        in dragCoefficient: RealValue;
+        in frictionCoefficient: RealValue;
+        in mass: MassValue;
+        in initialVelocity: VelocityValue;
+        in initialPosition: DistanceValue;
+        out acceleration : AccelerationValue[*];
+        out velocity : VelocityValue[*];
+        out position : DistanceValue[*];
+
+        /*
+         * This action simulates the dynamics of an entity (e.g., a vehicle) using
+         * inputs provided by external tools and computes its acceleration, velocity,
+         * and position over time.
+         */
+    }
+}
+```

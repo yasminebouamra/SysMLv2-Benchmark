@@ -1,0 +1,92 @@
+ ```SysMLV2
+   package Norwegian_Scenario {
+       class TellUConsumer {
+           behavior tellUBehavior {
+               event tellUAPIRequest : API::APIRequest;
+           }
+       }
+
+       class APISProducer {
+           behavior apiProducerBehavior {
+               event apiServiceTransfer : Transfers::MessageTransfer;
+           }
+       }
+
+       class MQTTServer {
+           behavior mqttBehavior {
+               state receivingMQTTPublish {
+                   transition forwarding
+                       first waitForPublication
+                       accept pub : MQTT::Publish via mqttPort
+                       if pub.topic == apiProducerTopic
+                       do send Forward(pub.publication) to apiConsumer;
+                       then waitForPublication;
+               }
+           }
+
+           attribute apiProducerTopic : String;
+
+           interface mqttPort to server_2.mqttPort {
+               bind source::incomingTransfersFromSelf = target::outgoingTransfersToSelf;
+           }
+       }
+
+       class APISConsumer {
+           behavior apiConsumerBehavior {
+               state waitingForAPIService {
+                   transition handlingAPIRequest
+                       first waitForAPIService
+                       accept apiService : Transfers::MessageTransfer via consumer_2.apiPort
+                       do handleAPI(apiService);
+                       then waitForAPIService;
+               }
+           }
+
+           attribute consumerTopic : String;
+
+           port apiPort : ~APIPort;
+
+           perform action apiConsumerBehavior {
+               action subscribe_API send MQTT::Subscribe(consumerTopic, APISConsumer) to server_2;
+               then action handleAPI accept Forward via consumer_2;
+           }
+       }
+
+       class Server_2 {
+           behavior mqttServerBehavior {
+               state forwardingMQTTPublish {
+                   transition handlingAPIServiceRequest
+                       first waitForAPIServiceRequest
+                       accept apiServiceRequest : APIServer::APIRequest via serverPort
+                       do send API::APIResponse(apiService) to apiProducer;
+                       then waitForAPIServiceRequest;
+               }
+           }
+
+           attribute apiProducerTopic : String;
+
+           interface mqttPort to tellUConsumer.mqttPort {
+               bind source::outgoingTransfersFromSelf = target::incomingTransfersToSelf;
+           }
+           interface serverPort to APISConsumer.apiPort {
+               bind source::incomingTransfersFromSelf = target::outgoingTransfersToSelf;
+           }
+       }
+
+       message MQTT::Publish : Transfers::MessageTransfer {
+           end :>> source = mqttServer.mqttPort;
+           end :>> target = apiProducer.apiPort;
+           attribute topic : String;
+           attribute publication : API::APIResponse;
+       }
+       message MQTT::Subscribe : Transfers::MessageTransfer {
+           end :>> source = APISConsumer.apiPort;
+           end :>> target = mqttServer.mqttPort;
+           attribute topic : String;
+       }
+       message Forward : Transfers::MessageTransfer {
+           end :>> source = server_2;
+           end :>> target = APISConsumer;
+       }
+   }
+   ```

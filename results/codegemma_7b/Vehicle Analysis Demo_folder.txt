@@ -1,0 +1,72 @@
+```sysmlv2
+namespace VehicleFuelEconomyAnalysis {
+
+    unit 'MilesPerGallon' {
+        symbol 'mpg'
+        description 'Miles per gallon'
+    }
+
+    package 'Vehicle Components' {
+        part 'Vehicle' {
+            attribute 'Weight'
+            attribute 'Engine' {
+                attribute 'Power'
+                attribute 'FuelTank' {
+                    attribute 'Capacity'
+                }
+            }
+            attribute 'Wheels' {
+                attribute 'Number'
+                attribute 'Diameter'
+            }
+        }
+    }
+
+    package 'Fuel Economy Requirements' {
+        part 'DrivingCondition' {
+            attribute 'Speed'
+            attribute 'Grade'
+        }
+        part 'FuelEconomyRequirement' {
+            attribute 'DrivingCondition'
+            attribute 'FuelEconomy' : MilesPerGallon
+        }
+    }
+
+    package 'Dynamics Modeling' {
+        part 'VehicleModel' {
+            attribute 'Vehicle'
+            attribute 'Acceleration'
+            attribute 'Velocity'
+            calc 'CalculateAcceleration' {
+                in Vehicle
+                return Vehicle.Engine.Power / Vehicle.Weight
+            }
+            calc 'CalculateVelocity' {
+                in Vehicle
+                in Acceleration
+                return Velocity = Vehicle.Engine.Power / Vehicle.Weight * Time
+            }
+        }
+    }
+
+    package 'FuelEconomyAnalysis' {
+        part 'VehicleModel'
+        part 'FuelEconomyRequirement'
+        calc 'CalculateFuelConsumption' {
+            in VehicleModel
+            in FuelEconomyRequirement
+            return VehicleModel.Vehicle.Engine.FuelTank.Capacity / FuelEconomyRequirement.FuelEconomy
+        }
+        constraint { CalculateFuelConsumption <= VehicleModel.Vehicle.Engine.FuelTank.Capacity }
+    }
+
+    use case 'AnalyzeFuelEconomy' {
+        in VehicleModel
+        in FuelEconomyRequirement
+        out ComplianceStatus {
+            true if CalculateFuelConsumption <= VehicleModel.Vehicle.Engine.FuelTank.Capacity; false otherwise
+        }
+    }
+}
+```

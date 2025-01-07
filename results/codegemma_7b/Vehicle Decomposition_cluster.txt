@@ -1,0 +1,40 @@
+```
+package 'Vehicle Model' {
+
+    package 'Core Vehicle' {
+
+        abstract part chassis : Vehicle {
+            part :>> engine : Engine;
+            part :>> wheels : Wheels;
+            part :>> rollBars : RollBars;
+        }
+
+        part engine : Engine {
+            attribute :>> numCylinders : Integer;
+        }
+
+        part wheels : Wheels {
+            attribute :>> numLugBolts : Integer;
+        }
+
+        part rollBars : RollBars {
+            attribute :>> type : String;
+        }
+    }
+
+    package 'Vehicle Variants' {
+
+        part vehicle4Cyl : CoreVehicle::chassis {
+            part :>> engine = Engine(numCylinders = 4);
+            part :>> wheels = Wheels(numLugBolts = 4);
+            part :>> rollBars = RollBars(type = 'Lightweight');
+        }
+
+        part vehicle6Cyl : CoreVehicle::chassis {
+            part :>> engine = Engine(numCylinders = 6);
+            part :>> wheels = Wheels(numLugBolts = 6);
+            part :>> rollBars = RollBars(type = 'Heavy Duty');
+        }
+    }
+}
+```

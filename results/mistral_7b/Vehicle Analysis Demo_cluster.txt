@@ -1,0 +1,93 @@
+ ```SysMLV2
+    Package 'FuelEconomyAnalysis' {
+        SysML::ModelVersion = "1.0";
+        SysML::ModelingLanguage = "SysML";
+        SysML::DiagramName = "FuelEconomyAnalysis";
+
+        Package 'CustomUnits' {
+            Constant 'Miles' : Length = 5280; // in feet
+            Constant 'Gallon' : Volume = 128.5// in cubic inches
+            Constant 'MPG' : Quantity = Gallon^-1 * Miles;
+        }
+
+        Package 'VehicleQuantities' {
+            Import 'CustomUnits'::*;
+            Attribute 'Weight' : Mass;
+            Attribute 'FuelCapacity' : Volume;
+            Attribute 'DragCoefficient' : Dimensionless;
+            Attribute 'AirDensity' : Density;
+        }
+
+        Package 'VehicleComponents' {
+            Import 'VehicleQuantities'::*;
+            Class 'Wheel' {
+                Attribute 'Radius' : Length;
+                Attribute 'Width' : Length;
+            }
+            Class 'FuelTank';
+            Class 'Engine';
+        }
+
+        Package 'DrivingConditions' {
+            Import 'VehicleQuantities'::*;
+            Enum 'DriveCyclePhase' {
+                'City', 'Highway'
+            }
+            Parameter 'CityFuelEconomyTarget' : MPG;
+            Parameter 'HighwayFuelEconomyTarget' : MPG;
+        }
+
+        Package 'DynamicsModeling' {
+            Import 'VehicleQuantities'::*;
+            Class 'MovingVehicleParcel' {
+                Attribute 'Velocity' : Speed;
+                Attribute 'Acceleration' : Acceleration;
+            }
+            Behavior 'VehicleBehavior' : ContinuousStateSpaceDynamics {
+                Inertia 'vehicleMass' : Mass = VehicleComponents::FuelTank.Weight;
+                Resistance 'airResistance' : Force = calculateAirResistance();
+                Input 'engineForce' : Force;
+                Output 'velocity' : Speed;
+                Derivative 'acceleration' : Acceleration;
+            }
+            Operation calculateAirResistance() {
+                Return (vehicle.DragCoefficient * vehicle.Velocity^2 * AirDensity);
+            }
+        }
+
+        Package 'FuelEconomyAnalysis' {
+            Import 'DrivingConditions'::*;
+            Import 'VehicleComponents'::*;
+            Import 'DynamicsModeling'::*;
+
+            Context 'FuelEconomyAnalyzer' {
+                Instance 'vehicle' : VehicleComponents::FuelTank;
+                Behavior 'vehicleBehavior' : VehicleComponents.Engine.VehicleBehavior;
+                Scenario 'cityDriveCycle' : DriveCyclePhase = 'City';
+                Scenario 'highwayDriveCycle' : DriveCyclePhase = 'Highway';
+            }
+
+            ScenarioOperation cityFuelEconomyAnalysis() {
+                ForEach cityDriveCycle in cityDriveCycle.allInstances() do {
+                    cityDriveCycle.vehicleBehavior.engineForce = calculateCityEngineForce();
+                    Calculate 'cityFuelConsumption' : Quantity = (cityDriveCycle.duration * cityDriveCycle.engineForce / cityDriveCycle.vehicle.FuelCapacity) / cityDriveCycleFuelEconomyTarget();
+                }
+            }
+
+            ScenarioOperation highwayFuelEconomyAnalysis() {
+                ForEach highwayDriveCycle in highwayDriveCycle.allInstances() do {
+                    highwayDriveCycle.vehicleBehavior.engineForce = calculateHighwayEngineForce();
+                    Calculate 'highwayFuelConsumption' : Quantity = (highwayDriveCycle.duration * highwayDriveCycle.vehicleBehavior.velocity / highwayDriveCycle.vehicle.FuelCapacity) / highwayDriveCycleFuelEconomyTarget();
+                }
+            }
+
+            Operation calculateCityEngineForce() {
+                // Insert calculations for city engine force here
+            }
+
+            Operation calculateHighwayEngineForce() {
+                // Insert calculations for highway engine force here
+            }
+        }
+    }
+```

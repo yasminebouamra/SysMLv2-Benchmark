@@ -1,0 +1,119 @@
+```plaintext
+package 'Vehicle Fuel Economy Analysis' {
+	
+	package 'Vehicle Quantities' {
+	    part def 'Distance Unit' {
+	        attribute :>> 'Miles';
+	    }
+	    
+	    part def 'Fuel Quantity Unit' {
+	        attribute :>> 'Gallons';
+	    }
+	    
+	    part def 'Acceleration Unit' {
+	        attribute :>> 'Feet per Second Squared';
+	    }
+	}
+	
+	package 'Vehicle Models' {
+	    part def 'Vehicle Body' {
+	        attribute 'Length';
+	        attribute 'Width';
+	        attribute 'Height';
+	    }
+	    
+	    part def 'Fuel Tank' {
+	        attribute 'Capacity';
+	        attribute 'Current Fuel Level';
+	    }
+	    
+	    part def 'Wheels' {
+	        attribute :>> 'Radius';
+	    }
+	}
+	
+	package 'Fuel Economy Requirements' {
+	    part def 'Urban Driving Requirement' {
+	        attribute :>> 'Miles per Gallon';
+	    }
+	    
+	    part def 'Highway Driving Requirement' {
+	        attribute :>> 'Miles per Gallon';
+	    }
+	}
+	
+	package 'Dynamics Modeling' {
+	    action def 'Calculate Acceleration' { in force : ForceValue; in mass : MassValue;
+	    	return acceleration = force / mass;
+	    }
+	    
+	    action def 'Calculate Velocity' { in distance : DistanceValue; in time : TimeUnit;
+	    	return velocity = distance / time;
+	    }
+	}
+	
+	package 'Fuel Economy Analysis' {
+	    part 'Analysis Context' {
+	        private import 'Vehicle Quantities'::*;
+	        private import 'Vehicle Models'::*;
+	        private import 'Fuel Economy Requirements'::*;
+	        private import 'Dynamics Modeling'::*;
+	        
+	        part 'Vehicle' specializes 'Vehicle Body', 'Fuel Tank', 'Wheels';
+	        
+	        action def 'Check Fuel Economy Compliance' {
+	            in urbanRequirement : 'Urban Driving Requirement';
+	            in highwayRequirement : 'Highway Driving Requirement';
+	            
+	            attribute :>> 'Total Distance Traveled Urban' = 0;
+	            attribute :>> 'Total Distance Traveled Highway' = 0;
+	            attribute :>> 'Fuel Used Urban' = 0;
+	            attribute :>> 'Fuel Used Highway' = 0;
+	            
+	            // Scenario for urban driving
+	            scenario def 'Urban Driving Scenario' {
+	                action 'Update Total Distance Traveled Urban';
+	                action 'Calculate Fuel Used Urban';
+	                if ('Total Distance Traveled Urban' / 'Fuel Used Urban' >= 'urbanRequirement'.MilesPerGallon) {
+	                    note "Compliant with Urban Requirement";
+	                } else {
+	                    note "Non-compliant with Urban Requirement";
+	                }
+	            }
+	            
+	            // Scenario for highway driving
+	            scenario def 'Highway Driving Scenario' {
+	                action 'Update Total Distance Traveled Highway';
+	                action 'Calculate Fuel Used Highway';
+	                if ('Total Distance Traveled Highway' / 'Fuel Used Highway' >= 'highwayRequirement'.MilesPerGallon) {
+	                    note "Compliant with Highway Requirement";
+	                } else {
+	                    note "Non-compliant with Highway Requirement";
+	                }
+	            }
+	            
+	            action def 'Update Total Distance Traveled Urban';
+	                in distanceTraveled : DistanceValue;
+	                update 'Total Distance Traveled Urban' = 'Total Distance Traveled Urban' + distanceTraveled;
+	            end
+	            
+	            action def 'Calculate Fuel Used Urban';
+	                in fuelConsumed : FuelQuantityValue;
+	                update 'Fuel Used Urban' = 'Fuel Used Urban' + fuelConsumed;
+	            end
+	            
+	            action def 'Update Total Distance Traveled Highway';
+	                in distanceTraveled : DistanceValue;
+	                update 'Total Distance Traveled Highway' = 'Total Distance Traveled Highway' + distanceTraveled;
+	            end
+	            
+	            action def 'Calculate Fuel Used Highway';
+	                in fuelConsumed : FuelQuantityValue;
+	                update 'Fuel Used Highway' = 'Fuel Used Highway' + fuelConsumed;
+	            end
+	        }
+	    }
+	}
+	
+} // End of package definition
+```

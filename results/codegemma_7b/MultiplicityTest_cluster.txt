@@ -1,0 +1,76 @@
+```sysmlv2
+package MultiplicityShowcase {
+	part def P {
+		attribute a;
+	}
+	
+	part def Q :> P;
+	attribute def B;
+	variation part def V :> P {
+		variant part x : Q {
+			attribute b : B :>> a;
+		}
+	}
+	
+	part q : Q;
+	variation part v : P {
+		variant q {
+			attribute b : B :>> a;
+		}
+	}
+	
+	part y : P = v::q;
+	
+	variation action def A {
+		variant action a1;
+		variant action a2;
+	}
+	
+	variation use case uc1 {
+    	variant use case uc11;
+    	variant use case uc12;
+    }
+
+    variation analysis a1;
+    
+    variation verification v1;
+    
+    variation requirement r {
+    	variant requirement r1;
+    }
+	
+}
+
+package ParameterTest {
+	attribute def A {
+		attribute x : ScalarValues::String;
+		attribute y : A;
+	}
+	
+	attribute a : A;
+	
+	calc def F { in p : A; in q : ScalarValues::Integer; return :  ScalarValues::Integer; }
+	
+	attribute f = F(a, 2);
+	attribute g = F(q = 1, p = a);
+	
+	attribute b = A(y=a, x=""); 
+	attribute c = A("test2");
+}
+
+action def ControlNodeTest {
+	action A1;
+	then J;
+	
+	action A2;
+	then J;
+	
+	join J;
+	then fork F;
+	then B1;
+	then B2;
+		
+	action B1;
+	action B2;
+}
+```

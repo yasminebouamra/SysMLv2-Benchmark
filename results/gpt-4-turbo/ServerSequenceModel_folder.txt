@@ -1,0 +1,78 @@
+```sysml
+package PublishSubscribeSystem {
+    signal Subscribe {
+        attribute topic : String;
+    }
+
+    signal Publish {
+        attribute topic : String;
+        attribute content : String;
+    }
+
+    signal Deliver {
+        attribute content : String;
+    }
+
+    part def Subscriber {
+        port subscriptionPort;
+    }
+
+    part def Publisher {
+        port publicationPort;
+    }
+
+    part def Server {
+        port subscriberPort;
+        port publisherPort;
+
+        action manageSubscriptions;
+        action handlePublishing;
+    }
+
+    part subscriber : Subscriber {
+        port subPort :> subscriptionPort;
+    }
+
+    part publisher : Publisher {
+        port pubPort :> publicationPort;
+    }
+
+    part server : Server {
+        port subPort :> subscriberPort;
+        port pubPort :> publisherPort;
+
+        action subscribeAction :>> manageSubscriptions;
+        action publishAction :>> handlePublishing;
+    }
+
+    connect subscriber.subPort to server.subPort;
+    connect publisher.pubPort to server.pubPort;
+
+    state def SubscriptionStateMachine {
+        state waitingForSubscriptionRequest;
+        state processingSubscriptionRequest {
+            accept s : Subscribe
+            do {
+                log("Subscription request received for topic: " + s.topic);
+            }
+            then waitingForPublish;
+        }
+
+        state waitingForPublish;
+        state processingPublish {
+            accept p : Publish
+            do {
+                log("Publishing content on topic: " + p.topic);
+            }
+            then readyToDeliver;
+        }
+
+        state readyToDeliver {
+            do send Deliver(p.content) to subscriber.subPort;
+        }
+    }
+
+    exhibit StateMachine SubscriptionStateMachine
+        on server;
+}
+```

@@ -1,0 +1,114 @@
+ ```SysMLv2
+    package SystemModel {
+
+        part def LogicalComponents;
+        part def PhysicalAssemblies;
+
+        part Definitions;
+
+            part LogicalComponentDefinition;
+            part PhysicalAssemblyDefinition;
+
+                attribute name : ScalarValues::String for LogicalComponentDefinition;
+                attribute mass : ScalarValues::Real for PhysicalAssemblyDefinition;
+
+        part Allocations;
+
+            part AllocationDefinition_Generic;
+            part AllocationDefinition_Specific;
+
+                part allocatedLogicalComponent : LogicalComponents[*];
+                part allocatedPhysicalAssembly : PhysicalAssemblies[*];
+
+                attribute purpose : ScalarValues::String for AllocationDefinition_Generic;
+                attribute specificPurpose : ScalarValues::String for AllocationDefinition_Specific;
+
+        part Instances;
+
+            part LogicalComponentInstance;
+            part PhysicalAssemblyInstance;
+
+                attribute name : ScalarValues::String for LogicalComponentInstance;
+                attribute mass : ScalarValues::Real for PhysicalAssemblyInstance;
+
+        part ImplicitAllocations;
+
+            part LogicalComponentPart_1 to PhysicalAssemblyPart_1;
+            part LogicalComponentPart_2 to PhysicalAssemblyPart_3;
+
+        part ExplicitAllocations;
+
+            part Allocation_Example1 : Allocations[0];
+            part Allocation_Example2 : Allocations[1];
+
+                attribute purpose : ScalarValues::String for Allocation_Example1;
+                attribute specificPurpose : ScalarValues::String for Allocation_Example2;
+
+    }
+
+    package SystemModel::Allocations {
+
+        part AllocationDefinition_Generic {
+            attribute purpose : ScalarValues::String = "Generic Allocation Definition";
+        }
+
+        part AllocationDefinition_Specific {
+            attribute specificPurpose : ScalarValues::String = "Specific Allocation Definition";
+        }
+
+    }
+
+    package SystemModel::ImplicitAllocations {
+
+        part LogicalComponentPart_1 : LogicalComponents[0] to PhysicalAssemblyPart_1 : PhysicalAssemblies[0];
+        part LogicalComponentPart_2 : LogicalComponents[1] to PhysicalAssemblyPart_3 : PhysicalAssemblies[1];
+
+    }
+
+    package SystemModel::ExplicitAllocations {
+
+        part Allocation_Example1 {
+            attribute purpose : ScalarValues::String = "Explicit Allocation Example 1";
+            allocatedLogicalComponent : LogicalComponents[0] = LogicalComponents[0];
+            allocatedPhysicalAssembly : PhysicalAssemblies[0] = PhysicalAssemblies[0];
+        }
+
+        part Allocation_Example2 {
+            attribute specificPurpose : ScalarValues::String = "Explicit Allocation Example 2";
+            allocatedLogicalComponent : LogicalComponents[1] = LogicalComponents[1];
+            allocatedPhysicalAssembly : PhysicalAssemblies[1] = PhysicalAssemblies[1];
+        }
+    }
+
+    package SystemModel::LogicalComponents {
+        part Component_1;
+        part Component_2;
+    }
+
+    package SystemModel::PhysicalAssemblies {
+        part Assembly_1 {
+            attribute mass : ScalarValues::Real = 10.0;
+        }
+        part Assembly_2 {
+            attribute mass : ScalarValues::Real = 20.0;
+        }
+    }
+
+    package SystemModel::LogicalComponentInstance {
+        part Instance_1 {
+            attribute name : ScalarValues::String = "LCInstance1";
+        }
+        part Instance_2 {
+            attribute name : ScalarValues::String = "LCInstance2";
+        }
+    }
+
+    package SystemModel::PhysicalAssemblyInstance {
+        part Instance_1 {
+            attribute mass : ScalarValues::Real = 15.0;
+        }
+        part Instance_2 {
+            attribute mass : ScalarValues::Real = 30.0;
+        }
+    }
+```

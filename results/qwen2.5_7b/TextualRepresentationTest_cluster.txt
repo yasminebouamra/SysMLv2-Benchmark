@@ -1,0 +1,21 @@
+```sysml
+package TextualRepresentationTest {
+	
+	item def NumericItem {
+		attribute def value: Real {
+			constraint def PositiveConstraint : value > 0;
+			assert value must satisfy PositiveConstraint;
+		}
+		
+		action def updateValue(newVal: Real) {
+			if (newVal > 0) then
+				value = newVal;
+				logOperation("Updated value to " + toString(value));
+			else
+				logOperation("Failed to update value, new value is not positive.");
+			finish;
+		}
+	}
+
+}
+```

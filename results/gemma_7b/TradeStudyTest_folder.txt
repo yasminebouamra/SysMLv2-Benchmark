@@ -1,0 +1,28 @@
+```sysmlv2
+package TradeStudy {
+
+    part def Engine {
+        attribute Cost : Real;
+        attribute Performance : Real;
+    }
+
+    public part def TradeStudy {
+        public part def Engine1 : Engine;
+        public part def Engine2 : Engine;
+
+        action EvaluateTradeStudy {
+            calc Score1 : Real {
+                in Engine engine = Engine1;
+            }
+            calc Score2 : Real {
+                in Engine engine = Engine2;
+            }
+            if (Score1 > Score2) {
+                result Engine1;
+            } else {
+                result Engine2;
+            }
+        }
+    }
+}
+```

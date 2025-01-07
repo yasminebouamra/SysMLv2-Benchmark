@@ -1,0 +1,41 @@
+ package 'VehicleDefinitions' {
+	    import ISQ::*;
+
+	    part def Vehicle {
+	        mass :> mass;
+	        port transmissionPort: Transmission[1];
+	        port axlePorts: AxleAssembly[2];
+	    }
+
+	    interface TransmissionInterface {
+	        output torque: force;
+	    }
+
+	    part def Transmission implements TransmissionInterface {
+	        mass :> mass;
+	    }
+
+	    part def AxleAssembly {
+	        port axlePorts: Axle[2];
+	    }
+
+	    part def Axle {
+	        mass :> mass;
+	        output torque: force;
+	        connection connectAxleToWheel: TorqueConnection to Wheel[1];
+	    }
+
+	    part def Wheel {
+	        mass :> mass;
+	    }
+
+	    interface LugboltInterface {
+	        output torque: force;
+	    }
+
+	    part def Lugbolt implements LugboltInterface {
+	        mass :> mass;
+	    }
+	}
+
+This SysML v2 model named 'VehicleDefinitions' defines the basic structure of a vehicle's mechanical components. It includes parts such as Vehicle, Transmission, AxleAssembly, Axles, Wheels, and Lugbolts, with an emphasis on mass and torque aspects. The model uses imported base for quantifiable attributes using international measurement standards. It specifies the interactions and connections between components using ports and an interface, focusing on the transmission of torque from axles to wheels which is crucial for understanding vehicle dynamics. The Transmission, Axle, and Lugbolt parts implement an interface to output torque as a force attribute.
