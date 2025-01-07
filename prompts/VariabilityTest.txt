@@ -1,0 +1,1 @@
+A SysMLv2 package demonstrates variability modeling, showcasing how to define variable parts, actions, use cases, analysis, verification activities, and requirements. This includes inheriting attributes between parts, variant mappings, and instantiations of variant parts, alongside defining variational actions and use cases.

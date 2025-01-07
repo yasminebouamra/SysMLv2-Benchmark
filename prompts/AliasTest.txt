@@ -1,0 +1,1 @@
+Demonstrate the use of aliases in a SysMLv2 model for system design flexibility. The model should depict parts with ports, the instantiation of those parts, and the establishment of connections between them utilizing aliases to provide alternative references to ports.

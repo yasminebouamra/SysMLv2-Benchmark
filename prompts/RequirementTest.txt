@@ -1,0 +1,1 @@
+Explore how a simple SysMLv2 model can define requirements, constraints, parts, and their interrelations including inheritance, satisfaction, and assertions within a package named `RequirementTest`.

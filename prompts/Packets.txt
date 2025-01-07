@@ -1,0 +1,1 @@
+Create a model for handling data packet structures in a system focused on data transmission, including base templates for packet headers and data fields, and extending these for specific use in thermal data transmission with emphasis on time-sensitive and temperature-related information.

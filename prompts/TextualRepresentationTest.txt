@@ -1,0 +1,1 @@
+Design a package in SysMLv2 named "TextualRepresentationTest" that includes an item with an attribute of a real number, which must always be positive, and an action to update this attribute and log an operation message.

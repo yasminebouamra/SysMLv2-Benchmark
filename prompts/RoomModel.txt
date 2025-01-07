@@ -1,0 +1,1 @@
+A simplified architectural layout modeling the connections between a Hallway, Classroom, and Storageroom using SysML v2. It includes definitions of room types with entry ports, and specifies the flow of items such as air, furniture, students, and teachers between these rooms.

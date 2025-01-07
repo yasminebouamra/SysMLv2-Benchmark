@@ -1,0 +1,1 @@
+Create a SysMLv2 model for a Hybrid Sport Utility Vehicle (HSUV) outlining specific requirement categories such as load capacity, eco-friendliness, performance, and ergonomics, each with detailed sub-requirements and standards the vehicle must comply with, like the 2010 Kyoto Accord emissions standards and fuel economy better than 95% of cars built in 2004.
