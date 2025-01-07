@@ -1,0 +1,49 @@
+```SysMLV2
+package Dynamics {
+	attribute def Power;
+	attribute def Acceleration;
+	attribute def Velocity;
+	attribute def Position;
+
+	attribute def DragCoefficient;
+	attribute def RollingResistanceCoefficient;
+	attribute def Mass;
+	attribute def InitialSpeed;
+	attribute def InitialPosition;
+
+	attribute def FinalAcceleration;
+	attribute def FinalSpeed;
+	attribute def FinalPosition;
+	
+	action def CalculateDynamics {
+		input wheelPower : Power;
+		input drag : DragCoefficient;
+		input rollingResistance : RollingResistanceCoefficient;
+		input mass : Mass;
+		input initialSpeed : InitialSpeed;
+		input initialPosition : InitialPosition;
+		
+		output finalAcceleration : FinalAcceleration;
+		output finalSpeed : FinalSpeed;
+		output finalPosition : FinalPosition;
+
+		do {
+			/* Calculation logic for velocity, acceleration, position */
+		}
+	}
+
+	action def SimulateDynamics {
+		input duration;
+		
+		output simulatedAcceleration : Acceleration;
+		output simulatedSpeed : Velocity;
+		output simulatedPosition : Position;
+
+		perform dynamics = CalculateDynamics;
+		do {
+			// Loop through time increments using 'duration' and update 'dynamics' inputs each step
+			// Update outputs based on dynamics calculations each step
+		}
+	}
+}
+```

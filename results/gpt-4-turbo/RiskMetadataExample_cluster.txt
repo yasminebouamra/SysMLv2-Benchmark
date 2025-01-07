@@ -1,0 +1,19 @@
+```SysMLV2
+package RiskMetadataExample {
+    import RiskLevels::*; // Assuming risk level definitions are in another package
+    import Metadata::*; // Assuming predefined metadata definitions are in another package
+
+    part def FourCylinderEngine {
+        doc /* Four-cylinder automotive engine */
+        
+        attribute overallRisk : RiskLevels::Risk; // Associating predefined risk levels
+        attribute technicalRisk : RiskLevels::Risk;
+        attribute scheduleRisk : RiskLevels::Risk;
+        
+        part assessment {
+            attribute probability : Metadata::Probability;
+            attribute impact : Metadata::Impact;
+        }
+    }
+}
+```

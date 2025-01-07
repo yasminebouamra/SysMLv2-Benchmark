@@ -1,0 +1,47 @@
+package AllocationExample {
+    part def LogicalComponent {
+        attribute description: String;
+    }
+
+    part def PhysicalAssembly {
+        attribute description: String;
+    }
+
+    part logicalComponent1: LogicalComponent {
+        attribute description = "This is a logical component.";
+    }
+
+    part physicalAssembly1: PhysicalAssembly {
+        attribute description = "This is a physical assembly.";
+    }
+
+    allocation def GeneralAllocation {
+        end logical: LogicalComponent;
+        end physical: PhysicalAssembly;
+    }
+
+    allocation generalAllocation1 : GeneralAllocation allocate logicalComponent1 to physicalAssembly1;
+
+    allocation specificAllocation1 {
+        end logical :>> logicalComponent1;
+        end physical :>> physicalAssembly1;
+        
+        doc /* This allocation using specific elements shows direct linkage */
+    }
+
+    part def ParentComponent {
+        part childLogical: LogicalComponent;
+        part childPhysical: PhysicalAssembly;
+        
+        allocate childLogical to childPhysical;
+    }
+
+    part instanceOfParentComponent: ParentComponent {
+        part childLogical: LogicalComponent {
+            attribute description = "Child logical component of parent.";
+        }
+        part childPhysical: PhysicalAssembly {
+            attribute description = "Child physical assembly of parent.";
+        }
+    }
+}

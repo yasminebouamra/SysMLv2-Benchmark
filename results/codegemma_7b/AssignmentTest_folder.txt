@@ -1,0 +1,34 @@
+```sysmlv2
+package AssignmentTest
+
+structure Counter {
+  attribute count : Integer;
+
+  method increment {
+    count := count + 1;
+  }
+
+  method decrement {
+    count := count - 1;
+  }
+
+  statemachine {
+    initial state Increment {
+      on trigger count == count + 1 do transition to Decrement;
+    }
+
+    state Decrement {
+      on trigger count == count - 1 do transition to Increment;
+    }
+  }
+}
+
+function increment(counter : Counter) {
+  counter.increment();
+}
+
+action performIncrement {
+  Counter counter;
+  increment(counter);
+}
+```

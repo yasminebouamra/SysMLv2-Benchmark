@@ -1,0 +1,31 @@
+```sysmlv2
+unit MilesPerGallon { }
+unit Horsepower { }
+
+item Vehicle {
+    attribute power : Horsepower;
+    attribute fuelEfficiency : MilesPerGallon;
+}
+
+action CalculateFuelConsumption {
+    in power : Horsepower;
+    out fuelConsumption : MilesPerGallon;
+    calc :>> fuelConsumption = power / fuelEfficiency;
+}
+
+item EngineConfiguration {
+    attribute enginePower : Horsepower;
+    attribute fuelEfficiency : MilesPerGallon;
+}
+
+individual Item VehicleEngineConfiguration {
+    attribute engine : EngineConfiguration;
+    attribute vehicle : Vehicle;
+}
+
+action AnalyzeFuelEconomy {
+    in vehicleEngineConfiguration : VehicleEngineConfiguration;
+    out fuelConsumption : MilesPerGallon;
+    calc :>> fuelConsumption = CalculateFuelConsumption.fuelConsumption(vehicleEngineConfiguration.engine.enginePower, vehicleEngineConfiguration.vehicle.fuelEfficiency);
+}
+```

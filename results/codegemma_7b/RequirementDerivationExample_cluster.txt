@@ -1,0 +1,23 @@
+```
+package RequirementDerivationExample {
+
+	requirement vehicleMassRequirement : MassRequirement {
+		subject :>> mass = vehicle.mass;
+	}
+
+	requirement chassisMassRequirement : MassRequirement {
+		subject :>> mass = vehicle.chassis.mass;
+	}
+
+	requirement engineMassRequirement : MassRequirement {
+		subject :>> mass = vehicle.engine.mass;
+	}
+
+	#derivation connection {
+		end #original ::> vehicleMassRequirement;
+		end #derive ::> chassisMassRequirement;
+		end #derive ::> engineMassRequirement;
+	}
+
+}
+```

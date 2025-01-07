@@ -1,0 +1,57 @@
+package Dynamics {
+    context StraightLineDynamicsContext {
+        part vehicle: Vehicle;
+        
+        variable v_i : VelocityValue = 0 [m/s];
+        variable x_i : DistanceValue = 0 [m];
+        variable m : MassValue = 1500 [kg];
+        variable C_r : RollingResistanceCoefficientValue = 0.01;
+        variable C_d : DragCoefficientValue = 0.25;
+        
+        def StraightLineDynamicsEquations (
+            p : PowerValue,
+            F_r : ForceValue,
+            F_a : ForceValue,
+            a : AccelerationValue,
+            v_f : VelocityValue,
+            x_f : DistanceValue
+        ) {
+            F_r == m * g * C_r &
+            F_a == 0.5 * rho * A * C_d * v_i^2 &
+            p + F_r + F_a == m * a &
+            v_f == v_i + a * dt &
+            x_f == x_i + v_i * dt + 0.5 * a * dt^2
+        }
+        
+        action calculateAcceleration {
+            in wheelPower : PowerValue;
+            out finalAcceleration : AccelerationValue = a;
+            
+            assert constraint accelerationConstraint {
+                StraightLineDynamicsEquations (
+                    p = wheelPower,
+                    m = vehicle.mass,
+                    C_r = vehicle.rollingResistanceCoefficient,
+                    C_d = vehicle.dragCoefficient
+                )
+            }
+        }
+        
+        action simulateVehicleDynamics {
+            in initialSpeed : VelocityValue;
+            in initialPosition : DistanceValue;
+            out finalAcceleration : AccelerationValue = a;
+            out finalSpeed : VelocityValue = v_f;
+            out finalPosition : DistanceValue = x_f;
+            
+            assert constraint dynamicsConstraint {
+                StraightLineDynamicsEquations (
+                    p = vehicle.wheelPower,
+                    m = vehicle.mass,
+                    C_r = vehicle.rollingResistanceCoefficient,
+                    C_d = vehicle.dragCoefficient
+                )
+            }
+        }
+    }
+}

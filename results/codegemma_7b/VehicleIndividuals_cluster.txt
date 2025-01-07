@@ -1,0 +1,76 @@
+```sysmlv2
+## SysMLv2 Model for Vehicle Configuration Tracking
+
+```sysmlv2
+package VehicleConfiguration {
+
+    type Timestamp {
+        attribute value : integer;
+    }
+
+    type Vehicle {
+        attribute mass : double;
+        attribute configuration : Configuration;
+        attribute timestamp : Timestamp;
+    }
+
+    type Configuration {
+        type Wheel {
+            attribute diameter : double;
+            attribute position : double;
+        }
+
+        type Axle {
+            attribute wheel1 : Wheel;
+            attribute wheel2 : Wheel;
+        }
+
+        attribute axles : Axle[];
+    }
+
+    type VehicleHistory {
+        attribute vehicle : Vehicle;
+        attribute timestamp : Timestamp;
+    }
+
+    association VehicleHistory_Vehicle {
+        source : VehicleHistory;
+        target : Vehicle;
+        multiplicity : 1..*
+    }
+
+    association Vehicle_Configuration {
+        source : Vehicle;
+        target : Configuration;
+        multiplicity : 1..*
+    }
+
+    association VehicleHistory_Timestamp {
+        source : VehicleHistory;
+        target : Timestamp;
+        multiplicity : 1..*
+    }
+}
+```
+
+**Explanation:**
+
+* **Timestamp:** Defines a type to represent timestamps.
+* **Vehicle:** Defines a type to represent individual vehicles with attributes like mass, configuration, and timestamp.
+* **Configuration:** Defines a type to represent the configuration of a vehicle, including wheels and axles.
+* **VehicleHistory:** Defines a type to store snapshots of vehicles at different timestamps.
+* **VehicleHistory_Vehicle:** Links VehicleHistory instances to Vehicle instances.
+* **Vehicle_Configuration:** Links Vehicle instances to Configuration instances.
+* **VehicleHistory_Timestamp:** Links VehicleHistory instances to Timestamp instances.
+
+**Usage:**
+
+* Create instances of the Vehicle type with unique timestamps.
+* Define configurations for each vehicle.
+* Add VehicleHistory instances to track vehicle configurations at specific timestamps.
+* Use queries to retrieve vehicle configurations at desired timestamps.
+
+**Note:**
+
+* This model focuses on the structure of the data and does not include any specific constraints or behaviors.
+* Additional elements can be added to the model to represent specific requirements.

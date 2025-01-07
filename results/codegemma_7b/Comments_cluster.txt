@@ -1,0 +1,32 @@
+```
+package Comments {
+	-- Package documentation comment
+	--
+	-- This package showcases the use of packages, parts, and various types of comments
+	-- for documentation and organization purposes.
+
+	part def MyPart {
+		-- Part documentation comment
+		--
+		-- This part demonstrates the usage of different commenting techniques.
+
+		-- Named comment
+		attribute x : Integer;
+
+		-- Comment about another comment
+		--
+		-- The value of attribute x is initialized to 10.
+		attribute y : Integer := 10;
+
+		-- Comment linked to a specific element
+		--
+		-- The value of attribute z is calculated based on the value of attribute x.
+		attribute z : Integer := x * 2;
+	}
+
+	-- Comment about the package itself
+	--
+	-- This package provides an example of how comments can be used to document
+	-- and organize SysMLv2 models.
+}
+```

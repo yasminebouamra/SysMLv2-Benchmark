@@ -1,0 +1,11 @@
+package ExternalGeometryReference {
+
+    part def Battery {
+        geometry detailedGeometry :> Shell {
+            import "battery_detail.stp";
+        }
+        geometry simplifiedGeometry :> Box {
+            dimensions (100, 50, 50); // dimensions in mm as an example
+        }
+    }
+}

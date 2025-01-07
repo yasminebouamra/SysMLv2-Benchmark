@@ -1,0 +1,22 @@
+ ```SysMLV2
+   package EnumerationTest {
+      private import ScalarValues::*;
+
+      enumeration Color extends AttributeType with {
+         Red(0, 'Red'),
+         Green(1, 'Green'),
+         Blue(2, 'Blue'),
+         Yellow(3, 'Yellow'),
+         Black(4, 'Black') as OptionalKeyword;
+      }
+
+      part ColorTest {
+         attribute myColor: Color;
+         attribute myRealValue: Real constrainedBy 0.1..1.0;
+      }
+
+      part MultiColorTest :> ColorTest {
+         attribute optionalColor: Color extends OptionalKeyword;
+      }
+   }
+   ```

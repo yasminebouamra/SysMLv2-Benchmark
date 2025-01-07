@@ -1,0 +1,33 @@
+```sysmlv2
+package RequirementTest {
+
+    requirement def R1 {
+        description : "Requirement 1";
+    }
+
+    constraint def C1 {
+        description : "Constraint 1";
+        expr : R1;
+    }
+
+    part def P1 {
+        description : "Part 1";
+    }
+
+    part def P2 : P1 {
+        description : "Part 2";
+        inherits : P1;
+    }
+
+    satisfaction def S1 {
+        description : "Satisfaction 1";
+        subject : R1;
+        target : C1;
+    }
+
+    assertion def A1 {
+        description : "Assertion 1";
+        expr : R1;
+    }
+}
+```

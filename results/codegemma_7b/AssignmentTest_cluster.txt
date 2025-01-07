@@ -1,0 +1,68 @@
+```
+package AssignmentTest {
+
+	structure Counter {
+		attribute count : Integer;
+		
+		method increment() {
+			count = count + 1;
+		}
+		
+		method decrement() {
+			count = count - 1;
+		}
+	}
+	
+	action IncrementTest {
+		part counter : Counter;
+		counter.increment();
+		counter.increment();
+		counter.decrement();
+		
+		assert counter.count == 2;
+	}
+	
+	stateMachine CounterStateMachine {
+		state increment;
+		state decrement;
+		
+		trigger incrementTrigger {
+			condition counter.count < Integer.MAX_VALUE;
+		}
+		
+		trigger decrementTrigger {
+			condition counter.count > Integer.MIN_VALUE;
+		}
+		
+		action incrementAction {
+			counter.increment();
+		}
+		
+		action decrementAction {
+			counter.decrement();
+		}
+		
+		transition incrementTransition {
+			trigger incrementTrigger;
+			action incrementAction;
+			target decrement;
+		}
+		
+		transition decrementTransition {
+			trigger decrementTrigger;
+			action decrementAction;
+			target increment;
+		}
+	}
+	
+	part counter : Counter;
+	part stateMachine : CounterStateMachine;
+	
+	action Test {
+		counter.increment();
+		counter.decrement();
+		
+		assert stateMachine.state == CounterStateMachine.decrement;
+	}
+}
+```

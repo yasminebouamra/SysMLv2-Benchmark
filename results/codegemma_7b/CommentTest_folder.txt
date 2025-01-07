@@ -1,0 +1,36 @@
+```sysmlv2
+package CommentTest {
+
+    -- Lexical comment
+
+    /**
+     * Documentation comment
+     */
+    part p {
+        -- Comment within part definition
+    }
+
+    /**
+     * Named comment
+     */
+    comment "This is a named comment"
+
+    /**
+     * Localizable comment
+     */
+    comment {
+        language = "en-US";
+        text = "This is a localizable comment";
+    }
+
+    /**
+     * Comment referencing another comment
+     */
+    comment "This comment refers to the named comment: " << comment "This is a named comment" >>
+
+    /**
+     * Comment referencing a part
+     */
+    comment "This comment refers to the part p: " << p >>
+}
+```

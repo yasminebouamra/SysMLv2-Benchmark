@@ -1,0 +1,22 @@
+```sysmlv2
+package MassCalculation {
+
+	part def MassEntity {
+		attribute m : MassValue;
+	}
+
+	part def SimpleObject : MassEntity {
+		attribute ::> m = mass;
+	}
+
+	part def CompositeObject : MassEntity {
+		part components[*] : MassEntity;
+		attribute ::> m = sum(components.m);
+	}
+
+	part def MinimumMassCompositeObject : MassEntity {
+		part components[*] : MassEntity;
+		attribute ::> m = max(components.m);
+	}
+}
+```

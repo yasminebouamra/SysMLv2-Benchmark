@@ -1,0 +1,29 @@
+```sysmlv2
+package VehicleMassModel
+
+part def Engine {
+	attribute mass : MassValue;
+}
+
+part def Transmission {
+	attribute mass : MassValue;
+}
+
+part def Vehicle {
+	attribute totalMass : MassValue;
+	part engine : Engine {
+		attribute :>> mass : MassValue;
+	}
+	part transmission : Transmission {
+		attribute :>> mass : MassValue;
+	}
+	constraint CalculateTotalMass {
+		totalMass == engine.mass + transmission.mass;
+	}
+}
+
+part def Car {
+	inherits Vehicle;
+}
+
+```

@@ -1,0 +1,122 @@
+```sysmlv2
+package EnumerationTest {
+
+    attribute def Color : Enumeration {
+        value Red { description: "Red color" }
+        value Green { description: "Green color" }
+        value Blue { description: "Blue color" }
+    }
+
+    part def Vehicle {
+        attribute color : Color;
+        attribute mileage : Real;
+    }
+
+    part car : Vehicle {
+        attribute color : Color.Red;
+        attribute mileage : 10000;
+    }
+
+    part truck : Vehicle {
+        attribute color : Color.Blue;
+        attribute mileage : 50000;
+    }
+
+    part bus : Vehicle {
+        attribute color : Color.Green;
+        attribute mileage : 25000;
+    }
+
+    part def Motorcycle : Vehicle {
+        attribute color : Color;
+        attribute engineCapacity : Integer;
+    }
+
+    part sportBike : Motorcycle {
+        attribute color : Color.Red;
+        attribute engineCapacity : 1000;
+    }
+
+    part cruiserBike : Motorcycle {
+        attribute color : Color.Blue;
+        attribute engineCapacity : 750;
+    }
+
+    part touringBike : Motorcycle {
+        attribute color : Color.Green;
+        attribute engineCapacity : 600;
+    }
+
+    attribute def VehicleType : Enumeration {
+        value Car
+        value Truck
+        value Bus
+        value Motorcycle
+    }
+
+    part def VehicleRegistry {
+        attribute vehicleType : VehicleType;
+        attribute vehicle : Vehicle;
+    }
+
+    part vehicleRegistry1 : VehicleRegistry {
+        attribute vehicleType : VehicleType.Car;
+        attribute vehicle : car;
+    }
+
+    part vehicleRegistry2 : VehicleRegistry {
+        attribute vehicleType : VehicleType.Truck;
+        attribute vehicle : truck;
+    }
+
+    part vehicleRegistry3 : VehicleRegistry {
+        attribute vehicleType : VehicleType.Bus;
+        attribute vehicle : bus;
+    }
+
+    part vehicleRegistry4 : VehicleRegistry {
+        attribute vehicleType : VehicleType.Motorcycle;
+        attribute vehicle : sportBike;
+    }
+
+    part vehicleRegistry5 : VehicleRegistry {
+        attribute vehicleType : VehicleType.Motorcycle;
+        attribute vehicle : cruiserBike;
+    }
+
+    part vehicleRegistry6 : VehicleRegistry {
+        attribute vehicleType : VehicleType.Motorcycle;
+        attribute vehicle : touringBike;
+    }
+
+    attribute def VehicleColor : Enumeration {
+        value Red { description: "Red color" }
+        value Green { description: "Green color" }
+        value Blue { description: "Blue color" }
+    }
+
+    part def VehicleManufacturer {
+        attribute name : String;
+        attribute vehicleColor : VehicleColor;
+        attribute yearEstablished : Integer;
+    }
+
+    part honda : VehicleManufacturer {
+        attribute name : "Honda";
+        attribute vehicleColor : VehicleColor.Red;
+        attribute yearEstablished : 1948;
+    }
+
+    part yamaha : VehicleManufacturer {
+        attribute name : "Yamaha";
+        attribute vehicleColor : VehicleColor.Blue;
+        attribute yearEstablished : 1955;
+    }
+
+    part kawasaki : VehicleManufacturer {
+        attribute name : "Kawasaki";
+        attribute vehicleColor : VehicleColor.Green;
+        attribute yearEstablished : 1969;
+    }
+}
+```

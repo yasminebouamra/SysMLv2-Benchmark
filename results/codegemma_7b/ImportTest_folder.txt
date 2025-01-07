@@ -1,0 +1,112 @@
+```sysmlv2
+package PackageStructure {
+
+    package PrivateImports {
+        part def A;
+        part y: A;
+        part y1: P2::A;
+
+        package P3 {
+            part def B;
+        }
+
+        private import P3::*;
+        part z: B;
+    }
+
+    package PublicImports {
+        public import all P2::*;
+        part z1: A;
+    }
+}
+
+package EnumerationTest {
+    attribute def Color {
+        attribute val : ScalarValues::Natural;
+    }
+
+    enum def ColorKind :> Color {
+        red { :>> val = 0; }
+        blue { :>> val = 1; }
+        green { :>> val = 2; }
+    }
+
+    enum color : ColorKind;
+    enum color1 = ColorKind::blue;
+    attribute color2 : ColorKind = color1;
+
+    enum def E1 { a; b; c; }
+    enum def E2;
+
+    attribute def Size :> ScalarValues::Real { }
+    enum def SizeChoice :> Size {
+        60.0;
+        70.0;
+        80.0;
+    }
+
+    enum size: SizeChoice = 60.0;
+}
+
+package RequirementTest {
+    constraint def C;
+    constraint c : C;
+    private import q::**;
+    requirement def R {
+        assume constraint c1 : C;
+        require c;
+        requirement;
+        requirement def <'1'> A {
+            subject s;
+        }
+    }
+    requirement def R1 {
+        require constraint c1 :>> c;
+    }
+    part p;
+    part q {
+        requirement r : R;
+        satisfy r by p;
+        assert satisfy r by q;
+    }
+
+    requirement r1 : R1;
+    not satisfy r1 by p;
+    assert not satisfy r1 by q;
+}
+
+package VerificationTest {
+    part def V {
+        m : ScalarValues::Integer;
+    }
+
+    part vv : V;
+
+    requirement def R { }
+
+    requirement r : R;
+
+    verification def VerificationCase {
+        subject v : V;
+        objective {
+            verify requirement : R;
+        }
+
+        VerificationCases::PassIf(v.m == 0)
+    }
+
+    verification def VerificationPlan {
+        subject v : V;
+        objective {
+            verify r;
+        }
+        verification verificationCase : VerificationCase;
+    }
+
+    part verificationContext {
+        verification verificationPlan : VerificationPlan {
+            subject v = vv;
+        }
+    }
+}
+```

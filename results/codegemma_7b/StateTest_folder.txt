@@ -1,0 +1,52 @@
+```
+package StateTest {
+
+    part p {
+        attribute signal : Boolean;
+        attribute start_incr : Integer;
+        attribute c : Integer;
+    }
+
+    state machine Counting {
+        initial state Initial {
+            when signal == true {
+                transition to Counting;
+            }
+        }
+
+        state Counting {
+            initial state Counter {
+                action a {
+                    state counting : Counting;
+                    assign counting.counter.count := counting.counter.count + 1;
+                    assign counting.counter.count := Increment(counting.counter).count;
+                }
+
+                when c > 5 {
+                    transition to Final;
+                }
+            }
+
+            state Parallel {
+                initial state P1 {
+                    when signal == true {
+                        transition to Final;
+                    }
+                }
+
+                initial state P2 {
+                    when signal == true {
+                        transition to Final;
+                    }
+                }
+            }
+
+            state Final {
+                when signal == false {
+                    transition to Initial;
+                }
+            }
+        }
+    }
+}
+```

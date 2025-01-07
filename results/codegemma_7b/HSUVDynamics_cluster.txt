@@ -1,0 +1,57 @@
+```sysmlv2
+package HighSpeedUnmannedVehicle {
+
+    type Real is numeric;
+
+    part Vehicle {
+        attribute :>> horsepower = 500 [hp];
+        attribute :>> weight = 2000 [kg];
+        attribute :>> acceleration = 2 [m/s²];
+        attribute :>> velocity = 0 [m/s];
+        attribute :>> distance = 0 [m];
+        attribute :>> time = 0 [s];
+    }
+
+    constraint PowerEquation {
+        in Vehicle;
+        return : Real;
+        return power = horsepower * velocity;
+    }
+
+    constraint PositionEquation {
+        in Vehicle;
+        return : Real;
+        return distance = velocity * time;
+    }
+
+    constraint VelocityEquation {
+        in Vehicle;
+        return : Real;
+        return velocity = acceleration * time;
+    }
+
+    constraint AccelerationEquation {
+        in Vehicle;
+        return : Real;
+        return acceleration = power / weight;
+    }
+
+    constraint VehicleDynamics {
+        in Vehicle;
+        return : Real;
+        return powerEquation = PowerEquation.power;
+        return : Real;
+        return positionEquation = PositionEquation.distance;
+        return : Real;
+        return velocityEquation = VelocityEquation.velocity;
+        return : Real;
+        return accelerationEquation = AccelerationEquation.acceleration;
+    }
+
+    analysis VehicleSimulation {
+        subject : Vehicle;
+        requirement :>> vehicleDynamics = VehicleDynamics;
+        return : Vehicle;
+    }
+}
+```

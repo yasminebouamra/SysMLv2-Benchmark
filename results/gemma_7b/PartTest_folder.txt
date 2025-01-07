@@ -1,0 +1,24 @@
+```sysmlv2
+container PartTest {
+
+	part def P {
+		doc "Detailed part description"
+	}
+
+	abstract template def TP {
+		doc "Abstract template for part definition"
+		part p : P { ... }
+	}
+
+	part def A : TP {
+		doc "Specific part implementation of abstract template"
+	}
+
+	... // Additional parts and templates as needed ...
+
+	port def I { ... }
+
+	... // Additional ports and interfaces as needed ...
+
+}
+```

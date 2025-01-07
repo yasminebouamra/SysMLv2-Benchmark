@@ -1,0 +1,11 @@
+```sysmlv2
+package CameraSystem {
+    private import PictureTaking::*;
+
+    action takePicture {
+        action focus: PictureTaking.Focus[1];
+        flow focus.xrsl to shoot.xsf;
+        action shoot: PictureTaking.Shoot[1];
+    }
+}
+```

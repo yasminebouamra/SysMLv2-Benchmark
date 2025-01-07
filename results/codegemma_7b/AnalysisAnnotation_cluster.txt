@@ -1,0 +1,82 @@
+```
+package VehicleDynamicsModel {
+
+    private import ScalarValues::*;
+    private import Quantities::*;
+    private import ISQ::*;
+    private import USCustomaryUnits::*;
+
+    package VehicleQuantities {
+        private import MeasurementReferences::*;
+
+        attribute def DistancePerVolumeUnit :> DerivedUnit {
+            private attribute distancePF: QuantityPowerFactor[1] { :>> quantity = isq.L; :>> exponent = 1; }
+            private attribute volumePF: QuantityPowerFactor[1] { :>> quantity = isq.L; :>> exponent = -3; }
+            attribute :>> quantityDimension { :>> quantityPowerFactors = (distancePF, volumePF); }
+        }
+
+        attribute def DistancePerVolumeValue :> ScalarQuantityValue {
+            :>> num : Real;
+            :>> mRef : DistancePerVolumeUnit;
+        }
+
+        attribute gallon : VolumeUnit = 231.0 * 'in' ** 3;
+        attribute mpg : DistancePerVolumeUnit = 'mi' / gallon;
+        attribute hp : PowerUnit = 745.7[SI::W];
+    }
+
+    package VehicleModel {
+        public import VehicleQuantities::*;
+
+        part def Vehicle {
+            attribute power :> ISQ::power;
+        }
+
+        part def Engine {
+            attribute peakPower :> ISQ::power;
+            attribute fuelEfficiency : Real;
+        }
+
+        part vehicle_c1 : Vehicle {
+            attribute :>> power = engine.peakPower;
+            part engine : Engine[1];
+        }
+    }
+
+    package VehicleDynamicsAction {
+        private import VehicleModel::*;
+
+        action def VehicleDynamics {
+            in timeStep : Real;
+            in power : PowerValue[];
+            in dragCoefficient : Real;
+            in frictionCoefficient : Real;
+            in mass : MassValue;
+            in initialVelocity : VelocityValue;
+            in initialPosition : PositionValue;
+            out acceleration : AccelerationValue;
+            out velocity : VelocityValue;
+            out position : PositionValue;
+        }
+    }
+
+    package VehicleDynamicsAnalysis {
+        private import VehicleDynamicsAction::*;
+
+        analysis def VehicleDynamicsAnalysis {
+            subject vehicle : Vehicle;
+
+            action vehicleDynamics : VehicleDynamics {
+                in power = vehicle.power;
+                // ... remaining parameters and outputs
+            }
+
+            return calculatedAcceleration : AccelerationValue = vehicleDynamics.acceleration;
+            return calculatedVelocity : VelocityValue = vehicleDynamics.velocity;
+            return calculatedPosition : PositionValue = vehicleDynamics.position;
+        }
+    }
+
+    // ... individual models and analyses as needed
+}
+```

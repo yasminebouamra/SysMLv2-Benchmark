@@ -1,0 +1,15 @@
+```sysmlv2
+package TextualRepresentationTest {
+
+item TextualRepresentation {
+	attribute text : Real {
+		constraint positive : text > 0;
+	}
+}
+
+action UpdateTextualRepresentation {
+	log OpMsg('TextualRepresentation updated.');
+}
+
+}
+```

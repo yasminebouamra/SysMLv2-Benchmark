@@ -1,0 +1,62 @@
+```sysmlv2
+package SysMLv2Examples {
+
+    part def A {
+        part b : B {
+            attribute c : Integer;
+        }
+        attribute d : Integer;
+    }
+
+    part a : A {
+        part b : B {
+            attribute c : Integer = 5;
+        }
+        attribute d : Integer = 10;
+    }
+
+    part B {
+        part c : C {
+            attribute d : Integer;
+        }
+        attribute e : Integer;
+    }
+
+    part b : B {
+        part c : C {
+            attribute d : Integer = 7;
+        }
+        attribute e : Integer = 12;
+    }
+
+    part C {
+        attribute d : Integer;
+    }
+
+    part c : C {
+        attribute d : Integer = 9;
+    }
+
+    part def D {
+        part e : E {
+            attribute f : Integer;
+        }
+        attribute g : Integer;
+    }
+
+    part d : D {
+        part e : E {
+            attribute f : Integer = 3;
+        }
+        attribute g : Integer = 6;
+    }
+
+    part E {
+        attribute f : Integer;
+    }
+
+    part e : E {
+        attribute f : Integer = 4;
+    }
+}
+```

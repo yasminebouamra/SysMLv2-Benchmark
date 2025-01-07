@@ -1,0 +1,50 @@
+```
+package QuadcopterModel {
+
+	private import ShapeItems::Box;
+	private import SI::mm;
+
+	part def Quadcopter {
+		doc
+		/*
+		 * Simple quadcopter model
+		 */
+
+		part motor : Motor[4] :> componentItems {
+			attribute :>> coordinateFrame {
+				attribute :>> transformation : TranslationRotationSequence {
+					attribute :>> source = datum;
+					attribute :>> elements = Translation((0, 0, 150)[datum]);
+				}
+			}
+		}
+
+		part strut : Strut[4] :> componentItems {
+			attribute :>> coordinateFrame {
+				attribute :>> transformation : TranslationRotationSequence {
+					attribute :>> source = datum;
+					attribute :>> elements = Translation((0, 0, 75)[datum]);
+				}
+			}
+		}
+
+		part propellerMotorAssembly : PropellerMotorAssembly[4] :> componentItems {
+			attribute :>> coordinateFrame {
+				attribute :>> transformation : TranslationRotationSequence {
+					attribute :>> source = datum;
+					attribute :>> elements = Translation((0, 0, 100)[datum]);
+				}
+			}
+		}
+
+		part cameraSystem : CameraSystem {
+			attribute :>> coordinateFrame {
+				attribute :>> transformation : TranslationRotationSequence {
+					attribute :>> source = datum;
+					attribute :>> elements = Translation((0, 0, 200)[datum]);
+				}
+			}
+		}
+	}
+}
+```

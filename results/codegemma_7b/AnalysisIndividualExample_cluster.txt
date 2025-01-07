@@ -1,0 +1,38 @@
+```sysml
+package VehicleFuelEconomyModel
+
+private import UnitDefinitions::UnitDefinitions;
+private import VehicleComponents::VehicleComponents;
+private import FuelEconomyAnalysis::FuelEconomyAnalysis;
+
+part context {
+    part vehicle : VehicleComponents.Vehicle {
+        attribute power : UnitDefinitions.Horsepower;
+        attribute fuelEfficiency_city : UnitDefinitions.MilesPerGallon;
+        attribute fuelEfficiency_highway : UnitDefinitions.MilesPerGallon;
+    }
+
+    part engine : VehicleComponents.Engine {
+        attribute power : UnitDefinitions.Horsepower;
+    }
+
+    action calculateFuelConsumption {
+        in power : UnitDefinitions.Horsepower;
+        out fuelConsumption : UnitDefinitions.GallonsPerMile;
+        calc :>> fuelConsumption = power / vehicle.fuelEfficiency_city;
+    }
+
+    analysis cityFuelEconomyAnalysis : FuelEconomyAnalysis {
+        subject vehicle : vehicle;
+        in attribute scenario : FuelEconomyAnalysis.Scenario.CITY;
+        in requirement fuelEconomyRequirement : UnitDefinitions.MilesPerGallon;
+    }
+
+    analysis highwayFuelEconomyAnalysis : FuelEconomyAnalysis {
+        subject vehicle : vehicle;
+        in attribute scenario : FuelEconomyAnalysis.Scenario.HIGHWAY;
+        in requirement fuelEconomyRequirement : UnitDefinitions.MilesPerGallon;
+    }
+}
+
+```

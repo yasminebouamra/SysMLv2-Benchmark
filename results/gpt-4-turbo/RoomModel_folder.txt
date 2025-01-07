@@ -1,0 +1,40 @@
+```SysMLV2
+package BuildingLayout {
+
+    part def Room {
+        port entry;
+    }
+
+    part def Hallway :> Room;
+
+    part def Classroom :> Room {
+        item flow def Air;
+        item flow def Furniture;
+        item flow def Students;
+        item flow def Teachers;
+
+        port entry {
+            item flow air : Air;
+            item flow furniture : Furniture;
+            item flow students : Students;
+            item flow teachers : Teachers;
+        }
+    }
+
+    part def Storageroom :> Room {
+        item flow def Supplies;
+        
+        port entry {
+            item flow supplies : Supplies;
+        }
+    }
+
+    part hallway : Hallway;
+    part classroom : Classroom;
+    part storageroom : Storageroom;
+
+    // Connecting ports
+    connect hallway.entry to classroom.entry;
+    connect classroom.entry to storageroom.entry;
+}
+```

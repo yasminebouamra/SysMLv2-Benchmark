@@ -1,0 +1,11 @@
+ ```SysMLV2
+  package TextualRepresentationTest {
+      item TextItem {
+          attribute real positiveAttribute;
+          action updateAndLog(message : String) {
+              modify positiveAttribute = (previousValue:real) => previousValue + 1;
+              logOperation("Updated attribute value: " + previousValue);
+          }
+      }
+  }
+  ```

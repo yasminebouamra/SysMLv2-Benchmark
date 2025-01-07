@@ -1,0 +1,49 @@
+```
+package CarEngine {
+
+  abstract part Vehicle : cuboid {
+    abstract attribute engineLocation : coordinateFrame;
+  }
+
+  part Car : Vehicle {
+    attribute length : SI::meter = 4.5;
+    attribute width : SI::meter = 2;
+    attribute height : SI::meter = 1.5;
+
+    attribute engineLocation : coordinateFrame = coordinateFrame(origin = origin, xAxis = xAxis, yAxis = yAxis, zAxis = zAxis);
+  }
+
+  part Engine : cuboid {
+    attribute length : SI::meter = 0.6;
+    attribute width : SI::meter = 0.3;
+    attribute height : SI::meter = 0.3;
+
+    attribute cylinderDiameter : SI::meter = 0.1;
+    attribute cylinderHeight : SI::meter = 0.2;
+
+    attribute engineCoordinateFrame : coordinateFrame = coordinateFrame(origin = origin, xAxis = xAxis, yAxis = yAxis, zAxis = zAxis);
+  }
+
+  part EngineModel : Engine {
+    attribute volume : SI::cubicMeter;
+
+    attribute engineBlock : cuboid = cuboid(length = length, width = width, height = height);
+
+    attribute cylinders : cuboid[2] = [
+      cuboid(length = cylinderDiameter, width = cylinderHeight, height = height),
+      cuboid(length = cylinderDiameter, width = cylinderHeight, height = height)
+    ];
+
+    attribute volumeDifference : SI::cubicMeter;
+
+    constraint volumeCalculation {
+      volume = engineBlock.volume - sum(cylinders.volume);
+    }
+
+    constraint positionCylinders {
+      cylinders[1].origin = engineCoordinateFrame.origin + (engineCoordinateFrame.xAxis * (length / 2)) + (engineCoordinateFrame.yAxis * (width / 2));
+      cylinders[2].origin = engineCoordinateFrame.origin + (engineCoordinateFrame.xAxis * (length / 2)) - (engineCoordinateFrame.yAxis * (width / 2));
+    }
+  }
+}
+```

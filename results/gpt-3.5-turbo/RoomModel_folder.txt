@@ -1,0 +1,26 @@
+package ArchitectureLayout {
+
+	part def Hallway {
+		port entry;
+	}
+	
+	part def Classroom {
+		port airIn;
+		port airOut;
+		port furniture;
+		port students;
+		port teachers;
+	}
+	
+	part def Storageroom {
+		port entry;
+		port furniture;
+	}
+	
+	connect Hallway.entry to Classroom.airIn;
+	connect Classroom.airOut to Hallway.entry;
+	connect Classroom.furniture to Storageroom.furniture;
+	connect Classroom.students to Hallway.entry;
+	connect Classroom.teachers to Hallway.entry;
+	connect Storageroom.entry to Classroom.furniture;
+}

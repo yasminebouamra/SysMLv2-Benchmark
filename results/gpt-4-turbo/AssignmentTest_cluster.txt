@@ -1,0 +1,37 @@
+```sysml
+package AssignmentTest {
+    part def Counter {
+        attribute count : ScalarValues::Integer = 0;
+        
+        function def incrementStep(amount : ScalarValues::Integer) {
+            do update count = count + amount;
+        }
+
+        action def increment {
+            do update count = count + 1;
+        }
+
+        action def decrement {
+            do update count = count - 1;
+        }
+        
+        state def CountingStateMachine {
+            state incrementing {
+                entry;
+                do increment();
+                transition to decrementing when trigger;
+            }
+            
+            state decrementing {
+                entry;
+                do decrement();
+                transition to incrementing when trigger;
+            }
+        }
+    }
+    
+    part counter : Counter {
+        state machine CountingStateMachine;
+    }
+}
+```

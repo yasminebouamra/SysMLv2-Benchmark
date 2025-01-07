@@ -1,0 +1,24 @@
+```sysmlv2
+package BatteryModel {
+
+    private import ShapeItems::Box;
+    private import SI::mm;
+
+    part def BatteryUnit {
+        doc
+        /*
+        * Simple geometric shape for the battery unit
+        */
+        item batteryShape : Box [1] :> boundingShapes {
+            :>> length = 200 [mm];
+            :>> width  = 100 [mm];
+            :>> height = 150 [mm];
+        }
+
+        /*
+        * Reference to the external STEP file containing the detailed geometry
+        */
+        externalReference stepFile : File;
+    }
+}
+```

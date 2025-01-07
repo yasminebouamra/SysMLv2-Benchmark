@@ -1,0 +1,17 @@
+```
+package ItemTest {
+
+    abstract part def A {
+        protected part ref c : C;
+        port p : P { in, out : A };
+    }
+
+    abstract part def B : A {
+        abstract part ref a : A;
+    }
+
+    part def C {
+        part ref item : A | B;
+    }
+}
+```

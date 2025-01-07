@@ -1,0 +1,43 @@
+```sysmlv2
+package StateTest
+
+part def InitialState {
+  initial state s1;
+}
+
+part def ParallelState {
+  parallel state s2 {
+    state s21;
+    state s22;
+  }
+}
+
+part def InheritedState {
+  inherit from InitialState;
+  state s3;
+}
+
+part def System {
+  attribute signal : Signal;
+
+  initial state initial : InitialState;
+  state parallel : ParallelState;
+  state inherited : InheritedState;
+
+  transition signal to parallel {
+    when signal.raised;
+  }
+
+  transition parallel.s21 to inherited {
+    when signal.raised;
+  }
+
+  action onEntry parallel.s22 {
+    do something();
+  }
+
+  action onExit parallel.s22 {
+    do something();
+  }
+}
+```

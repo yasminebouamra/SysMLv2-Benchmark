@@ -1,0 +1,72 @@
+```sysmlv2
+package SysMLV2Architecture {
+
+  attribute def ApplicationLayer {
+    in userAction : UserAction;
+    out businessResponse : BusinessResponse;
+  }
+
+  attribute def ServiceLayer {
+    in businessRequest : BusinessRequest;
+    out businessResponse : BusinessResponse;
+  }
+
+  attribute def DataLayer {
+    in businessRequest : BusinessRequest;
+    out dataResponse : DataResponse;
+  }
+
+  port def ApplicationLayerPort {
+    in userAction : UserAction;
+    out businessResponse : BusinessResponse;
+  }
+
+  port def ServiceLayerPort {
+    in businessRequest : BusinessRequest;
+    out businessResponse : BusinessResponse;
+  }
+
+  port def DataLayerPort {
+    in businessRequest : BusinessRequest;
+    out dataResponse : DataResponse;
+  }
+
+  part context {
+    part applicationLayer {
+      port applicationLayerPort: ApplicationLayerPort;
+      perform applicationLayer.processUserAction {
+        in userAction = applicationLayerPort.userAction;
+        out businessResponse = serviceLayerPort.businessResponse;
+      }
+    }
+
+    part serviceLayer {
+      port serviceLayerPort: ServiceLayerPort;
+      perform serviceLayer.processBusinessRequest {
+        in businessRequest = serviceLayerPort.businessRequest;
+        out businessResponse = dataLayerPort.businessResponse;
+      }
+    }
+
+    part dataLayer {
+      port dataLayerPort: DataLayerPort;
+      perform dataLayer.processBusinessRequest {
+        in businessRequest = dataLayerPort.businessRequest;
+        out dataResponse = dataLayerPort.dataResponse;
+      }
+    }
+  }
+
+  action applicationLayer {
+    action processUserAction { in userAction; out businessResponse: BusinessResponse; }
+  }
+
+  action serviceLayer {
+    action processBusinessRequest { in businessRequest; out businessResponse: BusinessResponse; }
+  }
+
+  action dataLayer {
+    action processBusinessRequest { in businessRequest; out dataResponse: DataResponse; }
+  }
+}
+```

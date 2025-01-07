@@ -1,0 +1,16 @@
+```sysmlv2
+package Model {
+    package Package1 {
+        part def Part1;
+    }
+
+    package Package2 {
+        private import Package1::*;
+        part instance PartInstance : Part1;
+    }
+
+    package Package3 {
+        part instance SubPartInstance : Package2::PartInstance;
+    }
+}
+```

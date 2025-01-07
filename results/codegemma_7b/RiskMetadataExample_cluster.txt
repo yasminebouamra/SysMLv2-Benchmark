@@ -1,0 +1,17 @@
+```
+package RiskMetadataExample {
+	private import RiskMetadata.*;
+
+	part def Engine4cyl : Engine {
+		@RiskMetadata{
+			overallRisk = High;
+			technicalRisk = Medium;
+			scheduleRisk = Low;
+			totalRiskAssessment {
+				probability = Medium;
+				impact = High;
+			}
+		}
+	}
+}
+```

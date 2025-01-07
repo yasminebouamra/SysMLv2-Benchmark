@@ -1,0 +1,50 @@
+```sysmlv2
+package CartModel
+
+part def Cart {
+    attribute mass : Real;
+    attribute velocity : Real;
+    attribute acceleration : Real;
+}
+
+part def Pusher {
+    attribute force : Real;
+}
+
+action def ApplyForce {
+    in force : Real;
+    out appliedForce : Real;
+}
+
+analysis def CartDynamics {
+    subject cart : Cart;
+    action applyForce : ApplyForce;
+
+    equation of motion : Real = mass * acceleration;
+
+    equation of change in velocity : Real = equation of motion;
+
+    return state : Real = cart.velocity;
+    return state derivative : Real = equation of change in velocity;
+}
+
+individual part def Cart_1 :> Cart {
+    attribute :>> mass = 1.0[kg];
+}
+
+individual part def Pusher_1 :> Pusher {
+    attribute :>> force = 5.0[N];
+}
+
+individual analysis def CartDynamics_1 :> CartDynamics {
+    subject cart : Cart_1;
+    individual action :>> applyForce : ApplyForce {
+        snapshot :>> done :> applyForce {
+            out :>> appliedForce = pusher.force;
+        }
+    }
+}
+
+```
+
+</start_of_turn>

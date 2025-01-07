@@ -1,0 +1,77 @@
+ ```sysml
+  package PublishSubscribeSystem {
+    context SystemContext;
+
+    class Producer_3 : Publisher {
+      operation publish(topic: String): Publication;
+    }
+
+    class Server_3 : InterfaceImplementor {
+      interfaceImplementation subscriptionPort: SubscriptionInterface;
+      operation subscribing(topic: String): Boolean;
+      operation publishing(publication: Publication): Boolean;
+      operation delivering(publication: Publication): Deliver;
+    }
+
+    class Consumer_3 : Subscriber {
+      attribute myTopic: String;
+      port subscriptionPort : SubscriptionPort;
+      operation subscribe(): SubscriptionRequest;
+      operation delivery(deliver: Deliver): Void;
+    }
+
+    interface SubscriptionInterface : SubscriptionInterfaceType {
+      operation subscribe(): SubscriptionRequest;
+      operation deliver(delivery: Deliver): Void;
+    }
+
+    class Publication : PublicationType {
+      attribute topic: String;
+    }
+
+    class Deliver : DeliverType {
+      attribute publication: Publication;
+    }
+
+    class SubscriptionRequest : SubscriptionType {
+      attribute topic: String;
+    }
+  }
+
+  sequence PublishSubscribeSequence {
+    part producer_3 : Producer_3 {
+      behavior producerBehavior {
+        event publish[1];
+      }
+    }
+
+    part server_3 : Server_3 {
+      behavior subscribing[1];
+      behavior publishing[1];
+      behavior delivering[1];
+    }
+
+    part consumer_3 : Consumer_3 {
+      behavior subscribe[1];
+      behavior delivery[1];
+    }
+
+    flow publish_message from producer_3.producerBehavior.publish to server_3.publishing {
+      event producer_3.publish;
+      then event PublishSubscribeSystem.SubscriptionInterface.publish;
+      then event server_3.publish;
+    }
+
+    flow subscribe_message from consumer_3.behavior.subscribe to server_3.subscribing {
+      event consumer_3.subscribe;
+      then event PublishSubscribeSystem.SubscriptionInterface.subscribe;
+      then event server_3.subscribing;
+    }
+
+    flow deliver_message from server_3.delivering to consumer_3.behavior.delivery {
+      event server_3.deliver;
+      then event PublishSubscribeSystem.SubscriptionInterface.deliver;
+      then event consumer_3.deliver;
+    }
+  }
+  ```

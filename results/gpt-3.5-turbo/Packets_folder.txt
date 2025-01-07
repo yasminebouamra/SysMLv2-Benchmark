@@ -1,0 +1,25 @@
+package DataPacketModel {
+
+	part def PacketHeader {
+		attribute sequenceNumber : Integer;
+		attribute timestamp : DateTime;
+		attribute sourceAddress : String;
+		attribute destinationAddress : String;
+	}
+	
+	part def DataField {
+		attribute dataType : String;
+		attribute dataValue : Real;
+	}
+	
+	package ThermalDataTransmission {
+		part def ThermalPacketHeader :> PacketHeader {
+			attribute temperature : Real;
+		}
+		
+		part def ThermalDataField :> DataField {
+			attribute timestamp : DateTime;
+			attribute temperatureValue : Real;
+		}
+	}
+}

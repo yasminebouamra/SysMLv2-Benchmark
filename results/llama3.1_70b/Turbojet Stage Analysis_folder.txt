@@ -1,0 +1,70 @@
+package TurbojetStagesFramework {
+	bindingContext LowPressureCompressorAnalysis {
+		subsystem lpCompressor :> LPCompressor;
+		
+		context LowPressureCompressorThermodynamicContext : ThermodynamicContext {
+			import * from ThermodynamicFunctions;
+			import * from GasParcel;
+			
+			object thermodynamicStructure : ThermodynamicStructure {
+				private static calculateIdealGasLaw( T : ThermodynamicState, p : PressureValue ) : VolumeValue;
+				private static calculateReversibleAdiabaticCompression( gamma : AdiabaticIndexValue, pi : PressureRatioValue ) : TemperatureRatioValue;
+			}
+			
+			object idealGasParcel :> GasParcel {
+				feature temperature : ThermodynamicTemperature = thermodynamicStructure.calculateIdealGasLaw( T, p );
+			}
+			
+			object movingGasParcel :> GasParcel {
+				feature totalEnthalpy : ThermodynamicEnthalpy = calculateTotalEnthalpy();
+			}
+			
+			action inletGasAnalysis {
+				in attribute gasComposition : MixtureValue;
+				out attribute staticPressure : PressureValue;
+				out attribute stagnationTemperature : ThermodynamicTemperature;
+				assert constraint inletBoundaryConditions {
+					staticPressure == lpCompressor.staticInletPressure &
+					stagnationTemperature == idealGasParcel.temperature
+				}
+			}
+		}
+		
+		part lpCompressor_analyzed :> lpCompressor {
+			import * from LowPressureCompressorThermodynamicContext;
+			
+			attribute :>> staticInletPressure = inletGasAnalysis.staticPressure;
+			attribute :>> stagnationTemperatureAtInlet = inletGasAnalysis.stagnationTemperature
+		}
+		
+		satisfy lpCompressor by lpCompressor_analyzed;
+	}
+	
+	package ThermodynamicFunctions {
+		function calculateIdealGasLaw( T : ThermodynamicState, p : PressureValue ) : VolumeValue;
+		function calculateReversibleAdiabaticCompression( gamma : AdiabaticIndexValue, pi : PressureRatioValue ) : TemperatureRatioValue;
+		function calculateTotalEnthalpy() : ThermodynamicEnthalpy;
+	}
+	
+	package GasParcel {
+		class GasParcel {
+			private attribute pressure : PressureValue;
+			private attribute temperature : ThermodynamicTemperature;
+			private attribute specificHeatCapacityAtConstantPressure : SpecificHeatCapacityValue;
+		}
+	}
+	
+	package ThermodynamicContext {
+		class ThermodynamicStructure {
+			private static calculateIdealGasLaw( T : ThermodynamicState, p : PressureValue ) : VolumeValue;
+			private static calculateReversibleAdiabaticCompression( gamma : AdiabaticIndexValue, pi : PressureRatioValue ) : TemperatureRatioValue;
+		}
+	}
+	
+	package LPCompressor {
+		class LPCompressor {
+			private attribute staticInletPressure : PressureValue;
+			private attribute stagnationTemperatureAtInlet : ThermodynamicTemperature;
+		}
+	}
+}

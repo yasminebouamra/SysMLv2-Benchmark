@@ -1,0 +1,42 @@
+```sysmlv2
+package VehicleConfigurations {
+
+	doc
+	/*
+	 * Model for individual vehicles and their configurations over time.
+	 */
+
+	private import SI::kg;
+	private import SI::m;
+
+	public import VehicleDefinitions::*;
+
+	/* VALUES */
+	vehicleMass_C1 = 1000.0 [kg];
+	vehicleMass_C2 = 1200.0 [kg];
+
+	/* TYPES */
+	type TimeSlice {
+		attribute timestamp : string;
+	}
+
+	/* CONFIGURATIONS */
+	configuration VehicleConfiguration_C1 {
+		part vehicle: Vehicle {
+			attribute mass = vehicleMass_C1;
+		}
+	}
+
+	configuration VehicleConfiguration_C2 {
+		part vehicle: Vehicle {
+			attribute mass = vehicleMass_C2;
+		}
+	}
+
+	/* TIMELINE */
+	timeline {
+		snapshot VehicleConfiguration_C1 at "2023-10-26 12:00:00";
+		snapshot VehicleConfiguration_C2 at "2023-10-26 12:30:00";
+	}
+}
+```

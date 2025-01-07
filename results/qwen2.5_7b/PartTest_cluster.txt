@@ -1,0 +1,125 @@
+```uml
+package PartTest {
+
+	part def AbstractPart {
+		doc 
+		/*
+		 * Abstract part definition providing a template for other parts.
+		 */
+		
+		attribute value : ScalarValues::Natural;
+	}
+
+	part def ConcretePart1 :> AbstractPart {
+		doc 
+		/*
+		 * A concrete implementation of the abstract part with additional behavior.
+		 */
+
+		timeslice asSlice1 [0..1] {
+			doc
+			/*
+			 * Timeslice during which ConcretePart1 operates in state 1.
+			 */
+		}
+
+		timeslice asSlice2 [1..*] {
+			doc
+			/*
+			 * Timeslice during which ConcretePart1 operates in state 2, with a minimum of one occurrence.
+			 */
+		}
+	}
+
+	part def SubsetPart :> AbstractPart {
+		doc 
+		/*
+		 * A subset part that inherits from the abstract part and adds specific behavior.
+		 */
+
+		timeslice asSubsetSlice [0..1] {
+			doc
+			/*
+			 * Timeslice during which SubsetPart operates in state 1.
+			 */
+		}
+
+		attribute customValue : ScalarValues::Natural;
+	}
+
+	part def CompositePart {
+		doc 
+		/*
+		 * A composite part that contains other parts and defines interactions between them.
+		 */
+
+		ref childPart1 : ConcretePart1 [0..*];
+		ref childPart2 : SubsetPart [1..1];
+	}
+
+	action def InteractionAction { out result : ScalarValues::Natural; }
+
+	action def CompositeBehavior {
+		first start;
+		
+		action init { 
+			out result : value;
+		}
+		
+		action processChildParts { in childResult : result from init; }
+		
+		bind result = (childResult + 10);
+	}
+
+	variation part def VaryingPart :> AbstractPart {
+		variant part x : ConcretePart1 {
+			doc 
+			/*
+			 * Variant part implementation of ConcretePart1.
+			 */
+			
+			timeslice asVaryingSlice [0..*] {
+				doc
+				/*
+				 * Timeslice during which the varying part operates.
+				 */
+			}
+		}
+
+		variant part y : SubsetPart {
+			doc 
+			/*
+			 * Variant part implementation of SubsetPart.
+			 */
+			
+			timeslice asVaryingSlice [0..*] {
+				doc
+				/*
+				 * Timeslice during which the varying part operates.
+				 */
+			}
+		}
+	}
+
+	part y : VaryingPart;
+
+	variation action def VaryingAction {
+		variant action a1;
+		variant action a2;
+	}
+
+	variation use case VaryingUseCase {
+    	variant use case uc1;
+    	variant use case uc2;
+    }
+
+	variation analysis A1;
+    
+	variation verification V1;
+    
+	variation requirement R {
+    	variant requirement r1;
+    }
+	
+}
+```

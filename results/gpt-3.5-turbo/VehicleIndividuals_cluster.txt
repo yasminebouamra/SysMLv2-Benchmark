@@ -1,0 +1,26 @@
+package VehicleIndividuals {
+	private import Time::*;
+	private import SI::kg;
+	
+	package IndividualDefinitions {
+
+		individual part def Vehicle {
+			attribute mass : Mass = 0 [kg];
+		}
+		
+		individual part def WheelAssembly;
+		individual part def AxleAssembly;
+		
+		individual part def VehicleSnapshot {
+			part vehicle :> Vehicle[1];
+			part wheelAssembly : WheelAssembly[*];
+			part axleAssembly : AxleAssembly[*];
+			attribute timestamp : DateTime;
+		}
+		
+		individual part def Configuration {
+			part vehicleSnapshot :> VehicleSnapshot;
+			attribute timeslice : DateTime;
+		}
+	}
+}

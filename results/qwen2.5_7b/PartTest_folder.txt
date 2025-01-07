@@ -1,0 +1,84 @@
+package PartTest {
+	
+	part def TemplatePart {
+		abstract;
+		attribute a : ScalarValues::Integer;
+	}
+	
+	part def SubsetPart1 :> TemplatePart { 
+		constraint a > 0; 
+	}	
+	
+	part def SubsetPart2 :> TemplatePart {
+		constraint a < 0;
+	}
+	
+	part def BaseComponent {
+		abstract;
+		part def PortA;
+		part def PortB;
+		
+		// Interface Definition
+		interface def I1 {
+			port ref PortA;
+			port ref PortB;
+		}
+	}
+	
+	part c : BaseComponent { 
+		interface i1 : I1; 
+	}
+
+	variation part def RecursivePart :> TemplatePart {
+		variant part x {
+			attribute b : ScalarValues::Integer;
+			
+			constraint 0 < b < a;
+			
+			port ref PortA;
+			port ref PortB;
+		}
+	}
+	
+	part r1 : RecursivePart { 
+		attribute b = -5; // Example value to illustrate constraint
+		interface i2 : I1 {
+			reuse i1::PortA;
+			port ref PortB;
+		} 
+	}
+	
+	variation part def ComplexComponent :> BaseComponent {
+		variant part c {
+			part :>> RecursivePart {
+				constraint b > 5; // Example value to illustrate constraint
+			}
+		}
+	}
+	
+	part cc : ComplexComponent { 
+		interface i3 : I1 {
+			reuse i2::PortA;
+			port ref PortB;
+		} 
+	}
+
+	variation use case uc1 {
+    	variant use case uc11;
+    	variant use case uc12;
+    }
+
+    variation analysis a1;
+
+    variation verification v1;
+
+    part def LogicalComponent {
+    	part def SubPart1 {
+    		constraint a > 0;
+    	}
+    }
+    
+    part l : LogicalComponent {
+        constraint a = 10;
+    }
+}

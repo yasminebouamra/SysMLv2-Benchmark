@@ -1,0 +1,33 @@
+```
+package VehicleMassConstraints {
+
+    private import SI::kg;
+
+    part Engine {
+        attribute mass: MassValue;
+    }
+
+    part Transmission {
+        attribute mass: MassValue;
+    }
+
+    part Vehicle {
+        attribute totalMass: MassValue;
+
+        part engine: Engine;
+        part transmission: Transmission;
+    }
+
+    constraint MassConstraint {
+        totalMass == engine.mass + transmission.mass;
+    }
+
+    part VehicleA :> Vehicle {
+        assert constraint massConstraint;
+    }
+
+    part VehicleB :> Vehicle {
+        assert totalMass == engine.mass + transmission.mass;
+    }
+}
+```

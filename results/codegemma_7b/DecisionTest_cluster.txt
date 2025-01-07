@@ -1,0 +1,65 @@
+```sysmlv2
+package DecisionTest
+
+attribute x : Integer := 0
+
+decision x_decision {
+  when x == 1 then
+    action execute_when_x_is_1
+  when x > 1 then
+    action execute_when_x_is_greater_than_1
+  else
+    action execute_when_x_is_not_1_or_greater_than_1
+}
+
+decision boolean_decision {
+  when true then
+    action execute_when_true
+  when false then
+    action execute_when_false
+}
+
+sequence {
+  execute x_decision
+  if x_decision == execute_when_x_is_1 then
+    execute execute_when_x_is_1
+  elseif x_decision == execute_when_x_is_greater_than_1 then
+    execute execute_when_x_is_greater_than_1
+  else
+    execute execute_when_x_is_not_1_or_greater_than_1
+  end if
+  execute boolean_decision
+  if boolean_decision == execute_when_true then
+    execute execute_when_true
+  else
+    execute execute_when_false
+  end if
+}
+
+action execute_when_x_is_1 {
+  print("Executed when x is 1")
+}
+
+action execute_when_x_is_greater_than_1 {
+  print("Executed when x is greater than 1")
+}
+
+action execute_when_x_is_not_1_or_greater_than_1 {
+  print("Executed when x is not 1 or greater than 1")
+}
+
+action execute_when_true {
+  print("Executed when true")
+}
+
+action execute_when_false {
+  print("Executed when false")
+}
+```
+
+**Note:**
+
+* The `Integer` data type is used for the `x` attribute.
+* The `when` clause specifies the conditions for each decision.
+* The `if` statement checks the result of the decision-making structure.
+* The `print()` action is used to display messages in the output.

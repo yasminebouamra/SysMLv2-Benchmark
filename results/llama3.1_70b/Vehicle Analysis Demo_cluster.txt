@@ -1,0 +1,78 @@
+package 'Units' {
+    unit def 'Miles Per Gallon';
+    unit def 'Gallons';
+    unit def 'Miles';
+}
+
+package 'Vehicle Quantities' {
+    quantity def 'Fuel Volume' : 'Units'::'Gallons';
+    quantity def 'Distance' : 'Units'::'Miles';
+    quantity def 'Fuel Economy' : 'Units'::'Miles Per Gallon';
+    
+    // Define conversion factors
+    value def '1 Gallon in Liters' = 3.785;
+    value def '1 Mile in Meters' = 1609.34;
+}
+
+package 'Vehicle Models' {
+    part def 'Fuel Tank' {
+        attribute 'Capacity' : 'Vehicle Quantities'::'Fuel Volume';
+    }
+    
+    part def 'Wheels' {
+        attribute 'Radius' : 'Units'::'Meters';
+        attribute 'Width' : 'Units'::'Meters';
+        
+        calc def 'Circumference' { in r = 'Radius'; return 2 * 3.14159 * r; }
+    }
+    
+    part def 'Vehicle' {
+        part 'Fuel Tank' specializes 'Fuel Tank';
+        part 'Wheels' : [4] specializes 'Wheels';
+        
+        attribute 'Mass' : 'Units'::'Kilograms';
+        attribute 'Drag Coefficient' : 'Units'::'Dimensionless';
+    }
+}
+
+package 'Fuel Economy Requirements' {
+    requirement def 'City Driving' {
+        constraint { 'Vehicle Quantities'::'Fuel Economy' >= 20 'Units'::'Miles Per Gallon'; }
+    }
+    
+    requirement def 'Highway Driving' {
+        constraint { 'Vehicle Quantities'::'Fuel Economy' >= 30 'Units'::'Miles Per Gallon'; }
+    }
+}
+
+package 'Dynamics Modeling' {
+    calc def 'Acceleration' { in F = 'Force'; in m = 'Mass'; return F / m; }
+    
+    calc def 'Velocity' { in a = 'Acceleration'; in t = 'Time'; return a * t; }
+}
+
+package 'Fuel Economy Analysis' {
+    private import 'Vehicle Models'::*;
+    private import 'Dynamics Modeling'::*;
+    
+    part 'Analysis Context' {
+        part 'City Driving Scenario' : specializes 'Fuel Economy Requirements'::'City Driving';
+        
+        action def 'Analyze Fuel Economy' {
+            calc 'Fuel Consumption' { in d = 'Distance'; in fe = 'Fuel Economy'; return d / fe; }
+            
+            constraint { 'Fuel Consumption' <= 'Fuel Tank'::'Capacity'; }
+        }
+    }
+}
+
+// Apply the model to a specific scenario
+package 'Fuel Economy Compliance Analysis' {
+    private import 'Fuel Economy Analysis'::*;
+    
+    part def 'Compliance Check' {
+        action def 'Analyze Fuel Economy' specializes 'Fuel Economy Analysis'::'Analyze Fuel Economy';
+        
+        constraint { 'Fuel Economy' >= 20 'Units'::'Miles Per Gallon'; }
+    }
+}

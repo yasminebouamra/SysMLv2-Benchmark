@@ -1,0 +1,46 @@
+```sysml
+package LocalCloudSystem {
+
+	part def System;
+	part def Service;
+
+	part topLevelSystem[1] :> System {
+		part subSystem[1..*] :> System;
+		part service[1] :> Service;
+	}
+
+	part detailedSystem[1] :> System {
+		part subSystem[0..*] :> System;
+		part service[1] :> Service;
+		part serviceInterface;
+		part protocol;
+		part systemInteraction;
+	}
+
+	part detailedService[1] :> Service {
+		part serviceInterface;
+		part protocol;
+		part systemInteraction;
+	}
+
+	attribute def Metadata {
+		attribute semanticAnnotations;
+		attribute meanings;
+		attribute roles;
+	}
+
+	part semanticMetadata[1] :> Metadata {
+		attribute definition;
+		attribute link;
+		attribute coherence;
+	}
+
+	part localCloudEcosystem[1] {
+		part topLevelSystem[1] :> System;
+		part detailedSystem[1] :> System;
+		part detailedService[1] :> Service;
+		part semanticMetadata[1] :> Metadata;
+	}
+
+}
+```

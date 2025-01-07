@@ -1,0 +1,26 @@
+```sysmlv2
+package ParameterTest {
+
+	attribute def A {
+		attribute x : String;
+		ref y : A;
+	}
+
+	calc def F {
+		in a : A, n : Integer;
+		return : Integer;
+		a.x + n
+	}
+
+	action a {
+		A a1 = new A(x = "hello");
+		A a2 = new A(x = "world", y = a1);
+
+		Integer result1 = F(a1, 5);
+		Integer result2 = F(a2, 10);
+
+		print("Result 1:", result1);
+		print("Result 2:", result2);
+	}
+}
+```

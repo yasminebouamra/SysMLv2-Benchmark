@@ -1,0 +1,27 @@
+```sysmlv2
+package ComponentAllocationTest {
+	part def LogicalComponent;
+	
+	part def PhysicalAssembly {
+		part element;
+	}
+	
+	part l : LogicalComponent[1];
+	part p : PhysicalAssembly {
+		part a : element[3];
+	}
+
+	allocation def ComponentAllocation {
+		end logical : LogicalComponent;
+		end physical : PhysicalAssembly;
+	}
+
+	allocation allocation1 : ComponentAllocation allocate l to p;
+	allocation allocation2 : ComponentAllocation allocate (
+		logical ::> l,
+		physical ::> p
+	);
+
+	allocate l to p.a[0];
+}
+```

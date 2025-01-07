@@ -1,0 +1,8 @@
+```sysmlv2
+model vehicleDynamicsAnalysis {
+
+	part vehicleDynamicsAnalysisContext {
+		...
+	}
+}
+```

@@ -1,0 +1,47 @@
+```sysml
+model FlashlightSystem {
+	
+	package : FlashlightComponents {
+		
+		part def User {
+			port cmd_on : FlashOnOff;
+			port cmd_off : FlashOnOff;
+		}
+		
+		part def Flashlight {
+			port light : Light;
+		}
+		
+		part def ReflectingSurface {
+			port reflect_light : Light;
+		}
+		
+		enum def FlashOnOff {
+			value on,
+			value off
+		}
+		
+		attribute def Light;
+		
+		flow :>> send_command from User.cmd_on to Flashlight.light {
+			event User.cmd_on[1];
+			then event Flashlight.light[1];
+		}
+		
+		flow :>> receive_command from Flashlight.light to ReflectingSurface.reflect_light {
+			event Flashlight.light[1];
+			then event ReflectingSurface.reflect_light[1];
+		}
+		
+		flow :>> send_off_command from User.cmd_off to Flashlight.light {
+			event User.cmd_off[1];
+			then event Flashlight.light[0];
+		}
+		
+		flow :>> receive_off_command from Flashlight.light to ReflectingSurface.reflect_light {
+			event Flashlight.light[0];
+			then event ReflectingSurface.reflect_light[0];
+		}
+	}
+}
+```

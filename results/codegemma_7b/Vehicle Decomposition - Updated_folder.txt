@@ -1,0 +1,49 @@
+```sysmlv2
+package VehicleDecomposition
+
+part def Vehicle {
+    part chassis : ChassisAssembly[1] {
+        part rollBar : RollBar[0..1];
+        part wheels : Wheel[4];
+    }
+    part engine : Engine[1] {
+        part cylinders : Cylinder[4..8];
+    }
+}
+
+part def ChassisAssembly {
+    part rollBar : RollBar[0..1];
+    part wheels : Wheel[4];
+}
+
+part def Wheel {
+    part lugBolts : LugBolt[6..10];
+}
+
+part def Engine {
+    part cylinders : Cylinder[4..8];
+}
+
+part def RollBar {
+    part type : string;
+}
+
+part def Cylinder {
+    part capacity : integer;
+}
+
+part def LugBolt {
+    part material : string;
+}
+
+part def VehicleModel1 : Vehicle {
+    attribute rollBarType : string = "Light";
+    attribute cylinderCapacity : integer = 2000;
+}
+
+part def VehicleModel2 : Vehicle {
+    attribute rollBarType : string = "Heavy";
+    attribute cylinderCapacity : integer = 3000;
+}
+
+```

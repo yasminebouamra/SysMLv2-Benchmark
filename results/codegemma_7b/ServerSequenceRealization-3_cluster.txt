@@ -1,0 +1,69 @@
+```sysmlv2
+type APIS_DD : Boolean;
+
+interface APIS_MQTT : Boolean;
+interface APIS_HTTP : Boolean;
+
+type ServiceMethod : Boolean;
+type CallGiveItems : Boolean;
+type ResultGiveItems : Boolean;
+
+type Return_AllItems : Boolean;
+
+type MQTTServer : Boolean;
+
+type ServiceDiscovery : Boolean;
+
+system APIS_Broker {
+	
+	part APISProducer {
+		port apisc : APIS_DD;
+		port tellu : APIS_DD;
+		
+		behavior APISPbehavior {
+			on start {
+				send Publish("Return_AllItems") via apisc.APIS_MQTT;
+			}
+			on CallGiveItems {
+				send Return_AllItems(itms) via apisc.APIS_MQTT;
+			}
+		}
+	}
+	
+	part APISConsumer {
+		port apisp : APIS_DD;
+		
+		behavior MQTT_APISP {
+			on Subscribe {
+				send Subscribe("Return_AllItems") via apisp.APIS_MQTT;
+			}
+			on Return_AllItems {
+				// Process the message
+			}
+		}
+	}
+	
+	part MQTTServer {
+		port getTopic : APIS_DD;
+		port giveTopic : APIS_DD;
+		
+		behavior Serve {
+			on Publish {
+				store information about the publisher
+			}
+			on Subscribe {
+				store information about the subscriber
+			}
+			on Return_AllItems {
+				send the message to the subscriber
+			}
+		}
+	}
+	
+	connect APISProducer.apisc to MQTTServer.getTopic;
+	connect MQTTServer.giveTopic to APISConsumer.apisp;
+	
+	connect APISProducer.serviceDiscovery to serviceDiscovery.serviceDiscovery;
+	connect APISConsumer.serviceDiscovery to serviceDiscovery.serviceDiscovery;
+}
+```

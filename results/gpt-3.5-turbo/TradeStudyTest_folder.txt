@@ -1,0 +1,29 @@
+package TradeStudyComparison {
+	
+	package EngineParts {
+		part def Engine;
+		
+		attribute def ObjectiveFunction {
+			// Evaluation function to assess engine performance
+		}
+	}
+	
+	part engine1 :> Engine;
+	part engine2 :> Engine;
+	
+	use case def TradeStudyComparison {
+		objective {
+			// Maximize objective by evaluating engine performance
+		}
+
+		include use case evaluatePerformance : EvaluatePerformance;
+	}
+	
+	use case def EvaluatePerformance {
+		subject engine : Engine;
+		
+		objective {
+			// Evaluation function to assess engine performance
+		}
+	}
+}

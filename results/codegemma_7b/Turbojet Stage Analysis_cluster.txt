@@ -1,0 +1,76 @@
+```
+package TurbojetStageAnalysis {
+
+    private import IdealGasFunctions.*;
+    private import MovingGasParcelStructure.*;
+
+    package IdealGasFunctions {
+
+        function def IdealGasLaw {
+            in temperature : Real;
+            in pressure : Real;
+            in moleNumber : Real;
+            out idealGasConstant : Real;
+            out pressureSpecificGas : Real;
+            out volumeSpecificGas : Real;
+        }
+
+        function def ReversibleAdiabaticCompression {
+            in pressureInitial : Real;
+            in pressureFinal : Real;
+            in volumeInitial : Real;
+            out temperatureFinal : Real;
+        }
+
+        function def TotalEnthalpy {
+            in pressure : Real;
+            in temperature : Real;
+            in moleNumber : Real;
+            out totalEnthalpy : Real;
+        }
+    }
+
+    package MovingGasParcelStructure {
+
+        part def GasParcel {
+            attribute pressure : Real;
+            attribute temperature : Real;
+            attribute moleNumber : Real;
+        }
+    }
+
+    package CompressorAnalysis {
+
+        part def Compressor {
+            part inletGas : GasParcel;
+            part outletGas : GasParcel;
+        }
+
+        analysis def CompressorAnalysis {
+            subject compressor : Compressor;
+
+            action def InletGasAnalysis {
+                in pressure : Real;
+                in temperature : Real;
+                in moleNumber : Real;
+
+                calc :>> calculatePressure {
+                    outletGas.pressure = compressor.inletGas.pressure;
+                }
+
+                calc :>> calculateTemperature {
+                    outletGas.temperature = IdealGasLaw.ReversibleAdiabaticCompression(
+                        compressor.inletGas.pressure,
+                        compressor.outletGas.pressure,
+                        compressor.inletGas.volumeSpecificGas
+                    );
+                }
+
+                calc :>> calculateMoleNumber {
+                    outletGas.moleNumber = compressor.inletGas.moleNumber;
+                }
+            }
+        }
+    }
+}
+```

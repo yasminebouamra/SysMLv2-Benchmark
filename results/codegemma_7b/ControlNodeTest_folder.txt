@@ -1,0 +1,35 @@
+```sysmlv2
+package SystemBehavior {
+    statedef InitialActions {
+        part action1 : Action;
+        part action2 : Action;
+        entry assign action1.status := Started, action2.status := Started;
+        then state wait;
+        accept Finished
+            then transition to ParallelActions;
+    }
+
+    statedef ParallelActions {
+        part action3 : Action;
+        part action4 : Action;
+        entry assign action3.status := Started, action4.status := Started;
+        then state wait;
+        accept Finished
+            then transition to Completion;
+    }
+
+    statedef Completion {
+        entry do nothing;
+    }
+
+    part initialActions : InitialActions;
+    part parallelActions : ParallelActions;
+    part completion : Completion;
+
+    viewdef MainView {
+        frame initialActions;
+        frame parallelActions;
+        frame completion;
+    }
+}
+```

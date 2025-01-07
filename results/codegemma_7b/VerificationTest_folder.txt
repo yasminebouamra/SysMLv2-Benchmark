@@ -1,0 +1,33 @@
+```sysmlv2
+package VerificationTest {
+
+    part def Component {
+        attribute value : ScalarValues::Integer := 0;
+    }
+
+    requirement def VerificationRequirement {
+        doc "The component's value should be zero.";
+        subject c : Component;
+        assert c.value = 0;
+    }
+
+    analysis def VerificationCase {
+        subject c : Component;
+        objective vreq : VerificationRequirement { subject = c; }
+        c.value = 0;
+    }
+
+    analysis def VerificationPlan {
+        subject c : Component;
+        objective vreq : VerificationRequirement { subject = c; }
+
+        analysis verificationCase : VerificationCase { return success; }
+    }
+
+    part verificationContext {
+        analysis verificationPlan : VerificationPlan {
+            subject c = new Component;
+        }
+    }
+}
+```

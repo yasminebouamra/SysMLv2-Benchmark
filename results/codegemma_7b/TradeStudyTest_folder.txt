@@ -1,0 +1,26 @@
+```
+package TradeStudy {
+
+    part def Engine {
+        attribute power : Real;
+        attribute torque : Real;
+        attribute fuelEfficiency : Real;
+    }
+
+    part engine1 : Engine;
+    part engine2 : Engine;
+
+    attribute objective : Real;
+
+    evaluation function evaluateEngine(engine : Engine) : Real {
+        return engine.power * engine.fuelEfficiency - engine.torque;
+    }
+
+    trade study engineComparison {
+        subject engine1 = engine1;
+        subject engine2 = engine2;
+        objective maximize objective;
+        evaluation function evaluateEngine = evaluateEngine;
+    }
+}
+```

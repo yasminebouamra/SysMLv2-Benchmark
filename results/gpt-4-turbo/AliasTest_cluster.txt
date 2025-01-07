@@ -1,0 +1,37 @@
+```SysMLV2
+package SystemDesignWithAliases {
+    part def Machine {
+        port inputDataPort;
+        port outputDataPort;
+    }
+    
+    part def Processor {
+        port procInput;
+        port procOutput;
+    }
+    
+    part def Component {
+        alias compInput for inputDataPort;
+        alias compOutput for outputDataPort;
+        
+        part machine : Machine {
+            port inputDataPort :>> compInput;
+            port outputDataPort :>> compOutput;
+        }
+        
+        part processor : Processor {
+            port procInput;
+            port procOutput;
+        }
+        
+        connect machine.compOutput to processor.procInput;
+    }
+
+    part system {
+        part component : Component;
+
+        // using aliases to reference ports during the connection
+        connect component.machine.compOutput to component.processor.procInput;
+    }
+}
+```

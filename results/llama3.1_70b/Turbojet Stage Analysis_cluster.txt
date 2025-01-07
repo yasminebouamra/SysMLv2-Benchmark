@@ -1,0 +1,130 @@
+package ThermodynamicFunctions {
+    private import ISQ::*;
+
+    action def IdealGasLaw {
+        in temperature : ThermodynamicTemperatureValue;
+        in pressure : PressureValue;
+        out density : MassPerVolumeValue;
+    }
+
+    action def ReversibleAdiabaticCompression {
+        in pressureRatio : PureNumberValue;
+        in isentropicExponent : PureNumberValue;
+        out temperatureRatio : PureNumberValue;
+    }
+
+    action def TotalEnthalpyCalculation {
+        in enthalpy : SpecificEnergyValue;
+        in velocity : SpeedValue;
+        out totalEnthalpy : SpecificEnergyValue;
+    }
+}
+
+package ThermodynamicStructure {
+    private import ThermodynamicFunctions::*;
+
+    part def IdealGasParcel {
+        attribute temperature :> ISQ::thermodynamicTemperature;
+        attribute pressure :> ISQ::pressure;
+
+        action idealGasLaw : IdealGasLaw {
+            in temperature = self.temperature;
+            in pressure = self.pressure;
+            out density : MassPerVolumeValue;
+        }
+    }
+
+    part def MovingGasParcel {
+        attribute velocity :> ISQ::speed;
+
+        action totalEnthalpyCalculation : TotalEnthalpyCalculation {
+            in enthalpy = 0[J/kg];
+            in velocity = self.velocity;
+            out totalEnthalpy : SpecificEnergyValue;
+        }
+    }
+
+    part def InletGasAnalysis {
+        attribute pressure :> ISQ::pressure;
+        attribute temperature :> ISQ::thermodynamicTemperature;
+
+        action idealGasLaw : IdealGasLaw {
+            in temperature = self.temperature;
+            in pressure = self.pressure;
+            out density : MassPerVolumeValue;
+        }
+
+        action totalEnthalpyCalculation : TotalEnthalpyCalculation {
+            in enthalpy = 0[J/kg];
+            in velocity = 0[m/s];
+            out totalEnthalpy : SpecificEnergyValue;
+        }
+    }
+}
+
+package LowPressureCompressorAnalysis {
+    private import ThermodynamicStructure::*;
+
+    part def CompressorInlet {
+        attribute pressure :> ISQ::pressure;
+        attribute temperature :> ISQ::thermodynamicTemperature;
+
+        action idealGasLaw : IdealGasLaw {
+            in temperature = self.temperature;
+            in pressure = self.pressure;
+            out density : MassPerVolumeValue;
+        }
+    }
+
+    part def CompressorOutlet {
+        attribute pressure :> ISQ::pressure;
+        attribute temperature :> ISQ::thermodynamicTemperature;
+
+        action idealGasLaw : IdealGasLaw {
+            in temperature = self.temperature;
+            in pressure = self.pressure;
+            out density : MassPerVolumeValue;
+        }
+    }
+
+    part def CompressorAnalysis {
+        attribute compressorInlet :> CompressorInlet;
+        attribute compressorOutlet :> CompressorOutlet;
+
+        action reversibleAdiabaticCompression : ReversibleAdiabaticCompression {
+            in pressureRatio = compressorOutlet.pressure / compressorInlet.pressure;
+            in isentropicExponent = 1.4;
+            out temperatureRatio : PureNumberValue;
+        }
+
+        action totalEnthalpyCalculation : TotalEnthalpyCalculation {
+            in enthalpy = 0[J/kg];
+            in velocity = 0[m/s];
+            out totalEnthalpy : SpecificEnergyValue;
+        }
+    }
+}
+
+package IndividualAnalysisModel {
+    private import LowPressureCompressorAnalysis::*;
+
+    individual part def CompressorInlet_1 :> CompressorInlet;
+    individual part def CompressorOutlet_1 :> CompressorOutlet;
+
+    individual action def InletGasAnalysis_1 :> InletGasAnalysis {
+        attribute :>> pressure = 101325[Pa];
+        attribute :>> temperature = 288.15[K];
+
+        action idealGasLaw : IdealGasLaw {
+            in temperature = self.temperature;
+            in pressure = self.pressure;
+            out density : MassPerVolumeValue;
+        }
+
+        action totalEnthalpyCalculation : TotalEnthalpyCalculation {
+            in enthalpy = 0[J/kg];
+            in velocity = 0[m/s];
+            out totalEnthalpy : SpecificEnergyValue;
+        }
+    }
+}

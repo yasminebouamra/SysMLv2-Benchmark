@@ -1,0 +1,52 @@
+ ```SysMLV2
+   package FlashlightSystem {
+      part def User {
+         attribute CommandType : Enumeration;
+         port OperationPort : OperationalPort [
+            providedEnd operation: sendCommand(CommandType);
+         ];
+      }
+      part def Flashlight {
+         attribute LightState : Enumeration;
+         state On {
+            do assign lightState := 'On';
+         }
+         state Off {
+            do assign lightState := 'Off';
+         }
+         port OperationPort : OperationalPort [
+            requiredEnd operation: receiveCommand(CommandType);
+            providedEnd operation: produceLight();
+         ];
+      }
+      part def ReflectingSurface {
+         port ObservationPort : ObservationalPort [
+            providedEnd observation: observeLight();
+         ];
+      }
+      use case TurnOnFlashlight {
+         actor User;
+         goal Goal_1 : turnOnFlashlight;
+         precondition Precondition_1: Goal_1 is not achieved;
+         postcondition Postcondition_1: Goal_1 is achieved;
+         activity Sequence_1 {
+            step sendCommand(On);
+            wait for receiveCommand(On);
+            step produceLight();
+         }
+      }
+      use case TurnOffFlashlight {
+         actor User;
+         goal Goal_2 : turnOffFlashlight;
+         precondition Precondition_2: Goal_2 is not achieved;
+         postcondition Postcondition_2: Goal_2 is achieved;
+         activity Sequence_2 {
+            step sendCommand(Off);
+            wait for receiveCommand(Off);
+            step produceLight(): 'On' -> 'Off';
+         }
+      }
+   }
+   ```
+
+This SysML V2 model defines a User, Flashlight, and ReflectingSurface. The User sends on/off commands to the Flashlight which responds by producing light or not. The ReflectingSurface observes the light produced. There are two use cases: TurnOnFlashlight and TurnOffFlashlight which describe the steps required to achieve these goals.

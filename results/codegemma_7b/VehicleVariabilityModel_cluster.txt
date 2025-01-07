@@ -1,0 +1,64 @@
+```sysmlv2
+package VehicleDesign
+
+// Base design elements
+
+part def Vehicle {
+    part redefines chs {
+        part redefines rb : LightRollBar[0..1];
+        part redefines w {
+            part redefines lb;
+        }
+    }
+    part redefines eng {
+        part redefines cyl[4];
+    }
+    ref lugBolts[24] = chs.w.lb;
+}
+
+part def LightRollBar {
+    // ...
+}
+
+part def Wheel {
+    // ...
+}
+
+part def Engine {
+    part redefines cyl[4];
+}
+
+// Variation points
+
+part variation EngineType {
+    part redefines cyl[6..8];
+}
+
+part variation Sunroof {
+    boolean installed;
+}
+
+// Actions
+
+action TorqueGeneration {
+    // ...
+}
+
+action TorqueAmplification {
+    // ...
+}
+
+// Constraints
+
+constraint MaxTorque {
+    Engine.cyl[i].torque <= 500Nm for i in 1..4;
+}
+
+// Vehicle instance with selected attributes
+
+part vehicle : Vehicle {
+    chs.rb[0].installed = true;
+    eng : EngineType[6];
+    chs.w.lb[5].installed = true;
+}
+```

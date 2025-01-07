@@ -1,0 +1,24 @@
+```sysmlv2
+package ThermalDataManagement {
+
+	part def ThermalDataPacket {
+		attribute temperature : ScalarValues::Real;
+		attribute timestamp : ScalarValues::Time;
+	}
+
+	part def StandardThermalDataPacket : ThermalDataPacket {
+	}
+
+	part def SpecializedThermalDataPacket : ThermalDataPacket {
+		attribute specificData : SpecializedThermalData {
+		}
+	}
+
+	part def ThermalDataPacker {
+		part tdp1 : ThermalDataPacket;
+		part tdp2 : ThermalDataPacket;
+		part tdp3 : SpecializedThermalDataPacket;
+	}
+
+}
+```

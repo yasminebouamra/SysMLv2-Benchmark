@@ -1,0 +1,29 @@
+```sysmlv2
+package CameraSystem {
+    private import PictureTaking::*;
+    
+    package Subsystems {
+        // Focusing Subsystem
+        part def FocusSubsystem {
+            action def focus: Focus[1];
+            flow focus.xrsl to shoot.xsf;
+        }
+        
+        // Imaging Subsystem
+        part def ImageCaptureSubsystem {
+            action def captureImage: Shoot[1];
+        }
+    }
+    
+    package CameraSystemContext {
+        part c: FocusSubsystem;
+        part i: ImageCaptureSubsystem;
+        
+        action takePicture {
+            action focus: c.focus[1];
+            flow focus.xrsl to i.captureImage.xsf;
+            action captureImage: i.captureImage[1];
+        }
+    }
+}
+```

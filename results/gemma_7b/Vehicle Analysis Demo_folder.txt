@@ -1,0 +1,66 @@
+```sysmlv2
+package 'Vehicle Quantities' {
+    unit 'Distance' 'mi';
+    unit 'Volume' 'gal';
+    unit 'Velocity' 'mph';
+    unit 'Acceleration' 'mph/s';
+}
+
+package 'Vehicle Models' {
+    part 'Vehicle' {
+        attribute 'Mass' 'kg';
+        attribute 'Volume' 'gal';
+        attribute 'Velocity' 'mph';
+        attribute 'Acceleration' 'mph/s';
+    }
+}
+
+package 'Fuel Economy Requirements' {
+    requirement 'Urban Fuel Economy' {
+        constraint { 'Velocity' <= 30, 'Distance' >= 20, 'Fuel Consumption' <= 20 }
+    }
+    requirement 'Highway Fuel Economy' {
+        constraint { 'Velocity' >= 60, 'Distance' >= 100, 'Fuel Consumption' <= 30 }
+    }
+}
+
+package 'Dynamics Modeling' {
+    action 'Calculate Acceleration' {
+        input 'Velocity';
+        output 'Acceleration';
+        equation { 'Acceleration' = 'Velocity' / 'Time' }
+    }
+}
+
+package 'Fuel Economy Analysis' {
+    action 'Calculate Fuel Consumption' {
+        input 'Distance', 'Velocity';
+        output 'Fuel Consumption';
+        equation { 'Fuel Consumption' = 'Distance' / ('Efficiency' * 'Volume') }
+    }
+}
+
+model {
+    import 'Vehicle Quantities'::*;
+    import 'Vehicle Models'::*;
+    import 'Fuel Economy Requirements'::*;
+    import 'Dynamics Modeling'::*;
+    import 'Fuel Economy Analysis'::*;
+
+    part 'Vehicle' : 'Vehicle Models'::'Vehicle' {
+        bind 'Mass' = 1000;
+        bind 'Volume' = 20;
+    }
+
+    action 'Analyze Fuel Economy' {
+        action 'Calculate Urban Fuel Economy' : 'Fuel Economy Analysis'::'Calculate Fuel Consumption' {
+            in Distance = 20;
+            in Velocity = 30;
+        }
+        action 'Calculate Highway Fuel Economy' : 'Fuel Economy Analysis'::'Calculate Fuel Consumption' {
+            in Distance = 100;
+            in Velocity = 60;
+        }
+    }
+}
+```

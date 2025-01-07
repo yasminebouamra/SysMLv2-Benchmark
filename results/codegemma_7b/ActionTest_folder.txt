@@ -1,0 +1,54 @@
+```sysmlv2
+package ActionTest
+
+action def DoSomething {
+  input param1 : Integer;
+  input param2 : String;
+  output param3 : Boolean;
+  actionBody {
+    // Operations to perform
+  }
+}
+
+action instance1 : DoSomething {
+  param1 = 5;
+  param2 = "Hello";
+}
+
+action instance2 : DoSomething {
+  param1 = instance1.param1;
+  param2 = instance1.param2;
+  param3 = true;
+}
+
+attribute sharedValue {
+  type : Integer;
+  initialValue : 10;
+}
+
+action sequenceAction {
+  on start {
+    sharedValue = 20;
+  }
+  merge {
+    // Operations to perform
+  }
+  event acceptTime {
+    delay : 5s;
+  }
+  event sendSignal {
+    signal : "MySignal";
+  }
+  decision {
+    when (sharedValue > 5) {
+      // Operations when condition is met
+    }
+    else {
+      // Operations when condition is not met
+    }
+  }
+}
+
+```
+
+</start_of_turn>

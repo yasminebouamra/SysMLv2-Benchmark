@@ -1,0 +1,38 @@
+```
+package ArchitecturalLayout {
+
+    part def Hallway;
+    part def Classroom;
+    part def Storageroom;
+
+    interface Item {
+        port entry;
+    }
+
+    interface Air : Item {
+        port airSupply;
+    }
+
+    interface Furniture : Item {
+        port furnitureSupply;
+    }
+
+    interface Student : Item {
+        port studentEntry;
+    }
+
+    interface Teacher : Item {
+        port teacherEntry;
+    }
+
+    connection def Flow {
+        source :>> Air.airSupply;
+        source :>> Furniture.furnitureSupply;
+        source :>> Student.studentEntry;
+        source :>> Teacher.teacherEntry;
+        target :>> Hallway.entry;
+        target :>> Classroom.entry;
+        target :>> Storageroom.entry;
+    }
+}
+```

@@ -1,0 +1,91 @@
+package 'Fuel Economy Analysis' {
+
+    // Custom units
+    unit def 'Miles per Gallon' = (1 mile) / (1 gallon);
+
+    package 'Vehicle Quantities' {
+        quantity 'Mass';
+        quantity 'Volume';
+        quantity 'Velocity';
+        quantity 'Acceleration';
+
+        part def 'Fuel Tank' {
+            attribute 'Capacity': Volume;
+            attribute 'Current Level': Volume;
+        }
+
+        part def 'Wheels' {
+            attribute 'Radius': Length;
+            attribute 'Width': Length;
+        }
+    }
+
+    package 'Vehicle Models' {
+        part def 'Vehicle' {
+            import 'Vehicle Quantities::*';
+            composition 'Fuel Tank' : FuelTank;
+            composition 'Wheels' : Wheels[4];
+            attribute 'Engine Type': String;
+            attribute 'Transmission Type': String;
+
+            action 'Accelerate' { param 'Acceleration': Acceleration; }
+        }
+
+        part def 'Truck' specializes Vehicle {
+            attribute 'Payload Capacity': Mass;
+        }
+    }
+
+    package 'Fuel Economy Requirements' {
+        constraint def 'City Driving Fuel Economy Requirement' { min 15 miles/gallon };
+        constraint def 'Highway Driving Fuel Economy Requirement' { min 25 miles/gallon };
+
+        part def 'Driving Condition' {
+            attribute 'Type': String;
+            constraint 'Fuel Economy Constraint';
+        }
+    }
+
+    package 'Dynamics Modeling' {
+        calc def 'Calculate Velocity' { in time; in acceleration; out velocity; return v = u + at; }
+        calc def 'Calculate Acceleration' { in force; in mass; out acceleration; return a = F/m; }
+    }
+
+    package 'Fuel Economy Analysis' {
+        import 'Vehicle Models::*';
+        import 'Fuel Economy Requirements::*';
+
+        part def 'Scenario' {
+            attribute 'Driving Condition': DrivingCondition;
+            composition 'Vehicle': Vehicle;
+
+            calc def 'Calculate Fuel Economy' { in distance; in fuel consumption; out fuel economy; return fe = d/fc; }
+
+            action 'Simulate' {
+                // Calculate velocity and acceleration using dynamics modeling package
+                param 'Acceleration': Acceleration;
+                var 'Velocity': Velocity := calculate_velocity(param 'time', param 'acceleration');
+                param 'Force': Force;
+                var 'Mass': Mass := get_mass();
+                var 'Acceleration': Acceleration := calculate_acceleration(param 'force', var 'mass');
+
+                // Check if fuel economy requirement is met
+                constraint 'Fuel Economy Constraint' { min 15 miles/gallon };
+            }
+        }
+
+        part def 'Compliance Analysis' {
+            import 'Scenario';
+            attribute 'Regulation Standard': String;
+            action 'Analyze' {
+                for each scenario in scenarios do {
+                    if scenario.'Calculate Fuel Economy' >= regulation_standard then {
+                        log "Fuel economy requirement met";
+                    } else {
+                        log "Fuel economy requirement not met";
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+```sysmlv2
+package HSUVRequirementModel {
+
+    // Requirement Category: Load Capacity
+    requirement category LoadCapacity {
+        sub-requirement reqLoadCapacity {
+            description: "The HSUV should have a cargo capacity of at least 400 pounds.";
+            standards: "ISO 3730:2013, SAE J2807";
+        }
+    }
+
+    // Requirement Category: Eco-Friendliness
+    requirement category EcoFriendliness {
+        sub-requirement reqEmissions {
+            description: "The HSUV should meet the 2010 Kyoto Accord emissions standards.";
+            standards: "EPA Fuel Economy Standards, California Air Resources Board (CARB)";
+        }
+        sub-requirement reqFuelEfficiency {
+            description: "The HSUV should have a fuel economy better than 95% of cars built in 2004.";
+            standards: "EPA Fuel Economy Standards";
+        }
+    }
+
+    // Requirement Category: Performance
+    requirement category Performance {
+        sub-requirement reqAcceleration {
+            description: "The HSUV should accelerate from 0 to 60 mph in under 8 seconds.";
+            standards: "SAE J1349";
+        }
+        sub-requirement reqTopSpeed {
+            description: "The HSUV should have a top speed of at least 120 mph.";
+            standards: "SAE J1349";
+        }
+    }
+
+    // Requirement Category: Ergonomics
+    requirement category Ergonomics {
+        sub-requirement reqInteriorSpace {
+            description: "The HSUV should have enough interior space to accommodate four adults and their luggage.";
+            standards: "SAE J2726";
+        }
+        sub-requirement reqVisibility {
+            description: "The HSUV should have good visibility for the driver and passengers.";
+            standards: "SAE J1680";
+        }
+    }
+}
+```

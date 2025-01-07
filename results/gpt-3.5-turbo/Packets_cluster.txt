@@ -1,0 +1,20 @@
+package DataPacketModel {
+
+	package BaseTemplates {
+		part def PacketHeader;
+		part def DataField;
+	}
+	
+	package ThermalDataTransmission {
+		import BaseTemplates::*;
+		
+		part def ThermalPacketHeader :> PacketHeader {
+			attribute timeSensitive : Boolean;
+			attribute temperature : ScalarValues::Real;
+		}
+		
+		part def ThermalDataField :> DataField {
+			attribute temperatureData : ScalarValues::Real;
+		}
+	}
+}

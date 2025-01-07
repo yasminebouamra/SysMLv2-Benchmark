@@ -1,0 +1,54 @@
+```SysMLV2
+package LocalCloudSystems {
+    package SystemOfSystems {
+        part def CloudSystem;
+    }
+    
+    package SystemDefinitions {
+        part def System {
+            port def ServiceInterface;
+            attribute protocols : String[*];
+        }
+        
+        part def Service {
+            port def API;
+            attribute protocols : String[*];
+        }
+        
+        part system1 : System {
+            port serviceInterface1 : ServiceInterface;
+            attribute protocols = ["HTTP", "HTTPS"];
+        }
+        
+        part service1 : Service {
+            port api1 : API;
+            attribute protocols = ["REST", "SOAP"];
+        }
+        
+        connect system1.serviceInterface1 to service1.api1;
+    }
+    
+    package SemanticAnnotations {
+        import SystemDefinitions::*;
+        
+        annotation def Metadata {
+            attribute meaning : String;
+            attribute role : String;
+        }
+        
+        part system1 :>> System {
+            annotate Metadata {
+                meaning = "Primary computation node";
+                role = "Computation";
+            }
+        }
+        
+        part service1 :>> Service {
+            annotate Metadata {
+                meaning = "Data retrieval service";
+                role = "Data";
+            }
+        }
+    }
+}
+```

@@ -1,0 +1,14 @@
+```sysmlv2
+package TextualRepresentationTest {
+
+    item def TextualRepresentation {
+        attribute text : Real;
+        constraint text > 0;
+    }
+
+    action UpdateTextualRepresentation {
+        in text : TextualRepresentation;
+        log op "Updated textual representation attribute";
+    }
+}
+```

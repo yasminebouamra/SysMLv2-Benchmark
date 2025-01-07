@@ -1,0 +1,29 @@
+```sysmlv2
+package Q
+
+part def F
+    attribute a : Integer
+end part
+
+part def A
+    attribute b : String
+end part
+
+part def B
+    attribute c : Boolean
+end part
+
+part def C
+    attribute d : Real
+    part e : A
+    part f : B
+    attribute g : E
+    link f_g : link(f, g)
+    link c_f : link(C, f)
+end part
+
+enumeration E
+    e1
+    e2
+end enumeration
+```

@@ -1,0 +1,33 @@
+```sysmlv2
+package Architecture {
+
+    layer Application {
+        port app;
+    }
+
+    layer Service {
+        port service;
+    }
+
+    layer Data {
+        port data;
+    }
+
+    connection app_to_service : Application -> Service {
+        end app ::> service;
+    }
+
+    connection service_to_data : Service -> Data {
+        end service ::> data;
+    }
+
+    connection data_to_app : Data -> Application {
+        end data ::> app;
+    }
+
+    attribute dependency : String {
+        description "Dependency between layers";
+    }
+
+}
+```

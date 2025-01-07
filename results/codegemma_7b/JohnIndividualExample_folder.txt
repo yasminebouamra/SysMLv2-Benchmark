@@ -1,0 +1,37 @@
+```sysmlv2
+package PresidencyModel {
+
+	class Person {
+		attribute name : String;
+	}
+
+	class Country {
+		attribute name : String;
+	}
+
+	class President extends Person {
+		attribute country : Country;
+		attribute termStart : Date;
+		attribute termEnd : Date;
+	}
+
+	person John : Person {
+		attribute name = "John";
+	}
+
+	country UnitedStates : Country {
+		attribute name = "United States";
+	}
+
+	president JohnAsPresident : President {
+		attribute country = UnitedStates;
+		attribute termStart = "2021-01-20";
+		attribute termEnd = "2025-01-20";
+	}
+
+	trace JohnAsPresidentTimeline {
+		from : JohnAsPresident.termStart;
+		to : JohnAsPresident.termEnd;
+	}
+}
+```

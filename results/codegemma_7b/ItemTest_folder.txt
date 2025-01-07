@@ -1,0 +1,23 @@
+```sysml
+package ItemTest {
+
+    part def ItemA {
+        part partB : B;
+        protected ref partC : C;
+    }
+
+    abstract part def ItemB : ItemA {
+        abstract part partA : ItemA;
+    }
+
+    private part def ItemC {
+        ref part item : ItemA or ItemB;
+    }
+
+    port def ItemPort {
+        in item : ItemA;
+        out item : ItemA;
+    }
+
+}
+```

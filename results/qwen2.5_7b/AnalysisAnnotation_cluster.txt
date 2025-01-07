@@ -1,0 +1,65 @@
+```sysmlv2
+package VehicleDynamics {
+
+	private import ScalarValues::Real;
+	private import ISQ::*;
+	private import TradeStudies::*;
+
+	part def Vehicle;
+	part engine: Engine;
+	part mass: MassValue;
+	
+	analysis def DynamicsAnalysis {
+		subject : Vehicle[1..*];
+		objective : MaximizeObjective;
+
+		calc :>> evaluationFunction {
+			in vehicle : Vehicle;
+			return : Real;
+		}
+
+		return subject : Vehicle;
+	}
+	
+	action def ComputeDynamicsWithModelCenter {
+		snapshot : ModelCenter : SimulationTool;
+		
+		out attribute a_out : AccelerationValue;
+		out attribute v_out : SpeedValue;
+		out attribute x_out : LengthValue;
+				
+		assert constraint {
+			attribute dt : TimeValue; in attribute whlpwr : PowerValue; 
+			in attribute Cd : Real; in attribute Cf: Real; in attribute tm : MassValue; 
+			in attribute v_in : SpeedValue; in attribute x_in : LengthValue;
+
+			dynamicsResult == ModelCenter.computeDynamics(dt, whlpwr, Cd, Cf, tm, v_in, x_in);
+		}
+
+		calc dynamicsResult {
+			return a_out = ModelCenter.a,
+				   v_out = ModelCenter.v,
+				   x_out = ModelCenter.x;
+		}
+		
+		out attribute :>> a_out : AccelerationValue = dynamicsResult.a;
+		out attribute :>> v_out : SpeedValue = dynamicsResult.v;
+		out attribute :>> x_out : LengthValue = dynamicsResult.x;
+	}
+
+	action dyn1 : ComputeDynamicsWithModelCenter {
+		in attribute dt : TimeValue;
+		in attribute whlpwr : PowerValue;
+		in attribute Cd : Real;
+		in attribute Cf: Real;
+		in attribute tm : MassValue;
+		in attribute v_in : SpeedValue;
+		in attribute x_in : LengthValue;
+
+		out attribute :>> a_out : AccelerationValue = ModelCenter.computeDynamics(dt, whlpwr, Cd, Cf, tm, v_in, x_in).a;
+		out attribute :>> v_out : SpeedValue = ModelCenter.computeDynamics(dt, whlpwr, Cd, Cf, tm, v_in, x_in).v;
+		out attribute :>> x_out : LengthValue = ModelCenter.computeDynamics(dt, whlpwr, Cd, Cf, tm, v_in, x_in).x;
+	}
+	
+}
+```

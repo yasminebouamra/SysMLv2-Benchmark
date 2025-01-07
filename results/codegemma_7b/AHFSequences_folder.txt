@@ -1,0 +1,62 @@
+```sysmlv2
+part system_of_systems:SysLocalCloudsDD;
+
+part def LocalCloudDesign {
+	doc /* Local Cloud definition */
+
+	part systems:SysD[1..*];
+}
+
+part def SysD {
+	doc /* System definitions */
+
+	port services: SD[1..*];
+	attribute systemname: String;
+	attribute address: String;
+	attribute portno: Integer;
+}
+
+// Design Description level
+port def IDD :> SD{
+	doc /* Interface Design Description of services */
+
+	attribute encoding_kind:String;
+}
+
+port def SDDD :> SD{
+	doc /* Service Definition Design Description */
+
+	port idds:IDD[*]; // nested protocol-specific services
+}
+
+part def SysLocalCloudsDD :> SysLocalCloudsDesign {
+	doc /* System of Systems Detailed Description */
+
+	part :>> locclouds:LocalCloudDD[1..*]; // the descriptions
+}
+
+part def LocalCloudDD :> LocalCloudDesign {
+	part :>> systems:SysDD[1..*];
+}
+
+part def SysDD :> SysD{
+	doc /* System Detailed Description */
+
+	port :>> services:SDDD;
+	action ServiceMethod[1..*]; //means general behaviors
+}
+
+sequence diagram LocalCloudSequence {
+	participant TellUConsumer
+	participant APISProducer
+	participant MQTTServer
+	participant APISConsumer
+
+	TellUConsumer->>APISProducer: RequestData
+	APISProducer->>MQTTServer: ForwardData(MQTT)
+	MQTTServer->>APISConsumer: ForwardData(MQTT)
+	APISConsumer->>TellUConsumer: RespondData
+}
+```
+
+**Note:** This code includes a sequence diagram named `LocalCloudSequence` to illustrate the interactions between the four systems in the scenario.

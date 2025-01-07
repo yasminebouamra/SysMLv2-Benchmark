@@ -1,0 +1,50 @@
+```sysmlv2
+## Verification Test Model
+
+```sysmlv2
+package VerificationTest
+
+part def Component {
+  int property;
+}
+
+requirement def VerifiedRequirement {
+  doc "The component's integer property should be zero.";
+  expression property == 0;
+}
+
+component instance componentInstance : Component;
+
+verification case def VerificationTestCase {
+  subject component : Component;
+  objective {
+    doc "Verify that the component's integer property is zero.";
+    expression component.property == 0;
+  }
+}
+
+verification plan def ComprehensiveVerificationPlan {
+  subject component : Component;
+  objective {
+    doc "Verify that the component meets the VerifiedRequirement.";
+  }
+  verificationCase = VerificationTestCase;
+}
+
+verification context def VerificationContext {
+  verificationPlan comprehensiveVerificationPlan;
+  componentInstance.property = 0;
+}
+
+```
+
+**Explanation:**
+
+* The model includes a `Component` part with an integer `property`.
+* A `VerifiedRequirement` is defined to specify the desired behavior.
+* An instance of the `Component` is created.
+* A `VerificationTestCase` is defined to test if the component's `property` is zero.
+* A `ComprehensiveVerificationPlan` uses the `VerificationTestCase` to verify the requirement.
+* A `VerificationContext` is defined to provide the necessary context for running the verification plan. It sets the component's `property` to zero and specifies the plan to be used.
+
+This model provides a structured and traceable approach to conducting a verification test within a system. It ensures that the component meets the defined requirement and provides an organized way to track the verification process.

@@ -1,0 +1,46 @@
+```
+package Dynamics {
+
+	package BehaviorModel {
+	
+		attribute def Power;
+		attribute def Acceleration;
+		attribute def Velocity;
+		attribute def Position;
+		
+		action def CalculateDynamics {
+			inputs {
+				wheelPower : Power;
+				dragCoefficient;
+				rollingResistanceCoefficient;
+				mass;
+				initialSpeed : Velocity;
+				initialPosition : Position;
+			}
+			outputs {
+				finalAcceleration : Acceleration;
+				finalSpeed : Velocity;
+				finalPosition : Position;
+			}
+		}
+		
+		action def SimulateDynamicsOverTime {
+			inputs {
+				wheelPowerTimeSeries : Power[0..*];
+				dragCoefficientSeries[0..*];
+				rollingResistanceCoefficientSeries[0..*];
+				massSeries[0..*];
+				initialSpeed : Velocity;
+				initialPosition : Position;
+			}
+			outputs {
+				finalAccelerationSeries : Acceleration[0..*];
+				finalSpeedSeries : Velocity[0..*];
+				finalPositionSeries : Position[0..*];
+			}
+		}
+		
+	}
+
+}
+```

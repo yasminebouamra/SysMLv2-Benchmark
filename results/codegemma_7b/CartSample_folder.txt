@@ -1,0 +1,28 @@
+```
+type Cart {
+  attribute mass : Real;
+  input force : Real;
+  output velocity : Real;
+  state velocity : Real;
+  state derivative(velocity) : Real {
+    return force / mass;
+  }
+}
+
+type Pusher {
+  attribute force : Real;
+  output force : Real {
+    return force;
+  }
+}
+
+part CartInstance {
+  subject :>> cart :> Cart {
+    attribute :>> mass = 100[kg];
+  }
+  part :>> pusher :> Pusher {
+    attribute :>> force = 10[N];
+  }
+  connect :>> cart.force = pusher.force;
+}
+```

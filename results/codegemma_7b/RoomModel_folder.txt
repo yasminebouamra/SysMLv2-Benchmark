@@ -1,0 +1,58 @@
+```sysmlv2
+package ArchitecturalLayout
+
+part def Hallway
+	port entryPort;
+	port exitPort;
+end part
+
+part def Classroom
+	port entryPort;
+	port exitPort;
+	port airInPort;
+	port airOutPort;
+	port furnitureInPort;
+	port furnitureOutPort;
+	port studentInPort;
+	port studentOutPort;
+	port teacherInPort;
+	port teacherOutPort;
+end part
+
+part def Storageroom
+	port entryPort;
+	port exitPort;
+	port furnitureInPort;
+	port furnitureOutPort;
+end part
+
+relation def Flows {
+	source :>> Hallway.exitPort;
+	target :>> Classroom.entryPort;
+	type : Air;
+}
+
+relation def Flows {
+	source :>> Hallway.exitPort;
+	target :>> Storageroom.entryPort;
+	type : Furniture;
+}
+
+relation def Flows {
+	source :>> Classroom.studentOutPort;
+	target :>> Hallway.entryPort;
+	type : Student;
+}
+
+relation def Flows {
+	source :>> Classroom.teacherOutPort;
+	target :>> Hallway.entryPort;
+	type : Teacher;
+}
+
+relation def Flows {
+	source :>> Storageroom.furnitureOutPort;
+	target :>> Classroom.furnitureInPort;
+	type : Furniture;
+}
+```

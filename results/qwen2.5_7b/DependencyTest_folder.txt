@@ -1,0 +1,33 @@
+```sysmlv2
+package SystemArchitecture {
+	
+	part ApplicationLayer {
+		part userInterface;
+	}
+	
+	part ServiceLayer {
+		part businessLogic;
+	}
+	
+	part DataLayer {
+		part dataPersistence;
+	}
+
+	// Define dependencies between layers
+	dependency dataFlow1 : ApplicationLayer.userInterface to ServiceLayer.businessLogic;
+	dependency controlFlow1 : ServiceLayer.businessLogic to DataLayer.dataPersistence;
+
+	// Attributes for dependency relations
+	attribute def DependencyAttributes {
+		dataDependency : ScalarValues::Boolean "Indicates if there is a data dependency between layers";
+		controlDependency : ScalarValues::Boolean "Indicates if there is a control flow dependency between layers";
+	}
+
+	part depAttrs : DependencyAttributes;
+	
+	// Connect attributes to dependencies
+	connect depAttrs.dataDependency from ApplicationLayer.userInterface to ServiceLayer.businessLogic;
+	connect depAttrs.controlDependency from ServiceLayer.businessLogic to DataLayer.dataPersistence;
+
+}
+```

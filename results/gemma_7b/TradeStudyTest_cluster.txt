@@ -1,0 +1,39 @@
+```sysmlv2
+model TradeStudyEvaluation {
+
+    // Engine parts
+    Part EnginePart {
+        feature PowerValue;
+        feature Cd;
+        feature Cf;
+    }
+
+    // Engine instances
+    Engine Engine1 {
+        instantiates EnginePart;
+    }
+    Engine Engine2 {
+        instantiates EnginePart;
+    }
+
+    // Trade study setup
+    TradeStudy TradeStudy {
+        objective Maximize {
+            evaluate Engine1;
+            evaluate Engine2;
+        }
+    }
+
+    // Evaluation function
+    EvaluationFunction {
+        in Engine : EnginePart;
+        return Real = // ... // Calculation of performance against predefined criteria
+    }
+
+    // Recommendation result
+    Recommendation {
+        in TradeStudy : TradeStudy;
+        out Engine = Engine;
+    }
+}
+```

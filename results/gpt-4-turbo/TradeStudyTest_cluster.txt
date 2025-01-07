@@ -1,0 +1,41 @@
+```SysMLV2
+package EngineTradeStudy {
+    part def Engine {
+        attribute power : ScalarValues::Watt;
+        attribute fuelConsumption : ScalarValues::LitersPerKilometer;
+        attribute reliabilityScore : ScalarValues::Integer;
+    }
+
+    part engine1 : Engine {
+        power = 250 [ScalarValues::Watt];
+        fuelConsumption = 8 [ScalarValues::LitersPerKilometer];
+        reliabilityScore = 80;
+    }
+
+    part engine2 : Engine {
+        power = 230 [ScalarValues::Watt];
+        fuelConsumption = 7 [ScalarValues::LitersPerKilometer];
+        reliabilityScore = 85;
+    }
+
+    analysis def TradeStudy {
+        objective {
+            minimize(engine.fuelConsumption);
+            maximize(engine.power);
+            maximize(engine.reliabilityScore);
+        }
+
+        evaluate 'EngineComparison' {
+            for engine in {engine1, engine2}
+            calc {
+                score = engine.power * 0.4 + (100 - engine.fuelConsumption) * 0.35 + engine.reliabilityScore * 0.25;
+            }
+        }
+    }
+
+    perform tradeStudy : TradeStudy {
+        include engine1, engine2;
+        evaluate 'EngineComparison';
+    }
+}
+```

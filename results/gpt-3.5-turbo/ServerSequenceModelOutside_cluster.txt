@@ -1,0 +1,42 @@
+package PubSubSequence {
+
+    part def Producer;
+    part def Server;
+    part def Consumer;
+    
+    structure PubSubSequenceOutside extends PubSubSequence {
+        attribute publicationStatus;
+        attribute serverProcessingStatus;
+        attribute deliveryStatus;
+        
+        flow start 
+            from Producer to Server
+            fire on publishMessage
+            modifies publicationStatus;
+        
+        flow serverMessageProcessing 
+            from Server to Server
+            fire on processMessage
+            modifies serverProcessingStatus;
+        
+        flow deliveryToConsumer 
+            from Server to Consumer
+            fire on deliverMessage
+            modifies deliveryStatus;
+        
+        flow acknowledgeSubscription 
+            from Consumer to Server
+            fire on requestSubscription
+            modifies serverProcessingStatus;
+        
+        flow messageAcknowledge 
+            from Server to Producer
+            fire on acknowledgeMessage
+            modifies publicationStatus;
+        
+        flow completeMessageDelivery 
+            from Server to Consumer
+            fire on completeDelivery
+            modifies deliveryStatus;
+    }
+}

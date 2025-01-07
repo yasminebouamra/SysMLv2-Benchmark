@@ -1,0 +1,60 @@
+```sysmlv2
+package Quadcopter {
+
+	// Structural components
+	part Motor {
+		attribute :>> shape : Shape {
+			variant cylinder;
+		}
+	}
+
+	part Strut {
+		attribute :>> shape : Shape {
+			variant cylinder;
+		}
+	}
+
+	part PropellerMotorAssembly {
+		part :>> motor : Motor;
+		part :>> propeller : Propeller;
+	}
+
+	part CameraSystem {
+		part :>> camera : Camera;
+	}
+
+	// Conceptual components
+	part Quadcopter {
+		part :>> motor1 : PropellerMotorAssembly;
+		part :>> motor2 : PropellerMotorAssembly;
+		part :>> motor3 : PropellerMotorAssembly;
+		part :>> motor4 : PropellerMotorAssembly;
+		part :>> strut1 : Strut;
+		part :>> strut2 : Strut;
+		part :>> strut3 : Strut;
+		part :>> strut4 : Strut;
+		part :>> cameraSystem : CameraSystem;
+
+		// Transformations and constraints
+		transformation :>> translate1;
+		transformation :>> translate2;
+		transformation :>> translate3;
+		transformation :>> translate4;
+		transformation :>> rotate1;
+		transformation :>> rotate2;
+		transformation :>> rotate3;
+		transformation :>> rotate4;
+
+		assert constraint {
+			translate1.origin == motor1.origin;
+			translate2.origin == motor2.origin;
+			translate3.origin == motor3.origin;
+			translate4.origin == motor4.origin;
+			rotate1.origin == motor1.origin;
+			rotate2.origin == motor2.origin;
+			rotate3.origin == motor3.origin;
+			rotate4.origin == motor4.origin;
+		}
+	}
+}
+```

@@ -1,0 +1,53 @@
+```
+package OccurrenceTest {
+
+    template occurrence def Occurrence {
+        attribute timestamp;
+        reference to : Occurrence;
+        item item;
+        part part;
+        state state;
+        period period;
+    }
+
+    template occurrence def IndividualOccurrence : Occurrence {
+        attribute uniqueId;
+        attribute name;
+        attribute description;
+    }
+
+    occurrence occ1 : Occurrence {
+        timestamp = now;
+        item = item1;
+        part = part1;
+        state = state1;
+        period = period1;
+    }
+
+    occurrence occ2 : IndividualOccurrence {
+        uniqueId = "12345";
+        name = "Event A";
+        description = "Occurrence of event A";
+        timestamp = now;
+        item = item2;
+        part = part2;
+        state = state2;
+        period = period2;
+    }
+
+    snapshot snapshot1 : Snapshot {
+        timestamp = now;
+        part = part1;
+        state = state1;
+        period = period1;
+    }
+
+    timeslice timeslice1 : Timeslice {
+        startTimestamp = start;
+        endTimestamp = end;
+        part = part1;
+        state = state1;
+        period = period1;
+    }
+}
+```

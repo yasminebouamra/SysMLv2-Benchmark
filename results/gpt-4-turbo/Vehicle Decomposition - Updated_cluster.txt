@@ -1,0 +1,76 @@
+package VehicleModeling {
+    part def Vehicle {
+        part chassis: Chassis;
+        part engine: Engine;
+        part wheels: Wheel[4];
+    }
+
+    part def Chassis {
+        part rollBar: RollBar;
+    }
+
+    part def Wheel;
+        
+    part def Engine {
+        attribute cylinderCount: Integer;
+    }
+
+    part def RollBar {
+        attribute type: String;
+    }
+
+    part familySedan :> Vehicle {
+        part :>> chassis {
+            part :>> rollBar {
+                attribute :>> type = "Standard";
+            }
+        }
+
+        part :>> engine {
+            attribute :>> cylinderCount = 4;
+        }
+    }
+
+    part sportsCar :> Vehicle {
+        part :>> chassis {
+            part :>> rollBar {
+                attribute :>> type = "Reinforced";
+            }
+        }
+
+        part :>> engine {
+            attribute :>> cylinderCount = 6;
+        }
+
+        part :>> wheels {
+            attribute diameter: LengthValue = 18[in];
+        }[4]
+    }
+
+    variation part def EngineVariants :> Engine {
+        variant engine4Cyl :> Engine {
+            attribute :>> cylinderCount = 4;
+        }
+
+        variant engine6Cyl :> Engine {
+            attribute :>> cylinderCount = 6;
+        }
+
+        variant engine8Cyl :> Engine {
+            attribute :>> cylinderCount = 8;
+        }
+    }
+
+    part vehicleCustom :> Vehicle {
+        part :>> chassis {
+            part :>> rollBar {
+                attribute :>> type = "Custom";
+            }
+        }
+
+        variation part :>> engine : EngineVariants {
+            variant engine6Cyl;
+            variant engine8Cyl;
+        }
+    }
+}

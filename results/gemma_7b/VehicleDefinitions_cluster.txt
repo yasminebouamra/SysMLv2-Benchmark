@@ -1,0 +1,39 @@
+```sysmlv2
+package 'VehicleDefinitions' {
+
+import 'ISO/ISQ.v2' as ISQ;
+
+part def Vehicle {
+    mass :> ISQ::mass;
+    attribute :>> model = 'Sedan';
+}
+
+part def Transmission {
+    torque :> ISQ::torque;
+}
+
+part def AxleAssembly {
+    mass :> ISQ::mass;
+}
+
+part def Axle {
+    torque :> ISQ::torque;
+}
+
+part def Wheel {
+    mass :> ISQ::mass;
+    diameter :> length;
+    width :> length;
+}
+
+part def Lugbolt {
+    torque :> ISQ::torque;
+    boltTension :> force;
+}
+
+connection def TransmissionOutput connects Transmission.torque to Axle.torque;
+connection def AxleOutput connects Axle.torque to Wheel.torque;
+connection def LugboltFastening connects Lugbolt.boltTension to Wheel.mass;
+
+}
+```

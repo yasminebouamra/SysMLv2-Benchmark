@@ -1,0 +1,52 @@
+ ```SysMLV2
+   package FlashlightSystem {
+      attribute 'Command' {
+         enum on : String;
+         enum off : String;
+      }
+      attribute 'LightIntensity' : Real;
+
+      part def User {
+         port def commandIn : Command;
+      }
+
+      part def Flashlight {
+         port def lightOut : LightIntensity;
+         stateMachine def StateMachine {
+            state def Off {
+               then state On;
+               accept commandIn.on
+                  then assign lightOut := MaxLightIntensity;
+            }
+            state def On {
+               then state Off;
+               accept commandIn.off
+                  then assign lightOut := MinLightIntensity;
+            }
+         }
+      }
+
+      part def ReflectingSurface {
+         port def reflectedLight : LightIntensity;
+      }
+
+      connection DefinedInterface {
+         connectorDef flashlightController {
+            provided operation commandSend(command : Command) : Void;
+            required operation getLightLevel(level : out LightIntensity) : Void;
+         }
+      }
+
+      Flashlight.StateMachine << connectorDef flashlightController.provided;
+      User << connectorDef flashlightController.required;
+      ReflectingSurface << connectorDef flashlightController.required;
+   }
+   ```
+
+In this SysML v2 model, we have defined a `FlashlightSystem` package that includes the following:
+
+1. Attributes for Command types (on and off) and LightIntensity.
+2. Part definitions for User, Flashlight, and ReflectingSurface with associated ports for commands and light intensity.
+3. A state machine for the Flashlight part to control turning on/off based on user commands.
+4. Definition of a `DefinedInterface` connection to specify the operations required (commandSend) and provided (getLightLevel) for the flashlightController connector.
+5. Connections between the User, Flashlight, ReflectingSurface, and flashlightController using the defined interface.

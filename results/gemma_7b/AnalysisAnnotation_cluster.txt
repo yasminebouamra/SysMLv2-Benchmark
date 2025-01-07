@@ -1,0 +1,8 @@
+```sysmlv2
+package DynamicsAnalysis {
+
+	// ... (code from previous example)
+
+}
+
+```

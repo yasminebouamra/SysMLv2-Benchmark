@@ -1,0 +1,45 @@
+```sysmlv2
+model Vehicle {
+
+    part chassisAssembly : ChassisAssembly {
+        attribute :>> material : Material = "Steel"
+    }
+
+    part wheel : Wheel {
+        attribute :>> diameter : LengthValue = 16[in]
+    }
+
+    part engine : Engine {
+        attribute :>> numCylinders : Integer = 4
+    }
+
+    // Vehicle model with 4-cylinder engine and standard roll bar
+    instance vehicle1 : Vehicle {
+        instantiates chassisAssembly
+        instantiates engine
+        instantiates {Wheel; diameter = 16[in]}[4]
+    }
+
+    // Vehicle model with 6-cylinder engine and premium roll bar
+    instance vehicle2 : Vehicle {
+        instantiates chassisAssembly : ChassisAssembly {
+            attribute :>> rollBarType : String = "Premium"
+        }
+        instantiates engine : Engine {
+            attribute :>> numCylinders : Integer = 6
+        }
+        instantiates {Wheel; diameter = 17[in]}[4]
+    }
+
+    // Additional constraints on engine configuration
+     specialization constrainedEngine : Engine {
+        attribute :>> numCylinders : Integer = 8
+    }
+
+    // Instance of constrainedEngine
+    instance highPerformanceEngine : Engine {
+        inherits from constrainedEngine
+    }
+
+}
+```

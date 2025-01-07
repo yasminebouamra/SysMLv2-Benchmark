@@ -1,0 +1,24 @@
+```
+package UseCaseTest {
+
+    part user : User;
+    part system : System {
+        use case UseSystem {
+            actor user;
+            objective unspecified;
+            use case UC1;
+            use case uc2;
+        }
+
+        use case UC1 {
+            actor user;
+            objective unspecified;
+        }
+
+        use case uc2 {
+            actor user;
+            objective unspecified;
+        }
+    }
+}
+```

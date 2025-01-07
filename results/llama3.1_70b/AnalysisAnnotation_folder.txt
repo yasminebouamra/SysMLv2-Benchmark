@@ -1,0 +1,85 @@
+package Dynamics::DynamicsAnalysis;
+
+	/**
+	 * This package defines a system for computing the dynamics of an entity,
+	 * focusing on vehicles or similar systems. It integrates with an external
+	 * simulation tool named "ModelCenter" to calculate acceleration, velocity,
+	 * and position based on inputs such as time step, power, drag coefficient,
+	 * friction coefficient, mass, initial velocity, and initial position.
+	 */
+
+	part DynamicsAnalysisSystem {
+	
+	    /* Define the interface for interacting with ModelCenter */
+	    port modelCenterInterface :> ModelCenterInterface;
+	    
+	    /* Declare the input variables */
+	    attribute timeStep : TimeValue;
+	    attribute power : PowerValue;
+	    attribute dragCoefficient : DimensionlessQuantityValue;
+	    attribute frictionCoefficient : DimensionlessQuantityValue;
+	    attribute mass : MassValue;
+	    attribute initialVelocity : VelocityValue;
+	    attribute initialPosition : LengthValue;
+	    
+	    /* Declare the output variables */
+	    attribute acceleration : AccelerationValue[*];
+	    attribute velocity : VelocityValue[*];
+	    attribute position : LengthValue[*];
+	    
+	    /* Define the actions for interacting with ModelCenter */
+	    action computeDynamics {
+	        in timeStep = this.timeStep;
+	        in power = this.power;
+	        in dragCoefficient = this.dragCoefficient;
+	        in frictionCoefficient = this.frictionCoefficient;
+	        in mass = this.mass;
+	        in initialVelocity = this.initialVelocity;
+	        in initialPosition = this.initialPosition;
+	        out acceleration = this.acceleration;
+	        out velocity = this.velocity;
+	        out position = this.position;
+	        
+	        /* Use the ModelCenterInterface to perform the computation */
+	        modelCenterInterface.computeDynamics(
+	            timeStep, power, dragCoefficient, frictionCoefficient,
+	            mass, initialVelocity, initialPosition
+	        )
+	    }
+	    
+	}
+	
+	/**
+	 * This interface defines the interactions with ModelCenter.
+	 */
+	interface ModelCenterInterface {
+	    action computeDynamics (
+	        in timeStep : TimeValue,
+	        in power : PowerValue,
+	        in dragCoefficient : DimensionlessQuantityValue,
+	        in frictionCoefficient : DimensionlessQuantityValue,
+	        in mass : MassValue,
+	        in initialVelocity : VelocityValue,
+	        in initialPosition : LengthValue
+	    ) out acceleration : AccelerationValue[*],
+	        velocity : VelocityValue[*],
+	        position : LengthValue[*];
+	}
+	
+	part vehicle_c1 {
+	    /* Define the specific values for this vehicle */
+	    attribute timeStep = 0.01 [s];
+	    attribute power = 100 [hp];
+	    attribute dragCoefficient = 0.5;
+	    attribute frictionCoefficient = 0.2;
+	    attribute mass = 1500 [kg];
+	    attribute initialVelocity = 10 [m/s];
+	    attribute initialPosition = 0 [m];
+	    
+	    /* Connect to the DynamicsAnalysisSystem */
+	    port dynamicsAnalysisInterface :> vehicle_c1DynamicsAnalysisPort;
+	    
+	    part vehicle_c1DynamicsAnalysisPort {
+	        connect dynamicsAnalysisSystem.modelCenterInterface;
+	    }
+	}

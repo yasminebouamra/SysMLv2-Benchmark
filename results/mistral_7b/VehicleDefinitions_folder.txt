@@ -1,0 +1,107 @@
+ ```
+   package VehicleDefinitions {
+      import UML:NamedElement; // Import international measurement standards
+      import SysML:Mass;
+      import SysML:Torque;
+
+      define NarrowRimWheel(quantity: Integer(minValue: 4, maxValue: 5)) {
+         NamedElement : Wheel;
+         documentation : String("Narrow-rim wheel configuration with 4 to 5 lugbolts.");
+         part Lugbolt[4..5];
+      }
+
+      define WideRimWheel(quantity: Integer(minValue: 4, maxValue: 6)) {
+         NamedElement : Wheel;
+         documentation : String("Wide-rim wheel configuration with 4 to 6 lugbolts.");
+         part Lugbolt[4..6];
+      }
+
+      define AxleAssembly() {
+         NamedElement : AxleAssembly;
+         documentation : String("Axle assembly for the vehicle.");
+         part Axle[1..2];
+         part Wheel[1..2];
+      }
+
+      define Axle() {
+         NamedElement : Axle;
+         documentation : String("Represents an axle.");
+         port MountingPoint[2]; // Left and right mounting points
+      }
+
+      define Wheel(lugboltQuantity: Integer) {
+         NamedElement : Wheel;
+         documentation : String("Wheel configuration based on the number of lugbolts.");
+         part Lugbolt[lugboltQuantity];
+      }
+
+      define Transmission() {
+         NamedElement : Transmission;
+         documentation : String("Transmission component for vehicle.");
+         port DriveIF: DriveInterface;
+      }
+
+      define DriveInterface(mass: Real, torque: Torque) {
+         NamedElement : Interface;
+         documentation : String("Defines the interface for drive connections in the vehicle.");
+         attribute Mass: Real;
+         attribute Torque: Torque;
+      }
+
+      define Vehicle() {
+         NamedElement : Vehicle;
+         documentation : String("Basic Vehicle configuration showing a part hierarchy.");
+         part FrontAxleAssembly subsets AxleAssembly;
+         part RearAxleAssembly subsets AxleAssembly;
+      }
+
+      define vehicle_C1() {
+         NamedElement : Vehicle;
+         documentation : String("Specialized configuration with part-specific ports.");
+         redefine FrontAxleAssembly as FrontAxleAssembly_C1;
+         redefine RearAxleAssembly as RearAxleAssembly_C1;
+      }
+
+      define FrontAxleAssembly_C1() {
+         NamedElement : AxleAssembly;
+         documentation : String("Specialized front axle assembly configuration.");
+         part LeftFrontWheel subsets Wheel(lugboltQuantity: 4) = Wheel#(1);
+         part RightFrontWheel subsets Wheel(lugboltQuantity: 4) = Wheel#(2);
+         Interface LeftFrontMount connect FrontAxleAssembly.LeftMountingPoint to LeftFrontWheel.Hub;
+         Interface RightFrontMount connect FrontAxleAssembly.RightMountingPoint to RightFrontWheel.Hub;
+      }
+
+      define RearAxleAssembly_C1() {
+         NamedElement : AxleAssembly;
+         documentation : String("Specialized rear axle assembly configuration.");
+         part LeftRearWheel subsets Wheel(lugboltQuantity: 6) = Wheel#(1);
+         part RightRearWheel subsets Wheel(lugboltQuantity: 6) = Wheel#(2);
+         Interface LeftRearMount connect RearAxleAssembly.LeftMountingPoint to LeftRearWheel.Hub;
+         Interface RightRearMount connect RearAxleAssembly.RightMountingPoint to RightRearWheel.Hub;
+      }
+
+      define vehicle_C2() {
+         NamedElement : Vehicle;
+         documentation : String("Further specialized configuration with a connection to a deeply-nested port.");
+         redefine RearAxleAssembly as RearAxleAssembly_C3;
+      }
+
+      define RearAxleAssembly_C3() {
+         NamedElement : AxleAssembly;
+         documentation : String("Specialized rear axle assembly configuration.");
+         redefine Axle[1] as Axle_C3;
+         part LeftRearWheel subsets Wheel(lugboltQuantity: 6) = Wheel#(1);
+         part RightRearWheel subsets Wheel(lugboltQuantity: 6) = Wheel#(2);
+         Interface LeftRearMount connect RearAxleAssembly.LeftMountingPoint to Axle_C3.LeftMountingPoint;
+         Interface RightRearMount connect RearAxleAssembly.RightMountingPoint to Axle_C3.RightMountingPoint;
+      }
+
+      define Axle_C3() {
+         NamedElement : Axle;
+         documentation : String("Specialized axle configuration.");
+         port LeftMountingPoint; // left mounting point
+         port RightMountingPoint; // right mounting point
+         part Transmission subsets DriveInterface();
+      }
+   }
+   ```

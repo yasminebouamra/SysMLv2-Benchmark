@@ -1,0 +1,78 @@
+```
+package PubSubSystem
+
+part def PubSubSequence {
+  part :>> producer {
+    event publish_source_event = publish_message.start;
+  }
+
+  part :>> server {
+    event subscribe_target_event = subscribe_message.done;
+    event publish_target_event = publish_message.done;
+    event deliver_source_event = deliver_message.start;
+  }
+
+  part :>> consumer {
+    event subscribe_source_event = subscribe_message.start;
+    event deliver_target_event = deliver_message.done;
+  }
+}
+
+part def PubSubConfiguration {
+  interface publication_interface : PublicationInterface {
+    flow publish_request from publication_interface.source.publish to publication_interface.target.publish;
+  }
+
+  interface subscription_interface : SubscriptionInterface {
+    flow subscribe_request from subscription_interface.source.subscribe to subscription_interface.target.subscribe;
+    flow deliver_response from subscription_interface.target.deliver to subscription_interface.source.deliver;
+  }
+
+  part producer {
+    attribute topic : String;
+    port publicationPort : ~PublicationPort {
+      out ref :>> publish;
+    }
+    flow publish_request from producerBehavior.publish.request to publicationPort.publish;
+  }
+
+  part server {
+    attribute topic : String;
+    port subscriptionPort : ~SubscriptionPort {
+      in ref :>> subscribe;
+      out ref :>> deliver;
+    }
+    flow subscribe_request from subscriptionPort.subscribe to serverBehavior.subscribing.request;
+    flow publish_request from publicationPort.publish to serverBehavior.publishing.request;
+    flow deliver_response from serverBehavior.delivering.response to subscriptionPort.deliver;
+  }
+
+  part consumer {
+    attribute topic : String;
+    port subscriptionPort : ~SubscriptionPort {
+      in ref :>> subscribe;
+      out ref :>> deliver;
+    }
+    flow subscribe_request from subscriptionPort.subscribe to serverBehavior.subscribing.request;
+    flow deliver_response from subscriptionPort.deliver to consumerBehavior.delivery.response;
+  }
+}
+
+part realization : PubSubSequence {
+  part :>> producer :> producer {
+    event producerBehavior.publish[1] :>> publish_source_event;
+  }
+
+  part :>> server :> server {
+    event serverBehavior.subscribing[1] :>> subscribe_target_event;
+    event serverBehavior.publishing[1] :>> publish_target_event;
+    event serverBehavior.delivering[1] :>> deliver_source_event;
+  }
+
+  part :>> consumer :> consumer {
+    event consumerBehavior.subscribe[1] :>> subscribe_source_event;
+    event consumerBehavior.delivery[1] :>> deliver_target_event;
+  }
+}
+
+```

@@ -1,0 +1,107 @@
+```sysmlv2
+package VehicleQuantities {
+
+    unit Distance {
+        name = "Mile"
+    }
+
+    unit FuelConsumption {
+        name = "Gallon"
+    }
+
+    unit Velocity {
+        name = "Mile/Hour"
+    }
+
+    unit Acceleration {
+        name = "Mile/Hour^2"
+    }
+}
+
+package VehicleModel {
+
+    part Vehicle {
+        attribute mass :> VehicleQuantities::Mass;
+        attribute fuelConsumption :> VehicleQuantities::FuelConsumption;
+
+        attribute def Velocity :> VehicleQuantities::Velocity;
+        attribute def Acceleration :> VehicleQuantities::Acceleration;
+    }
+
+    part FuelTank {
+        attribute capacity :> VehicleQuantities::FuelConsumption;
+    }
+
+    part Wheel {
+        attribute radius :> VehicleQuantities::Distance;
+    }
+}
+
+package FuelEconomyRequirements {
+
+    part UrbanDriving {
+        constraint { Velocity <= 30 }
+        constraint { FuelConsumption >= 20 }
+    }
+
+    part HighwayDriving {
+        constraint { Velocity >= 60 }
+        constraint { FuelConsumption <= 30 }
+    }
+}
+
+package DynamicsModeling {
+
+    action CalculateVelocity {
+        in input : VehicleModel.Vehicle;
+        out output : VehicleQuantities.Velocity;
+        calc :>> output = input.Velocity + input.Acceleration * Time;
+    }
+
+    action CalculateAcceleration {
+        in input : VehicleModel.Vehicle;
+        out output : VehicleQuantities.Acceleration;
+        // Calculate acceleration based on input forces and masses
+    }
+}
+
+package FuelEconomyAnalysis {
+
+    part FuelConsumptionCalculator {
+        action CalculateFuelConsumption {
+            in input : VehicleModel.Vehicle;
+            out output : VehicleQuantities.FuelConsumption;
+            // Calculate fuel consumption based on distance and fuel efficiency
+        }
+    }
+
+    part ScenarioAnalysis {
+        action AnalyzeFuelEconomy {
+            in input : VehicleModel.Vehicle;
+            in requirements : FuelEconomyRequirements.*;
+            out output : Boolean;
+            // Analyze fuel consumption against specified requirements
+        }
+    }
+}
+
+package VehicleAnalysis {
+
+    part Main {
+        import VehicleQuantities.*;
+        import VehicleModel.*;
+        import FuelEconomyRequirements.*;
+        import DynamicsModeling.*;
+        import FuelEconomyAnalysis.*;
+
+        // Create instances of vehicle model, fuel consumption calculator, etc.
+
+        action AnalyzeVehicleFuelEconomy {
+            in vehicle : VehicleModel.Vehicle;
+            in requirements : FuelEconomyRequirements.*;
+
+            run AnalyzeFuelEconomy(vehicle, requirements);
+        }
+    }
+}
+```

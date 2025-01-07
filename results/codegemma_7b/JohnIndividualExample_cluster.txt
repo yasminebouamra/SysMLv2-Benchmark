@@ -1,0 +1,45 @@
+```sysmlv2
+package PersonsAndCountries {
+	class Person {
+		attribute name : String;
+	}
+
+	class Country {
+		attribute name : String;
+		attribute president : Person;
+	}
+
+	class Presidency {
+		attribute start : Date;
+		attribute end : Date;
+	}
+
+	class President extends Person {
+		attribute country : Country;
+		association presidency : Presidency {
+			navigators : [country, presidency]
+		}
+	}
+
+	person John : Person {
+		name : "John";
+	}
+
+	country US : Country {
+		name : "United States";
+		president : John;
+	}
+
+	constraint presidencyDuration {
+		pre presidency.start <= presidency.end;
+	}
+
+	attribute presidencyStart : Date {
+		value : presidency.start;
+	}
+
+	attribute presidencyEnd : Date {
+		value : presidency.end;
+	}
+}
+```

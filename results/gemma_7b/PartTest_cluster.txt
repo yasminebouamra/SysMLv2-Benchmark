@@ -1,0 +1,48 @@
+```sysmlv2
+container PartTest {
+
+    part def P {
+        attribute a;
+    }
+
+    abstract template def T {
+        attribute b;
+    }
+
+    part def Q :> T;
+
+    variation part def V :> T {
+        variant part x : Q {
+            attribute c : b :>> a;
+        }
+    }
+
+    part q : Q;
+
+    variation part v : T {
+        variant q {
+            attribute c : b :>> a;
+        }
+    }
+
+    part y : T = v::q;
+
+    variation action def A {
+        variant action a1;
+        variant action a2;
+    }
+
+    variation use case uc1 {
+        variant use case uc11;
+        variant use case uc12;
+    }
+
+    variation analysis a1;
+
+    variation verification v1;
+
+    variation requirement r {
+        variant requirement r1;
+    }
+}
+```

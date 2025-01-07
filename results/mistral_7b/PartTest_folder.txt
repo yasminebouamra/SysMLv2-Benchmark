@@ -1,0 +1,48 @@
+ ```SysMLV2
+   package PartTest {
+       document "Advanced System Modeling Example in SysMLV2"
+
+       part DefinedStructure {
+           part Container;
+           part AbstractBaseTemplate;
+           part ComplexPartConfiguration;
+           part RecursiveRelationship;
+       }
+
+       part Container;
+
+       part AbstractBaseTemplate {
+           attribute cardinality : ScalarValues::Integer; // Define the specific cardinality for this part type
+
+           operation operation1();
+           operation operation2(parameter1 : DataType);
+
+           port inPort;
+           port outPort;
+
+           abstract interface I_Abstract {
+               operation operation3();
+               operation operation4(parameter2 : DataType);
+           }
+       }
+
+       part ComplexPartConfiguration {
+           attribute complexAttribute1 : DataType;
+           attribute complexAttribute2 : DataInternal::DataArray[DataType];
+
+           port complexInputPort;
+           port complexOutputPort;
+
+           interface I_Complex {
+               operation operation5(parameter3 : DataType);
+               operation operation6(parameter4 : DataType, parameter5 : DataType);
+           }
+       }
+
+       part RecursiveRelationship {
+           part SubRecursive;
+
+           allocation def R_Recursive :> RecursiveRelationship allocate SubRecursive to RecursiveRelationship;
+       }
+   }
+   ```

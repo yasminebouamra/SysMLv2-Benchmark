@@ -1,0 +1,18 @@
+ ```SysMLV2
+   package ThermalDataPacketManagement {
+      part def ThermalDataPacket;
+
+      part def StandardThermalDataPacket :> ThermalDataPacket;
+      part def SpecializedThermalDataPacket :> ThermalDataPacket {
+         attribute specificDataType : ScalarValues::String;
+      }
+
+      part def ThermalDataPackets[3] : ThermalDataPacket[];
+   }
+
+   part def StandardThermalDataPacket1 : StandardThermalDataPacket;
+   part def StandardThermalDataPacket2 : StandardThermalDataPacket;
+   part def SpecializedThermalDataPacket3 : SpecializedThermalDataPacket {
+      attribute specificDataType = "Temperature_Pressure";
+   }
+   ```

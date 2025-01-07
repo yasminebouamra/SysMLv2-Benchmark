@@ -1,0 +1,27 @@
+```sysmlv2
+package SystemArchitecture
+
+part ApplicationLayer {
+	feature userInteractions;
+	feature dataAccess;
+	attribute dependencyOnServiceLayer;
+}
+
+part ServiceLayer {
+	feature businessLogic;
+	feature dataAccess;
+	attribute dependencyOnDataLayer;
+}
+
+part DataLayer {
+	feature dataPersistence;
+	attribute dependencyOnApplicationLayer;
+}
+
+relation Dependency {
+	ApplicationLayer appLayer;
+	ServiceLayer serviceLayer;
+	DataLayer dataLayer;
+}
+
+```

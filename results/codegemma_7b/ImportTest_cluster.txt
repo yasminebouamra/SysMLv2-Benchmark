@@ -1,0 +1,38 @@
+```
+package Model {
+
+    package Package1 {
+        private import Package2::*;
+
+        part def PartA;
+        part def PartB;
+
+        public import Package3::*;
+
+        part def PartC;
+        part def PartD;
+    }
+
+    package Package2 {
+        private import Package3::*;
+
+        part def PartE;
+        part def PartF;
+
+        public import Package4::*;
+
+        part def PartG;
+        part def PartH;
+    }
+
+    package Package3 {
+        part def PartI;
+        part def PartJ;
+    }
+
+    package Package4 {
+        part def PartK;
+        part def PartL;
+    }
+}
+```

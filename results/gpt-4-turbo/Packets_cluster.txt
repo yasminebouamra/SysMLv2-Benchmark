@@ -1,0 +1,32 @@
+```SysMLV2
+package DataPacketModel {
+
+    attribute def HeaderTemplate {
+        attribute identifier : ScalarValues::String;
+        attribute timestamp : Time::DateTime;
+        attribute size : ScalarValues::Integer;
+    }
+
+    attribute def DataFieldTemplate {
+        attribute type : ScalarValues::String;
+        attribute length : ScalarValues::Integer;
+    }
+
+    attribute def ThermalDataField :> DataFieldTemplate {
+        attribute temperature : SI::Kelvin;
+        attribute criticalLevel : ScalarValues::Real;
+    }
+
+    part def Packet {
+        attribute header : HeaderTemplate;
+        attribute dataFields : DataFieldTemplate[*];
+    }
+
+    part def ThermalPacket :> Packet {
+        attribute header :> HeaderTemplate {
+            attribute timestamp : Time::DateTime with { resolution = Time::Resolution::Milliseconds; }
+        }
+        attribute dataFields : ThermalDataField[1..*];
+    }
+}
+```

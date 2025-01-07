@@ -1,0 +1,36 @@
+```sysmlv2
+package ConjugationTest {
+
+    port def P {
+        alias p for port p1;
+        alias p for port p2;
+    }
+
+    port def ~P {
+        alias p for port p1;
+        alias p for port p2;
+    }
+
+    part def B {
+        in port p1 : P;
+        out port p2 : ~P;
+    }
+
+    connection type def A {
+        port p : P;
+        port ~p : ~P;
+    }
+
+    interface def I {
+        port p : P;
+        port ~p : ~P;
+    }
+
+    part def B1 {
+        part b : B;
+        connection c : A;
+        interface i : I;
+    }
+
+}
+```

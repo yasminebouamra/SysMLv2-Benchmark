@@ -1,0 +1,46 @@
+```sysmlv2
+package PubSubSystem {
+
+	package Components {
+		part Producer {
+			event publish(topic: String)
+		}
+
+		part Server {
+			event subscribe(topic: String)
+			event publish(publication: Publication)
+			event deliver(publication: Publication)
+		}
+
+		part Consumer {
+			event subscribe(topic: String)
+			event deliver(publication: Publication)
+		}
+	}
+
+	package Interfaces {
+		interface PublicationInterface {
+			operation publish(publication: Publication)
+		}
+
+		interface SubscriptionInterface {
+			operation subscribe(topic: String)
+			operation deliver(publication: Publication)
+		}
+	}
+
+	package Flows {
+		flow publishMessage {
+			from producer.publish to server.publish via PublicationInterface.publish
+		}
+
+		flow subscribeMessage {
+			from consumer.subscribe to server.subscribe via SubscriptionInterface.subscribe
+		}
+
+		flow deliverMessage {
+			from server.deliver to consumer.deliver via SubscriptionInterface.deliver
+		}
+	}
+}
+```

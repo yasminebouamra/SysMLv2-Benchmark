@@ -1,0 +1,13 @@
+```sysmlv2
+package 'Vehicle Package' {
+
+    package 'Vehicle Components' {
+        
+        part vehicleCar : PartsTree::vehicleFamily {
+            part :>> engine = engine::'4cylEngine';
+            part :>> transmission = transmission::automaticTransmission;
+            part :>> sunroof = sunroof::withSunroof;
+        }
+    }
+}
+```

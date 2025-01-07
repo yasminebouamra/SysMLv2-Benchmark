@@ -1,0 +1,80 @@
+```
+package Vehicle {
+
+	private import SpatialItems::*;
+	private import ShapeItems::*;
+	private import Objects::Point;
+	private import Quantities::VectorQuantityValue;
+	private import MeasurementReferences::CoordinateFrame;
+	private import MeasurementReferences::TranslationRotationSequence;
+	private import MeasurementReferences::Translation;
+	private import MeasurementReferences::Rotation;
+	private import SI::*;
+
+	part def Vehicle :> SpatialItem {
+		doc
+		/*
+		 * Vehicle with chassis, wheels, and lug bolts
+		 */
+
+		item :>> chassis : Car;
+		item :>> wheel1 : Wheel;
+		item :>> wheel2 : Wheel;
+		item :>> wheel3 : Wheel;
+		item :>> wheel4 : Wheel;
+
+		attribute datum :>> coordinateFrame {
+			:>> mRefs = (mm, mm, mm);
+		}
+	}
+
+	part def Car :> SpatialItem {
+		doc
+		/*
+		 * Vehicle chassis with detailed shape
+		 */
+
+		item :>> shape : Cuboid {
+			:>> length = 4800 [mm];
+			:>> width  = 1840 [mm];
+			:>> height = 1350 [mm];
+		}
+	}
+
+	part def Wheel :> SpatialItem {
+		doc
+		/*
+		 * Single wheel with diameter calculation based on tire size
+		 */
+
+		item :>> tire : Tire;
+
+		attribute diameter : Length {
+			:>> calculation {
+				return tire.diameter;
+			}
+		}
+
+		item :>> shape : Cylinder {
+			:>> radius = diameter/2;
+			:>> height = tire.profileHeight;
+		}
+	}
+
+	part def Tire :> SpatialItem {
+		doc
+		/*
+		 * Tire with dimensions and calculated diameter
+		 */
+
+		attribute width : Length;
+		attribute profileHeight : Length;
+
+		attribute diameter : Length {
+			:>> calculation {
+				return width * 2 + profileHeight * 2;
+			}
+		}
+	}
+}
+```

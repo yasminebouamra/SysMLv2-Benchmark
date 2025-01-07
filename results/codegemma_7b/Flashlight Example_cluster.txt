@@ -1,0 +1,28 @@
+```sysml
+package FlashlightSystem
+
+type OnOffCommand
+	on
+	off
+end
+
+type Light
+	intensity : Real
+end
+
+part User
+	port command : InPort<OnOffCommand>
+end
+
+part Flashlight
+	port command : InPort<OnOffCommand>
+	port light : OutPort<Light>
+end
+
+part ReflectingSurface
+	port light : InPort<Light>
+end
+
+flow User.command -> Flashlight.command
+flow Flashlight.light -> ReflectingSurface.light
+```

@@ -1,0 +1,12 @@
+package PictureTakingProcess {
+
+	action def Focus;
+	action def Shoot;
+	action def GetExposureSettings;
+
+	sequence {
+		perform Focus;
+		perform GetExposureSettings;
+		perform Shoot;
+	}
+}

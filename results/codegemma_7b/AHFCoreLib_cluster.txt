@@ -1,0 +1,53 @@
+```sysmlv2
+package ArrowheadFramework {
+
+	abstract part def ServicePort {
+		abstract event publish;
+		abstract event subscribe;
+	}
+
+	abstract part def ServiceSystem {
+		abstract part def service : ServicePort;
+	}
+
+	abstract part def System {
+		abstract part def discovery : ServiceSystem;
+		abstract part def authorization : ServiceSystem;
+	}
+
+	part realization_1 : System {
+		part :>> discovery :> DiscoverySystem {
+			part :>> service :> HttpDiscoveryService {
+				event publish :>> publish_event;
+			}
+		}
+
+		part :>> authorization :> AuthorizationSystem {
+			part :>> service :> MqttAuthorizationService {
+				event subscribe :>> subscribe_event;
+			}
+		}
+	}
+
+	part realization_2 : System {
+		part :>> discovery :> DiscoverySystem {
+			part :>> service :> HttpDiscoveryService {
+				event publish :>> publish_event;
+			}
+		}
+
+		part :>> authorization :> AuthorizationSystem {
+			part :>> service :> MqttAuthorizationService {
+				event subscribe :>> subscribe_event;
+			}
+		}
+	}
+}
+```
+
+**Explanation:**
+
+* The model defines abstract parts for service ports, service systems, systems, and their realizations.
+* The `System` part includes references to the `DiscoverySystem` and `AuthorizationSystem`.
+* The `DiscoverySystem` and `AuthorizationSystem` parts have a reference to a specific service port (HTTP and MQTT, respectively).
+* The `realization_1` and `realization_2` parts instantiate the `System` part with concrete service implementations.

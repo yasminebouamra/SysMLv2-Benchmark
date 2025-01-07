@@ -1,0 +1,79 @@
+```sysmlv2
+part system_of_systems:SysLocalCloudsDD;
+
+part def LocalCloudDesign {
+    doc /* Local Cloud definition */
+
+    part systems:SysD[1..*];
+}
+
+part def SysD {
+    doc /* System definitions */
+
+    port services: SD[1..*];
+    attribute systemname: String;
+    attribute address: String;
+    attribute portno: Integer;
+}
+
+port def IDD :> SD{
+    doc /* Interface Design Description of services */
+
+    attribute encoding_kind:String;
+}
+
+port def SDDD :> SD{
+    doc /* Service Definition Design Description */
+
+    port idds:IDD[*];
+}
+
+part def SysLocalCloudsDD :> SysLocalCloudsDesign {
+    doc /* System of Systems Detailed Description */
+
+    part :>> locclouds:LocalCloudDD[1..*];
+}
+
+part def LocalCloudDD :> LocalCloudDesign {
+    part :>> systems:SysDD[1..*];
+}
+
+part def SysDD :> SysD{
+    doc /* System Detailed Description */
+
+    port :>> services:SDDD;
+    action ServiceMethod[1..*];
+}
+
+event def TellUConsumerRequest{data:String};
+
+event def APISProducerResponse{data:String};
+
+message def MQTTMessage{data:String};
+
+sequenceDiagram def SequenceDiagram1 {
+    participant TellUConsumer;
+    participant APISProducer;
+    participant MQTTServer;
+    participant APISConsumer;
+
+    TellUConsumer->>TellUConsumerRequest;
+    activate TellUConsumer;
+    TellUConsumer->>MQTTServer!MQTTMessage(data: tellUConsumerRequest.data);
+
+    activate MQTTServer;
+    MQTTServer->>MQTTMessage(data: tellUConsumerRequest.data);
+
+    deactivate MQTTServer;
+    activate APISProducer;
+    MQTTServer->>APISProducerResponse;
+    APISProducer->>APISPProducerResponse;
+
+    deactivate APISProducer;
+    activate APISConsumer;
+    APISConsumer->>MQTTServer!MQTTMessage(data: APISProducerResponse.data);
+
+    deactivate MQTTServer;
+    deactivate TellUConsumer;
+}
+```

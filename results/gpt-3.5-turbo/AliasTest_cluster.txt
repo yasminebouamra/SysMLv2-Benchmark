@@ -1,0 +1,33 @@
+package AliasesExample {
+
+    private import SystemElements::*;
+    
+    part def Processor {
+        port inPort;
+        port outPort;
+    }
+    
+    part def Memory {
+        port dataPort;
+    }
+    
+    part processor1 : Processor {
+        port input :>> inPort;
+        port output :>> outPort;
+    }
+    
+    part processor2 : Processor {
+        port in :>> inPort;
+        port out :>> outPort;
+    }
+    
+    part memory : Memory {
+        port data :>> dataPort;
+    }
+    
+    alias processor1Input for processor1.input;
+    alias processor2Output for processor2.out;
+
+    connect processor1Input to processor2Output;
+    connect processor1.outPort to memory.dataPort;
+}

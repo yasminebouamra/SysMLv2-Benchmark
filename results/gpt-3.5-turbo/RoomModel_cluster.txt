@@ -1,0 +1,44 @@
+package ArchitecturalLayout {
+
+	part def Hallway {
+		port entryPort;
+		port exitPort;
+		port airFlowPort;
+		port studentFlowPort;
+		port teacherFlowPort;
+	}
+	
+	part def Classroom {
+		port entryPort;
+		port exitPort;
+		port airFlowPort;
+		port furnitureFlowPort;
+		port studentFlowPort;
+		port teacherFlowPort;
+	}
+	
+	part def Storageroom {
+		port entryPort;
+		port exitPort;
+		port airFlowPort;
+		port furnitureFlowPort;
+	}
+	
+	part def Air;
+	part def Furniture;
+	part def Student;
+	part def Teacher;
+	
+	connect Hallway.exitPort to Classroom.entryPort;
+	connect Classroom.exitPort to Hallway.entryPort;
+	connect Classroom.exitPort to Storageroom.entryPort;
+	connect Storageroom.exitPort to Classroom.entryPort;
+	
+	connect Hallway.airFlowPort to Classroom.airFlowPort;
+	connect Hallway.studentFlowPort to Classroom.studentFlowPort;
+	connect Hallway.teacherFlowPort to Classroom.teacherFlowPort;
+	connect Classroom.airFlowPort to Storageroom.airFlowPort;
+	connect Classroom.studentFlowPort to Storageroom.studentFlowPort;
+	connect Classroom.teacherFlowPort to Storageroom.teacherFlowPort;
+	connect Classroom.furnitureFlowPort to Storageroom.furnitureFlowPort;
+}

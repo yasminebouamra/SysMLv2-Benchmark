@@ -1,0 +1,56 @@
+```sysmlv2
+package PartTest {
+
+    part def P1 {
+        part a;
+        part b {
+            part c;
+        }
+    }
+
+    part def P2 {
+        part d;
+        part e {
+            part f;
+        }
+    }
+
+    part p1 : P1;
+    part p2 : P2;
+
+    interface i1 {
+        operation op1();
+        operation op2(int x);
+    }
+
+    interface i2 : i1 {
+        operation op3(string s);
+    }
+
+    behavior b1 : i1 {
+        operation op1() {
+            // Code for op1
+        }
+
+        operation op2(int x) {
+            // Code for op2
+        }
+    }
+
+    behavior b2 : i2 {
+        operation op3(string s) {
+            // Code for op3
+        }
+    }
+
+    part p3 : i1;
+    part p4 : i2;
+
+    port p in;
+    port p out;
+
+    connection c1 : p in --> p3;
+    connection c2 : p4 --> p out;
+
+}
+```

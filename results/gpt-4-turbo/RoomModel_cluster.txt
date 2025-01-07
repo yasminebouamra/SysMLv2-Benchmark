@@ -1,0 +1,47 @@
+```SysML
+package BuildingLayout {
+
+    item def Air;
+    item def Furniture;
+    item def Students;
+    item def Teachers;
+
+    port def EntryPort<T> {
+        in item : T;
+    }
+
+    part def Room {
+        port entry : EntryPort<Air>;
+    }
+
+    part def Hallway :> Room {
+        port entryFurniture : EntryPort<Furniture>;
+        port entryStudents : EntryPort<Students>;
+        port entryTeachers : EntryPort<Teachers>;
+    }
+
+    part def Classroom :> Room {
+        port entryFurniture : EntryPort<Furniture>;
+        port entryStudents : EntryPort<Students>;
+        port entryTeachers : EntryPort<Teachers>;
+    }
+
+    part def Storageroom :> Room {
+        port entryFurniture : EntryPort<Furniture>;
+    }
+
+    part hallway : Hallway;
+    part classroom1 : Classroom;
+    part classroom2 : Classroom;
+    part storageroom : Storageroom;
+
+    connect hallway.entryFurniture to classroom1.entryFurniture;
+    connect hallway.entryFurniture to classroom2.entryFurniture;
+    connect hallway.entryFurniture to storageroom.entryFurniture;
+    connect hallway.entryStudents to classroom1.entryStudents;
+    connect hallway.entryTeachers to classroom1.entryTeachers;
+    connect hallway.entryStudents to classroom2.entryStudents;
+    connect hallway.entryTeachers to classroom2.entryTeachers;
+
+}
+```

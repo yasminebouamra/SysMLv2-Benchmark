@@ -1,0 +1,54 @@
+```SysMLV2
+package HybridSUVModel {
+
+    requirement def LoadCapacity {
+        doc /* Requirement for carrying capacity of the HSUV */
+        satisfies LoadCapabilityStandard;
+    }
+
+    requirement def EcoFriendliness {
+        doc /* Requirement focussed on environmental impact */
+        satisfies KyotoAccord2010EmissionsStandards;
+        satisfies FuelEconomyStandard2004;
+    }
+
+    requirement def Performance {
+        doc /* Requirement detailing performance aspects like acceleration and top speed */
+        satisfies PerformanceStandard;
+    }
+
+    requirement def Ergonomics {
+        doc /* Requirement focused on the comfort and accessibility of the vehicle */
+        satisfies ErgonomicsStandard;
+    }
+
+    requirement def LoadCapabilityStandard {
+        doc /* Standard defining the load capacity requirements */
+        id "STD001";
+    }
+
+    requirement def KyotoAccord2010EmissionsStandards {
+        doc /* Compliance with the 2010 Kyoto Accord emissions standards */
+        id "ENV001";
+    }
+
+    requirement def FuelEconomyStandard2004 {
+        doc /* Fuel economy should be better than 95% of cars built in 2004 */
+        id "ENV002";
+    }
+
+    requirement def PerformanceStandard {
+        doc /* Standard defining required performance measures */
+        id "PER001";
+    }
+
+    requirement def ErgonomicsStandard {
+        doc /* Standard to measure the ergonomic aspects of the vehicle */
+        id "ERG001";
+    }
+
+    part def HSUV {
+        doc /* Hybrid Sport Utility Vehicle Part Definition */
+    }
+}
+```

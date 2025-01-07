@@ -1,0 +1,65 @@
+ ```sysml
+    package 'Vehicle Decomposition' {
+        doc
+        /*
+         * SysMLv2 model for hierarchical structure and customizable components of a vehicle.
+         */
+
+        part def Vehicle {
+            attribute :>> name { dataType: String };
+            attribute :>> modelNumber { dataType: Integer };
+
+            part chassisAssy : ChassisAssembly;
+            part engine : Engine;
+            part wheel [4] : Wheel;
+
+            ref rollBarBR[*] : RollBar;
+            ref cylinderBR[*] : Cylinder;
+        }
+
+        part def ChassisAssembly {
+            attribute :>> type { dataType: String; allowedValues = ('Light', 'Heavy'); defaultValue='Light' };
+            part rollBar [0..1] : RollBar;
+        }
+
+        part def Engine {
+            attribute :>> numberOfCylinders { dataType: Integer; minValue=4; maxValue=8; defaultValue=6 };
+            part cylinder [4..numberOfCylinders] : Cylinder;
+        }
+
+        part def Wheel {
+            attribute :>> tireSize { dataType: Integer; minValue=12; maxValue=20; defaultValue=15 };
+            ref lugBoltBR [6..tireSize*4] : LugBolt;
+        }
+
+        part def RollBar {
+            attribute :>> type { dataType: String; allowedValues = ('Light', 'Heavy'); defaultValue='Light' };
+        }
+
+        part def LightRollBar :> RollBar {
+            // Specific characteristics for light roll bars
+        }
+
+        part def HeavyRollBar :> RollBar {
+            // Specific characteristics for heavy roll bars
+        }
+
+        part def Cylinder;
+        part def LugBolt;
+
+        /* Example configurations */
+        part def 'Vehicle Model 1' :> Vehicle {
+            attribute :>> name = "Model 1";
+            attribute :>> modelNumber = 1001;
+            ref redefines rollBarBR[0] as HeavyRollBar;
+            ref redefines cylinderBR[4];
+        }
+
+        part def 'Vehicle Model 2' :> Vehicle {
+            attribute :>> name = "Model 2";
+            attribute :>> modelNumber = 1002;
+            ref redefines rollBarBR[1] as LightRollBar;
+            ref redefines cylinderBR[6..8];
+        }
+    }
+```

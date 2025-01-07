@@ -1,0 +1,25 @@
+```sysmlv2
+package CarDimensions {
+
+	namespace Dimensions {
+		abstract part Box {
+			attribute l : Length;
+			attribute w : Width;
+			attribute h : Height;
+		}
+
+		part Car extends Box {
+			// Dimensions in millimeters
+			attribute l : Length = 4500 [mm];
+			attribute w : Width = 1800 [mm];
+			attribute h : Height = 1300 [mm];
+		}
+	}
+
+	part CarInstance {
+		part car : Dimensions.Car;
+	}
+}
+```
+
+</start_of_turn>

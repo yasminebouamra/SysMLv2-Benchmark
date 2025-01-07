@@ -1,0 +1,61 @@
+```sysmlv2
+package MedicalDeviceFailure {
+
+    part def Battery;
+    part def Device;
+    part def Patient;
+
+    event def BatteryDepletion;
+    event def DeviceFailure;
+    event def TherapyDelay;
+
+    connection def BatteryToDevice {
+        type Battery -> Device;
+    }
+
+    connection def DeviceToFailure {
+        type Device -> DeviceFailure;
+    }
+
+    connection def FailureToDelay {
+        type DeviceFailure -> TherapyDelay;
+    }
+
+    part battery : Battery;
+    part device : Device;
+    part patient : Patient;
+
+    relation BatteryToDevice connects battery to device;
+    relation DeviceToFailure connects device to deviceFailure;
+    relation FailureToDelay connects deviceFailure to therapyDelay;
+
+    @CausationMetadata(isNecessary=true, probability=0.2)
+    relation BatteryDepletion causes BatteryToDevice;
+
+    @CausationMetadata(isNecessary=true, probability=0.8)
+    relation DeviceFailure causes DeviceToFailure;
+
+    @CausationMetadata(isNecessary=false, probability=0.5)
+    relation TherapyDelay resultsFrom FailureToDelay;
+}
+```
+
+**Explanation:**
+
+* **Parts:** Battery, Device, Patient
+* **Events:** BatteryDepletion, DeviceFailure, TherapyDelay
+* **Connections:**
+    * BatteryToDevice: Connects the battery to the device.
+    * DeviceToFailure: Connects the device to the DeviceFailure event.
+    * FailureToDelay: Connects the DeviceFailure event to the TherapyDelay event.
+* **Relations:**
+    * BatteryToDevice: Causes the BatteryDepletion event.
+    * DeviceFailure: Causes the DeviceFailure event.
+    * TherapyDelay: Results from the FailureToDelay event.
+* **Causation Metadata:** Specifies the necessity and probability of each causation relationship.
+
+**Note:**
+
+* The model assumes a direct relationship between battery depletion and device failure.
+* The probability of each causation relationship is provided as an example.
+* The model does not include any specific details about the medical device or patient.

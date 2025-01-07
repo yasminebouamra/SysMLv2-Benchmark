@@ -1,0 +1,101 @@
+package VehicleFuelEconomyModel {
+	import ScalarValues::*;
+	import Quantities::*;
+	import ISQ::*; // International System of Quantities for base units
+
+	package VehicleQuantities {
+		unit alias mpg for mile_per_gallon = mile/gallon; // Custom unit for fuel economy
+		
+		attribute def ConsumptionUnit :> DerivedUnit {
+			attribute distance : QuantityPowerFactor { quantity = mile; exponent = 1; }
+			attribute volume : QuantityPowerFactor { quantity = gallon; exponent = -1; }
+			doc /* Defines miles per gallon as a fuel consumption unit. */
+		}
+
+		attribute def FuelEfficiency :> ScalarQuantityValue {
+			attribute value : Real;
+			attribute unit : ConsumptionUnit;
+			doc /* Attribute that will hold a fuel efficiency value. */
+		}
+	}
+
+	package VehicleModel {
+		part def Vehicle {
+			attribute mass :> ISQ::mass;
+			part fuelTank : FuelTank;
+			part wheels : Wheel[4..8];
+			port fuelIntake : FuelPort;
+		}
+
+		part def FuelTank {
+			attribute capacity :> ISQ::volume;
+		}
+
+		part def Wheel {
+			attribute diameter :> ISQ::length;
+		}
+
+		port def FuelPort {
+			in item fuel : Fuel;
+		}
+
+		item def Fuel;
+	}
+
+	package FuelEconomyRequirements {
+		requirement def FuelEconomyRequirement {
+			attribute minimumEfficiency :> VehicleQuantities::FuelEfficiency;
+			doc /* Requirement for minimum fuel efficiency. */
+		}
+		
+		requirement cityDrivingRequirement : FuelEconomyRequirement {
+			attribute minimumEfficiency = VehicleQuantities::FuelEfficiency(30, VehicleQuantities::mpg);
+			doc /* Specific requirement for city driving conditions. */
+		}
+		
+		requirement highwayDrivingRequirement : FuelEconomyRequirement {
+			attribute minimumEfficiency = VehicleQuantities::FuelEfficiency(35, VehicleQuantities::mpg);
+			doc /* Specific requirement for highway driving conditions. */
+		}
+	}
+
+	package VehicleDynamics {
+		action def ComputeDynamics {
+			in attribute speed :> ISQ::speed;
+			in attribute time :> ISQ::time;
+			out attribute acceleration :> ISQ::acceleration;
+			out attribute newSpeed :> ISQ::speed;
+			out attribute newPosition :> ISQ::length;
+			
+			do compute /* Calculation block maybe implemented as external constraint */
+				acceleration = (someFunctionProvidedElsewhere(speed, time));
+				newSpeed = speed + (acceleration * time);
+				newPosition = someOtherFunction(speed, acceleration, time);
+		}
+	}
+
+	package FuelEconomyAnalysis {
+		use analysis FuelEconomyTest {
+			subject vehicle :> VehicleModel::Vehicle;
+			subject req :> FuelEconomyRequirements::FuelEconomyRequirement;
+			
+			action evaluateFuelEconomy {
+				use VehicleDynamics::ComputeDynamics;
+				check /* Evaluate the results against the requirements */
+					(vehicle.fuelTank.capacity / newPosition) >= req.minimumEfficiency.value;
+			}
+		}
+	}
+
+	package TestScenarios {
+		part scenario1 :> FuelEconomyAnalysis::FuelEconomyTest {
+			subject vehicle = VehicleModel::Vehicle();
+			subject req = FuelEconomyRequirements::cityDrivingRequirement;
+		}
+
+		part scenario2 :> FuelEconomyAnalysis::FuelEconomyTest {
+			subject vehicle = VehicleModel::Vehicle();
+			subject req = FuelEconomyRequirements::highwayDrivingRequirement;
+		}
+	}
+}

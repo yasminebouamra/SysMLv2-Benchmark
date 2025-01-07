@@ -1,0 +1,80 @@
+package EnumerationTest {
+
+	part def Vehicle {
+		color : Color;
+	}
+
+	part def Car : Vehicle {
+		attribute color: Color;
+	}
+	
+	part def Bike : Vehicle {
+		attribute color: Color;
+	}
+	
+	part def Tricycle : Vehicle {
+		attribute color: Color;
+	}
+	
+	enum def Color { Red, Green, Blue }
+	
+	part car1 : Car {
+		color = Red
+	}
+
+	part bike1 : Bike {
+		color = Green
+	}
+	
+	part tricycle1 : Tricycle {
+		color = Blue
+	}
+	
+	part car2 : Car {
+		color : Color;
+	}
+	
+	part bike2 : Bike {
+		color : Color;
+	}
+	
+	part tricycle2 : Tricycle {
+		color : Color;
+	}
+
+	assert constraint colorAnalysis { 
+		car2.color == Red;
+		bike2.color == Green; 
+		tricycle2.color == Blue
+	}
+
+	attribute def RealNumberWithLimits {
+		lowLimit: Real;
+		highLimit: Real;
+	}
+	
+	part realNumber1 : RealNumberWithLimits {
+		lowLimit = 0.0;
+		highLimit = 100.0;
+	}
+
+	part realNumber2 : RealNumberWithLimits {
+		lowLimit = 50.0;
+		highLimit = 200.0;
+	}
+	
+	assert constraint realNumberAnalysis { 
+		realNumber1.lowLimit == 0.0; 
+		realNumber1.highLimit == 100.0; 
+		realNumber2.lowLimit == 50.0; 
+		realNumber2.highLimit == 200.0
+	}
+	
+	part optionalColor : Color {
+		color ?= Blue;
+	}
+
+	assert constraint optionalColorAnalysis { 
+		optionalColor != undefined && optionalColor == Blue
+	}
+}

@@ -1,0 +1,52 @@
+package AssignmentTest {
+	
+	attribute def Counter {
+		attribute count : ScalarValues::Integer = 0;
+		
+		action increment {
+			count = count + 1;
+		}
+		
+		action decrement {
+			count = count - 1;
+		}
+	}
+	
+	state def CounterStateMachine {
+		state Idle {
+			accept increment_trigger
+			do increment
+			then Incrementing;
+		}
+		
+		state Incrementing {
+			accept increment_trigger
+			do increment
+			then Incrementing;
+			
+			accept decrement_trigger
+			do decrement
+			then Idle;
+		}
+		
+		transition
+			first Idle
+			accept increment_trigger
+			do increment
+			then Incrementing;
+		
+		transition
+			first Incrementing
+			accept decrement_trigger
+			do decrement
+			then Idle;
+	}
+	
+	action def PerformIncrementOperation {
+		do Counter::increment;
+	}
+	
+	action IncrementCounterCount {
+		do Counter::increment;
+	}
+}

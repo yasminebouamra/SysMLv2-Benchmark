@@ -1,0 +1,56 @@
+ ```
+   package EnumerationTest;
+
+   part EnumBase : Enumeration {
+      name = 'EnumBase';
+      value 'Unassigned';
+   }
+
+   part ColorExtension : EnumExtension of EnumBase with {
+      value 'Red' ;
+      value 'Green' ;
+      value 'Blue' ;
+      value 'Yellow' ;
+   }
+
+   part ColorEnumeration : Enumeration extends ColorExtension {
+      name = 'Color';
+   }
+
+   part Vehicle with {
+      color: ColorEnumeration;
+   }
+
+   part Car1 : Vehicle {
+      color = ColorEnumeration::Red;
+   }
+
+   part Car2 : Vehicle {
+      color = ColorExtension::Green;
+   }
+
+   part Truck : Vehicle with {
+      color: OptionalColorEnumeration extends ColorEnumeration;
+   }
+
+   part OptionalCar1 : Truck {
+      color = ColorEnumeration::Red;
+   }
+
+   part OptionalCar2 : Truck {
+      // No color specified, using default Unassigned from base enum
+   }
+
+   part VehicleWithWeight : Vehicle with {
+      weight: RealValue constrainedBy WeightConstraint;
+   }
+
+   part WeightConstraint : Constraint {
+      in minWeight: RealValue = 1000.0;
+      in maxWeight: RealValue = 5000.0;
+   }
+
+   part Car3 : VehicleWithWeight {
+      weight = 2000.0;
+   }
+   ```

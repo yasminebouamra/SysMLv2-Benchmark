@@ -1,0 +1,87 @@
+```sysmlv2
+model WheelHubAssembly : Model {
+
+    part def WheelAssembly :> SpatialItem {
+        part wheel : Wheel[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                /* ... */
+            }
+        }
+        part hub : Hub[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                /* ... */
+            }
+        }
+        part tire : Tire[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                /* ... */
+            }
+        }
+        part tireBead : TireBead[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                /* ... */
+            }
+        }
+        part pressureSeat : PressureSeat[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                /* ... */
+            }
+        }
+        part bandMount : BandMount[1] :> componentItems {
+            attribute :>> coordinateFrame {
+                /* ... */
+            }
+        }
+        assert constraint {
+            hub.coordinateFrame.transformation == wheel.coordinateFrame.transformation
+            hub.coordinateFrame.transformation == tire.coordinateFrame.transformation
+            hub.coordinateFrame.transformation == tireBead.coordinateFrame.transformation
+            hub.coordinateFrame.transformation == pressureSeat.coordinateFrame.transformation
+            hub.coordinateFrame.transformation == bandMount.coordinateFrame.transformation
+        }
+    }
+
+    part def Tire :> SpatialItem {
+        /* ... */
+    }
+
+    part def TireBead :> SpatialItem {
+        /* ... */
+    }
+
+    part def PressureSeat :> SpatialItem {
+        /* ... */
+    }
+
+    part def BandMount :> SpatialItem {
+        /* ... */
+    }
+
+    part def Hub :> SpatialItem {
+        part lugBolt : LugBolt[numberOfBolts] :> componentItems {
+            /* ... */
+        }
+        private attribute lugBoltDistributionAngle : Real;
+        private attribute lbpr : Real;
+        assert constraint {
+            /* ... */
+        }
+    }
+
+    action mountTire : Action {
+        precondition :>> wheel.hasTire == false
+        postcondition :>> wheel.hasTire == true
+        steps {
+            /* ... */
+        }
+    }
+
+    action adjustPressure : Action {
+        precondition :>> pressureSeat.pressure >= minPressure
+        postcondition :>> pressureSeat.pressure <= maxPressure
+        steps {
+            /* ... */
+        }
+    }
+}
+```

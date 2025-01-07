@@ -1,0 +1,48 @@
+```sysmlv2
+vehicle Vehicle {
+    // Chassis Assembly
+    part chassisAssembly : ChassisAssembly {
+        attribute :>> materialType = Steel;
+        attribute :>> weight = 100[kg];
+    }
+
+    // Wheels
+    part wheel : Wheel {
+        attribute :>> numberOfTires = 4;
+        attribute :>> tireSize = 205/60R16;
+    }
+    
+    // Engine
+    part engine : Engine {
+        attribute :>> numberOfCylinders = 4;
+        attribute :>> displacement = 1.8[L];
+    }
+
+    // Specialized Variations
+    part specialChassisAssembly : ChassisAssembly {
+        override attribute :>> materialType = Aluminum;
+        override attribute :>> weight = 50[kg];
+        attribute :>> rollBarType = Standard;
+    }
+
+    part sportsEngine : Engine {
+        override attribute :>> numberOfCylinders = 6;
+        override attribute :>> displacement = 3.0[L];
+        attribute :>> performanceTuning = True;
+    }
+
+    // Vehicle Instances
+    instance sedan : Vehicle {
+        chassisAssembly;
+        wheel[4];
+        engine;
+    }
+    
+    instance suv : Vehicle {
+        specialChassisAssembly;
+        wheel[4];
+        sportsEngine;
+    }
+
+}
+```

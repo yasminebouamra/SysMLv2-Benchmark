@@ -1,0 +1,57 @@
+ Here is a simplified SysMLv2 model based on your description. Please note that this is a basic representation and does not cover all possible details. You may need to adjust it according to your specific needs.
+
+```sysml
+library package NorwegianScenario {
+  private import Metaobjects::SemanticMetadata;
+  private import AHFProfileLib::*;
+
+  port global_model:SD;
+
+  metadata def NorwegianScenarioMetadata :> SemanticMetadata{
+    :>> baseType = system_of_systems meta SysML::Package;
+  }
+
+  part def SystemOfSystems :> SystemDesign {
+    doc /* Norwegian Scenario of Arrowhead Framework */
+
+    part :>> localcloud:LocalCloudDD[1..*]; // the descriptions
+  }
+
+  part def LocalCloudDD :> LocalCloudDesign {
+    part :>> systems:SysDD[1..*];
+  }
+
+  part def SysDD :> SysD{
+    doc /* System Detailed Description */
+
+    port :>> services:SDDD;
+    action ServiceMethod[1..*]; //means general behaviors
+    event APIRequestEvent[1..*]; //API Request Events
+    event APISResponseEvent[1..*]; //API Response Events
+
+    message MQTTMessage[1..*]; //MQTT messages
+
+    interface TellUConsumer_Interface :> SDInterface{
+      port :>> APIRequest:APIRequestEvent;
+      port :>> APISResponse:APISResponseEvent;
+    }
+
+    interface APISProducer_Interface :> SDInterface{
+      port :>> APIRequest:APIRequestEvent;
+      port :>> APISResponse:APISResponseEvent;
+    }
+
+    interface MQTTServer_Interface :> SDInterface{
+      port :>> MQTTMessage:MQTTMessage;
+    }
+
+    interface APISConsumer_Interface :> SDInternal{
+      port :>> APIRequest:APIRequestEvent;
+      port :>> APISResponse:APISResponseEvent;
+      port :>> MQTTMessage:MQTTMessage;
+    }
+  }
+}
+```
+
+This model consists of four systems: TellUConsumer, APISProducer, MQTTServer, and APISConsumer. Each system has its own interface that describes the services, events, and messages it offers or consumes. The `APISConsumer` system also uses MQTT messages to facilitate message forwarding between systems.

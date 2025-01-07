@@ -1,0 +1,19 @@
+```sysmlv2
+package TextualRepresentationTest {
+
+    item Item {
+        attribute realNumber : Real {
+            constraint positive : realNumber > 0;
+        }
+    }
+
+    action UpdateRealNumber {
+        item : Item;
+        realNumber : Real;
+        log {
+            message("Real number updated to: " + realNumber);
+        }
+        item.realNumber = realNumber;
+    }
+}
+```

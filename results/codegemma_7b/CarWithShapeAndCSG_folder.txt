@@ -1,0 +1,39 @@
+```sysmlv2
+part def Car : SpatialItem {
+    attribute wcf : CoordinateFrame;
+    attribute lbpr : Real = 1.4; // lugBoltPitchRadius in meter
+
+    part chassis : Chassis[1] :> componentItems {
+        attribute :>> coordinateFrame {
+            attribute :>> transformation : TranslationRotationSequence {
+                attribute :>> source = wcf;
+                attribute :>> elements = Translation((-(shape as Box).length/2, -(shape as Box).width/2, 0)[wcf]);
+            }
+        }
+    }
+
+    part engine : Engine {
+        attribute :>> coordinateFrame {
+            attribute :>> transformation : TranslationRotationSequence {
+                attribute :>> source = chassis.coordinateFrame;
+                attribute :>> elements = Translation((shape as Box).length/2 - 0.3, 0, 0.15)[chassis.coordinateFrame];
+            }
+        }
+    }
+}
+
+part def Engine : SpatialItem {
+    item :>> shape : Box {
+        attribute :>> dimensions = [0.3, 0.2, 0.15];
+    }
+
+    part cylinder : Cylinder {
+        attribute :>> radius = 0.075;
+        attribute :>> height = 0.15;
+        attribute :>> transformation : TranslationRotationSequence {
+            attribute :>> source = coordinateFrame;
+            attribute :>> elements = Translation((0, 0, -0.075))[coordinateFrame];
+        }
+    }
+}
+```

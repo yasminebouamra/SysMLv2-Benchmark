@@ -1,0 +1,76 @@
+```sysmlv2
+part def WheelHubAssembly :> Vehicle {
+
+	part chassis : Chassis[1] :> componentItems {
+		part leftFrontWheel : Wheel[1] :> componentItems {
+			part tire : Tire :> componentItems {}
+			part hub : Hub :> componentItems {}
+			part brake : Brake[1] :> componentItems {}
+		}
+		part rightFrontWheel : Wheel[1] :> componentItems {
+			part tire : Tire :> componentItems {}
+			part hub : Hub :> componentItems {}
+			part brake : Brake[1] :> componentItems {}
+		}
+		part leftRearWheel : Wheel[1] :> componentItems {
+			part tire : Tire :> componentItems {}
+			part hub : Hub :> componentItems {}
+			part brake : Brake[1] :> componentItems {}
+		}
+		part rightRearWheel : Wheel[1] :> componentItems {
+			part tire : Tire :> componentItems {}
+			part hub : Hub :> componentItems {}
+			part brake : Brake[1] :> componentItems {}
+		}
+	}
+	
+	private attribute wheelDiameter : Real = 0.45;
+	private attribute hubBore : Real = 0.3;
+	private attribute tirePressure : Real = 0.3;
+	
+	assert constraint {
+		chassis.leftFrontWheel.hub.hubBore == hubBore;
+		chassis.leftFrontWheel.hub.wheelDiameter == wheelDiameter;
+		chassis.leftFrontWheel.tire.pressure == tirePressure;
+		// ... similar constraints for remaining wheels
+	}
+	
+	action mountTire {
+		// ... code to mount tire onto wheel
+	}
+	
+	action inflateTire {
+		// ... code to inflate tire to desired pressure
+	}
+}
+
+part def Tire :> SpatialItem {
+	item :>> shape : Cylinder {
+		:>> radius = 0.225;
+		:>> height = 0.125;
+	}
+	attribute pressure : Real;
+}
+
+part def Hub :> SpatialItem {
+	item :>> shape : Cylinder {
+		:>> radius = 0.15;
+		:>> height = 0.3;
+	}
+	attribute hubBore : Real;
+	attribute wheelDiameter : Real;
+}
+
+part def Wheel :> SpatialItem {
+	item :>> shape : Cylinder {
+		:>> radius = 0.225;
+		:>> height = 0.5;
+	}
+}
+
+part def Brake :> SpatialItem {
+	item :>> shape : Box {
+		:>> dimensions = (0.1, 0.1, 0.05);
+	}
+}
+```

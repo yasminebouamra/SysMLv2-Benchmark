@@ -1,0 +1,28 @@
+**SysML V2 Code:**
+
+```sysml
+package FlashlightSystem
+
+type OnOffCommand
+type Light
+
+part User
+part Flashlight
+part ReflectingSurface
+
+port OnOffCommandPort : In(OnOffCommand)
+port LightPort : Out(Light)
+
+flow User.OnOffCommandPort -> Flashlight.OnOffCommandPort
+flow Flashlight.LightPort -> ReflectingSurface.LightPort
+
+```
+
+**Explanation:**
+
+* **Types:** The `OnOffCommand` and `Light` types represent the user's commands and the emitted light, respectively.
+* **Ports:** The `OnOffCommandPort` receives on-off commands from the user, while the `LightPort` transmits light from the flashlight.
+* **Parts:** The `User`, `Flashlight`, and `ReflectingSurface` parts represent the interacting entities.
+* **Flows:** The flow from the user's command port to the flashlight's command port and from the flashlight's light port to the reflecting surface port simulate the interaction and light emission.
+
+**Note:** This code only includes the necessary elements and connections for the flashlight system. You may need to further expand it based on your specific needs and requirements.

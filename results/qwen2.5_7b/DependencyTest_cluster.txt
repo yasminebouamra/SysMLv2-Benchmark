@@ -1,0 +1,21 @@
+package SystemArchitecture {
+	
+	part ApplicationLayer {
+		part UserInteraction;
+	}
+	
+	part ServiceLayer {
+		part BusinessLogic;
+	}
+	
+	part DataLayer {
+		part DataPersistence;
+	}
+
+	connect ApplicationLayer to ServiceLayer;
+	connect ServiceLayer to DataLayer;
+
+	attribute dependency1 : ApplicationLayer -> ServiceLayer [depends on, flows data and control];
+	attribute dependency2 : ServiceLayer -> DataLayer [depends on, manages data persistence];
+	
+}

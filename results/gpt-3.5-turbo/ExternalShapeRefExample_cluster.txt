@@ -1,0 +1,25 @@
+package ExternalGeometryModel {
+
+    part def BatteryUnit {
+        annotation ExternalGeometry::GeometryReference;
+        annotation Geometry::Box;
+    }
+    
+    package ExternalGeometry {
+    
+        part def GeometryReference {
+            attribute externalFile : PrimitiveTypes::String;
+        }
+    }
+    
+    package Geometry {
+    
+        part def Shell {
+            attribute def Size : ScalarValues::Real;
+            attribute def Material : ScalarValues::String;
+        }
+        
+        part def Box;
+    }
+    
+}

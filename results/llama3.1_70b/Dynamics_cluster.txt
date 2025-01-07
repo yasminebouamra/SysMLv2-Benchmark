@@ -1,0 +1,55 @@
+package Dynamics {
+    import ISQ::real;
+
+    block VehicleDynamics :>> ISQ::system {
+        attribute :>> wheelPower :> ISQ::real = 0[N];
+        attribute :>> dragCoefficient :> ISQ::real = 0.5[N];
+        attribute :>> rollingResistanceCoefficient :> ISQ::real = 0.01[N];
+        attribute :>> mass :> ISQ::real = 800[kg];
+
+        part :>> vehicleBehavior {
+            property velocityChangeRate {
+                return wheelPower / mass - dragCoefficient * velocity - rollingResistanceCoefficient;
+            }
+            property acceleration :>> ISQ::acceleration {
+                return velocityChangeRate;
+            }
+            property positionChangeRate :>> ISQ::velocity = velocity;
+            property position :>> ISQ::length {
+                return initialPosition + positionChangeRate * timeStep;
+            }
+
+        }
+
+        part action :>> accelerate {
+            input :>> wheelPowerInput :> ISQ::real = 1000[N];
+            input :>> dragCoefficientInput :> ISQ::real = 0.5[N];
+            input :>> rollingResistanceCoefficientInput :> ISQ::real = 0.01[N];
+
+            do {
+                vehicleBehavior.wheelPower = wheelPowerInput;
+                vehicleBehavior.dragCoefficient = dragCoefficientInput;
+                vehicleBehavior.rollingResistanceCoefficient = rollingResistanceCoefficientInput;
+            }
+        }
+
+        part action :>> simulateDynamics {
+            input :>> initialSpeed :> ISQ::velocity = 0[m/s];
+            input :>> timeStep :> ISQ::time = 1[s];
+            input :>> initialPosition :> ISQ::length = 0[m];
+
+            do {
+                vehicleBehavior.initialVelocity = initialSpeed;
+                vehicleBehavior.timeStep = timeStep;
+                vehicleBehavior.initialPosition = initialPosition;
+
+                accelerate(wheelPowerInput, dragCoefficientInput, rollingResistanceCoefficientInput);
+
+                return acceleration = vehicleBehavior.acceleration;
+                return speed = vehicleBehavior.velocity;
+                return position = vehicleBehavior.position;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,46 @@
+```
+package ActionTest {
+
+    attribute def MyAttribute {
+        attribute val : Integer;
+    }
+
+    action def SimpleAction {
+        in x : Integer;
+        out y : Integer;
+        language "alf"
+            y := x + 1;
+    }
+
+    action def ComplexAction {
+        start s1;
+        merge m1;
+        event e1 accept after 2 seconds;
+        signal s2 send "Event Triggered";
+        decision d1 {
+            when condition { x > 5 } then goto a1;
+            else goto a2;
+        }
+        action a1 {
+            in x : Integer;
+            out y : Integer;
+            language "alf"
+                y := x + 1;
+        }
+        action a2 {
+            in x : Integer;
+            out y : Integer;
+            language "alf"
+                y := x - 1;
+        }
+    }
+
+    action def DataBindingAction {
+        in a : MyAttribute;
+        out b : MyAttribute;
+        language "alf"
+            b := a;
+    }
+
+}
+```

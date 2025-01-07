@@ -1,0 +1,13 @@
+```sysml
+package QualifiedNameImportTest {
+	package P1 {
+		part def A;
+	}
+	package P2 {
+		package P2a {
+			public import P1::*;
+		}
+		part x: P2a::A;
+	}
+}
+```

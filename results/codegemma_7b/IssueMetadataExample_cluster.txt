@@ -1,0 +1,30 @@
+```sysml
+package InterfaceCompatibilityIssue {
+
+    interface Engine {
+        port clutch : ClutchPort;
+    }
+
+    interface Transmission {
+        port drivePwr : DrivePwrPort;
+    }
+
+    part Vehicle {
+        part engine : Engine;
+        part transmission : Transmission;
+
+        metadata CompatibilityIssue {
+            message = "Compatibility issue between Engine and Transmission interfaces.";
+            reason = "Port type mismatch between ClutchPort and DrivePwrPort.";
+        }
+    }
+
+}
+```
+
+**Explanation:**
+
+* The model defines an `Engine` and `Transmission` interface, each with a single port.
+* The `Vehicle` part connects an `Engine` and a `Transmission` instance.
+* The `CompatibilityIssue` metadata is attached to the `Vehicle` part, providing a specific description of the interface compatibility issue.
+* The `CompatibilityIssue` metadata specifies the message and reason for the issue, highlighting the mismatch between the `ClutchPort` and `DrivePwrPort` types.

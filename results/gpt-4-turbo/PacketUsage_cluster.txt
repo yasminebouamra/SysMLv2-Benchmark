@@ -1,0 +1,13 @@
+package ThermalDataManagement {
+    part def 'Thermal Data Packet' {
+        attribute primaryHeader : String;
+        attribute dataPayload : Real;
+    }
+
+    part instance thermalPacket1 : 'Thermal Data Packet';
+    part instance thermalPacket2 : 'Thermal Data Packet';
+
+    part instance enhancedThermalPacket : 'Thermal Data Packet' {
+        attribute specializedThermalData : Vector<Real>;
+    }
+}

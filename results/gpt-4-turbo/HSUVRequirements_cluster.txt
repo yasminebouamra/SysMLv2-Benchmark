@@ -1,0 +1,64 @@
+```SysMLV2
+package HSUVModel {
+    requirement def HSUV {
+        doc /* Hybrid Sport Utility Vehicle Specifications */
+        
+        requirement loadCapacity {
+            doc /* Requirement for load capacity */
+            id = "RC1";
+            text = "The vehicle shall support a minimum load capacity of 800 kilograms.";
+        }
+        
+        requirement ecoFriendliness {
+            doc /* Environmental requirement */
+            id = "RC2";
+            
+            requirement emissions {
+                doc /* Requirement for emissions compliance */
+                id = "RC2.1";
+                text = "The vehicle must comply with the 2010 Kyoto Accord emissions standards.";
+            }
+            
+            requirement fuelEconomy {
+                doc /* Requirement for fuel economy */
+                id = "RC2.2";
+                text = "The vehicle's fuel economy must be better than 95% of cars built in 2004.";
+            }
+        }
+
+        requirement performance {
+            doc /* Requirement for vehicle performance */
+            id = "RC3";
+            
+            requirement acceleration {
+                doc /* Requirement for acceleration */
+                id = "RC3.1";
+                text = "The vehicle shall accelerate from 0 to 100 km/h in less than 10 seconds.";
+            }
+            
+            requirement topSpeed {
+                doc /* Requirement for top speed */
+                id = "RC3.2";
+                text = "The vehicle must have a top speed of at least 180 km/h.";
+            }
+        }
+
+        requirement ergonomics {
+            doc /* Requirement for ergonomics */
+            id = "RC4";
+            
+            requirement seatingComfort {
+                doc /* Requirement for seating comfort */
+                id = "RC4.1";
+                text = "The vehicle shall provide ergonomically designed seats with adjustable lumbar support.";
+            }
+            
+            requirement accessibility {
+                doc /* Requirement for ease of access */
+                id = "RC4.2";
+                text = "The vehicle must feature easy entry and exit for all passengers.";
+            }
+        }
+    }
+}
+```

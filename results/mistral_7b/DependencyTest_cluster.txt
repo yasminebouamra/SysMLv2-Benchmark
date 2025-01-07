@@ -1,0 +1,34 @@
+ ```SysMLV2
+   package SystemArchitecture {
+       block Architecture {
+           port def Application {
+               ref in ApplicationInput;
+               attribute ApplicationData;
+           }
+
+           port def Service {
+               ref in BusinessLogic;
+               attribute ServiceData;
+               ref out ServiceOutput;
+           }
+
+           port def Data {
+               attribute DataPersistence;
+               ref out DataStorage;
+           }
+       }
+
+       part ApplicationLayer : Architecture;
+       part ServiceLayer : Architecture;
+       part DataLayer : Architecture;
+
+       allocate ApplicationLayer.Application to ServiceLayer.Service;
+       allocate ServiceLayer.Service to DataLayer.Data;
+
+       connection ControlFlow {
+           end start : ApplicationLayer.Application.ApplicationInput ::> ServiceLayer.Service.BusinessLogic;
+           end data : ServiceLayer.Service.ServiceOutput ::> DataLayer.Data.DataStorage;
+           end transform : ServiceLayer.Service.ServiceData to DataLayer.Data.DataPersistence;
+       }
+   }
+   ```

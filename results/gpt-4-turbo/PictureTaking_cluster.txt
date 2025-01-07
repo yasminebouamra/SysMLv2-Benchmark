@@ -1,0 +1,21 @@
+package PictureTakingProcess {
+    action def Focus {
+        action getExposureSettings;
+    }
+    
+    action def Shoot {
+        data exposureSettings;
+    }
+    
+    control flow {
+        from Focus::getExposureSettings
+        to Shoot::exposureSettings;
+    }
+    
+    activity takePicture {
+        perform focus : Focus;
+        perform shoot : Shoot {
+            use focus::getExposureSettings;
+        }
+    }
+}

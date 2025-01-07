@@ -1,0 +1,101 @@
+```sysmlv2
+model FuelEconomyAnalysis
+
+package VehicleQuantities {
+    unit 'MilesPerGallon' {
+        expression 1 / 'Gallon'
+    }
+    unit 'Gallon' {
+        expression 3.78541 * 'Liter'
+    }
+    unit 'Liter' {
+        expression 1
+    }
+    unit 'Mile' {
+        expression 1
+    }
+    unit 'Kilometer' {
+        expression 1.60934 * 'Mile'
+    }
+}
+
+package VehicleModels {
+    part Vehicle {
+        attribute Capacity {
+            unit 'Gallon'
+        }
+        attribute Weight {
+            unit 'Pound'
+        }
+        attribute WheelDiameter {
+            unit 'Foot'
+        }
+        attribute GearRatio {
+            unit 'Unitless'
+        }
+    }
+}
+
+package FuelEconomyRequirements {
+    part FuelEconomyRequirement {
+        attribute Condition {
+            unit 'MilesPerGallon'
+        }
+        attribute VehicleModel {
+            type Vehicle
+        }
+    }
+}
+
+package DynamicsModeling {
+    part Engine {
+        attribute Power {
+            unit 'Horsepower'
+        }
+        attribute Torque {
+            unit 'PoundFoot'
+        }
+    }
+    part Drivetrain {
+        attribute TransmissionEfficiency {
+            unit 'Unitless'
+        }
+        attribute DifferentialGear {
+            unit 'Unitless'
+        }
+    }
+}
+
+package FuelEconomyAnalysis {
+    part AnalysisContext {
+        attribute Vehicle {
+            type Vehicle
+        }
+        attribute Engine {
+            type Engine
+        }
+        attribute Drivetrain {
+            type Drivetrain
+        }
+        attribute FuelEconomyRequirement {
+            type FuelEconomyRequirement
+        }
+        attribute Velocity {
+            unit 'MilesPerHour'
+        }
+        attribute Acceleration {
+            unit 'MilesPerHourSquared'
+        }
+        attribute FuelConsumption {
+            unit 'GallonPerHour'
+        }
+        action CalculateFuelEconomy {
+            // Calculate fuel consumption based on dynamics and vehicle properties
+        }
+        constraint FuelEconomyRequirementCompliance {
+            // Check if fuel consumption complies with the given requirement
+        }
+    }
+}
+
+```

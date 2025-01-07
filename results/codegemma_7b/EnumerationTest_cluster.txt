@@ -1,0 +1,60 @@
+```sysmlv2
+package EnumerationTest {
+
+    enumeration Color extends Attribute {
+        RED = 1,
+        GREEN = 2,
+        BLUE = 3
+    }
+
+    part def Item {
+        attribute color : Color;
+        attribute size : Real;
+        attribute quantity : Integer;
+    }
+
+    part item1 : Item {
+        color : Color.RED;
+        size : 5.5;
+        quantity : 10;
+    }
+
+    part item2 : Item {
+        color : Color.GREEN;
+        size : 7.2;
+        quantity : 20;
+    }
+
+    part item3 : Item {
+        color : Color.BLUE;
+        size : 3.8;
+        quantity : 5;
+    }
+
+    attribute sizeRange : Real[1..10];
+
+    part item4 : Item {
+        color : Color.RED;
+        size : 4.5;
+        quantity : 15;
+    }
+
+    part item5 : Item {
+        color : Color.GREEN;
+        size : 6.8;
+        quantity : 30;
+    }
+
+    part item6 : Item {
+        color : Color.BLUE;
+        size : 2.3;
+        quantity : 7;
+    }
+
+    part item7 : Item {
+        color : Color.RED;
+        size : 8.1;
+        quantity : 40;
+    }
+}
+```

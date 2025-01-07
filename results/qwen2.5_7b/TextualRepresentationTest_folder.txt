@@ -1,0 +1,15 @@
+package TextualRepresentationTest {
+    attribute def RealNumberAttribute {
+        attribute value : ScalarValues::Real;
+        invariant "Value must be positive" {value > 0.0}
+    }
+
+    action def UpdateAndLog {
+        in item: RealNumberAttribute;
+        first start;
+        
+        operation updateValue = set item.value to value > 0.0 ? value + 1.0 : item.value;
+        then log "Updated attribute value to: " + item.value;
+        then done;
+    }
+}

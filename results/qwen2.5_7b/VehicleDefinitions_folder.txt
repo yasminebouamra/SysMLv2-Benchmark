@@ -1,0 +1,130 @@
+```sysml
+package VehicleDefinitions {
+	doc /*
+	 * This SysML v2 model encapsulates a simplistic structure of a vehicle's mechanical components. 
+	 * It involves defining parts such as the Vehicle itself, Transmission, Axle Assembly, Axles, Wheels, and Lugbolts with emphasis on aspects like mass and torque.
+	 */
+	private import SI::m;
+	private import SI::kg;
+	private import ScalarFunctions::*;
+
+	public import VehiclePartDefinitions::*;
+	
+	/* VALUES */	 
+	massVehicle = 1000 [kg];
+	torqueFrontWheel = 50 [Nm];
+	torqueRearWheel = 75 [Nm];
+
+	/* PARTS */
+	part vehicle: Vehicle {
+		doc /* Basic structure of a Vehicle. */
+
+		part mass subsets mass[vehicle] = 1000 [kg];
+		part transmission: Transmission {
+			port drive: ~DriveIF;
+		}
+		part frontAxleAssembly: AxleAssembly {
+			part frontAxle: Axle {
+				part driveTorque subsets torque = torqueFrontWheel [Nm];
+			}			
+		}		
+		part rearAxleAssembly: AxleAssembly {
+			part rearAxle: Axle {
+				part driveTorque subsets torque = torqueRearWheel [Nm];				
+			}
+		}
+	}
+
+	part wheel: Wheel {
+		doc /* Generic definition of a Wheel. */
+
+		part mass subsets mass[wheel] = 10 [kg];
+		part radius subsets radius[wheel] = 0.5 [m];
+		part lugbolts: Lugbolt[4..6]; 
+		part driveTorque subsets torque = 30 [Nm];
+	}
+
+	part axleAssembly: AxleAssembly {
+		doc /* Base definition of an Axle Assembly. */
+
+		part mass subsets mass[axleAssembly] = 50 [kg];
+		part frontMountingPoint: Mounting;
+		part rearMountingPoint: Mounting;		
+	}
+	
+	part axle: Axle {
+		doc /* Base definition of an Axle. */
+
+		port driveTorque: ~DriveIF;
+	}
+
+	part lugbolt: Lugbolt {
+		doc /* Definition of a Lugbolt used to secure wheels to axles. */
+	}
+	
+	part vehicle_C1 subsets vehicle {
+		doc /* Specific configuration for Vehicle C1, focusing on front and rear wheel torque. */
+
+		part redefines transmission {
+			port drive: ~DriveIF;
+		}
+
+		part redefines frontAxleAssembly {
+			part leftFrontWheel subsets wheel = wheel#(0);
+			part rightFrontWheel subsets wheel = wheel#(1);
+
+			interface leftMounting: Mounting connect 
+				frontAxle.frontMountingPoint to leftFrontWheel.hub;
+
+			interface rightMounting: Mounting connect 
+				frontAxle.rearMountingPoint to rightFrontWheel.hub;
+		}
+
+		part redefines rearAxleAssembly {
+			part leftRearWheel subsets wheel = wheel#(2);
+			part rightRearWheel subsets wheel = wheel#(3);
+
+			interface leftMounting: Mounting connect 
+				rearAxle.frontMountingPoint to leftRearWheel.hub;
+
+			interface rightMounting: Mounting connect 
+				rearAxle.rearMountingPoint to rightRearWheel.hub;
+		}
+	}
+
+	part vehicle_C2 subsets vehicle_C1 {
+		doc /* Further specialized configuration for Vehicle C2, with focused torque transmission. */
+
+		part redefines transmission {
+			port drive: ~DriveIF;
+		}
+
+		part redefines frontAxleAssembly redefines vehicle_C1::frontAxleAssembly {
+			part leftFrontWheel subsets wheel = wheel#(0);
+			part rightFrontWheel subsets wheel = wheel#(1);
+
+			interface leftMounting: Mounting connect 
+				frontAxle.frontMountingPoint to leftFrontWheel.hub;
+
+			interface rightMounting: Mounting connect 
+				frontAxle.rearMountingPoint to rightFrontWheel.hub;
+		}
+
+		part redefines rearAxleAssembly redefines vehicle_C1::rearAxleAssembly {
+			part leftRearWheel subsets wheel = wheel#(2);
+			part rightRearWheel subsets wheel = wheel#(3);
+
+			interface leftMounting: Mounting connect 
+				rearAxle.frontMountingPoint to leftRearWheel.hub;
+
+			interface rightMounting: Mounting connect 
+				rearAxle.rearMountingPoint to rightRearWheel.hub;
+		}
+		
+		part driveShaft connect 
+			transmission.drive to axleDrive ::> rearAxleAssembly.rearAxle.drive {
+			flow transmission.driveTorque to axleDrive.driveTorque;
+		}		
+	}
+}
+```
