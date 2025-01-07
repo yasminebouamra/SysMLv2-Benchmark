@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="264px" preserveAspectRatio="none" style="width:320px;height:264px;background:#FFFFFF;" version="1.1" viewBox="0 0 320 264" width="320px" zoomAndPan="magnify"><defs/><g><!--MD5=[fbc87193dbaf4d95561dea2c320d4a47]
+cluster E1--><g id="cluster_E1"><a href="psysml:cd50ab78-5098-444b-8fde-a3b322e43f63" target="_top" title="psysml:cd50ab78-5098-444b-8fde-a3b322e43f63" xlink:actuate="onRequest" xlink:href="psysml:cd50ab78-5098-444b-8fde-a3b322e43f63" xlink:show="new" xlink:title="psysml:cd50ab78-5098-444b-8fde-a3b322e43f63" xlink:type="simple"><polygon fill="none" points="16,6,212,6,219,29.6094,303,29.6094,303,257.5,16,257.5,16,6" style="stroke:#000000;stroke-width:1.5;"/><line style="stroke:#000000;stroke-width:1.5;" x1="16" x2="219" y1="29.6094" y2="29.6094"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="190" x="20" y="22.5332">TextualRepresentationTest</text></a></g><!--MD5=[f6df4d0ebaf0b5dfb2ced0ae5af7c670]
+cluster E4--><g id="cluster_E4"><a href="psysml:4c8d1a87-e4f0-488d-95b2-3c08653be801" target="_top" title="psysml:4c8d1a87-e4f0-488d-95b2-3c08653be801" xlink:actuate="onRequest" xlink:href="psysml:4c8d1a87-e4f0-488d-95b2-3c08653be801" xlink:show="new" xlink:title="psysml:4c8d1a87-e4f0-488d-95b2-3c08653be801" xlink:type="simple"><rect fill="#FFFFFF" height="160" id="E4" style="stroke:#383838;stroke-width:1.5;" width="130" x="157" y="81.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="70" x="187" y="98.957">«action  def»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="27" x="208.5" y="116.127">setX</text><line style="stroke:#383838;stroke-width:1.0;" x1="157" x2="287" y1="124.2031" y2="124.2031"/></a></g><!--MD5=[b4997ac47864f28c2f74865a473b2911]
+class E2--><a href="psysml:29fe61b5-d556-4d2b-b626-f3492a8476ac" target="_top" title="psysml:29fe61b5-d556-4d2b-b626-f3492a8476ac" xlink:actuate="onRequest" xlink:href="psysml:29fe61b5-d556-4d2b-b626-f3492a8476ac" xlink:show="new" xlink:title="psysml:29fe61b5-d556-4d2b-b626-f3492a8476ac" xlink:type="simple"><g id="elem_E2"><rect fill="#FFFFFF" height="79.3563" id="E2" style="stroke:#181818;stroke-width:0.5;" width="67" x="51.5" y="42"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="61" x="54.5" y="59.457">«item  def»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="10" x="80" y="76.627">C</text><line style="stroke:#181818;stroke-width:0.5;" x1="52.5" x2="117.5" y1="84.7031" y2="84.7031"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="43" x="57.5" y="114.2801">x: Real</text><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="59" x="55.5" y="97.9316">attributes</text></g></a><!--MD5=[09b614a08d8cba4a07c9adeb5e0fee81]
+class E3--><a href="psysml:21e6e4ff-80a1-491f-a895-130a69a9783d" target="_top" title="psysml:21e6e4ff-80a1-491f-a895-130a69a9783d" xlink:actuate="onRequest" xlink:href="psysml:21e6e4ff-80a1-491f-a895-130a69a9783d" xlink:show="new" xlink:title="psysml:21e6e4ff-80a1-491f-a895-130a69a9783d" xlink:type="simple"><g id="elem_E3"><rect fill="#FFFFFF" height="50.7031" id="E3" rx="10" ry="10" style="stroke:#181818;stroke-width:0.5;" width="105" x="32.5" y="181"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="103" x="33.5" y="198.457">«assert constraint»</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76" x="43" y="215.627">x_constraint</text><line style="stroke:#181818;stroke-width:0.5;" x1="33.5" x2="136.5" y1="223.7031" y2="223.7031"/></g></a><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="7" x="171.5" y="60.4238">c</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="169" y="75.5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="33" x="205.5" y="60.4238">newX</text><rect fill="#FFFFFF" height="12" style="stroke:#181818;stroke-width:1.5;" width="12" x="216" y="75.5"/><!--MD5=[209b3feb70ccb6233bfe1053d122c12c]
+reverse link E2 to E3--><g id="link_E2_E3"><a href="psysml:f0eb748c-5f73-4d82-874e-14822b4cf52e" target="_top" title="psysml:f0eb748c-5f73-4d82-874e-14822b4cf52e" xlink:actuate="onRequest" xlink:href="psysml:f0eb748c-5f73-4d82-874e-14822b4cf52e" xlink:show="new" xlink:title="psysml:f0eb748c-5f73-4d82-874e-14822b4cf52e" xlink:type="simple"><path d="M85,134.35 C85,150.53 85,167.62 85,180.99 " fill="none" id="E2-backto-E3" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="85,121.08,81,127.08,85,133.08,89,127.08,85,121.08" style="stroke:#181818;stroke-width:1.0;"/></a></g><!--MD5=[d4caecbe34b2ecac9086313c918a0f45]
+@startuml
+skin sysmlbw
+skinparam monochrome true
+skinparam wrapWidth 300
+hide circle
+
+package "TextualRepresentationTest" as E1  [[psysml:cd50ab78-5098-444b-8fde-a3b322e43f63 ]]  {
+comp def "C" as E2  <<(T,blue) item  def>> [[psysml:29fe61b5-d556-4d2b-b626-f3492a8476ac ]] {
+##//attributes//##
+x: Real
+}
+comp usage "x_constraint  " as E3  <<(T,blue) assert constraint>> [[psysml:21e6e4ff-80a1-491f-a895-130a69a9783d ]] {
+}
+rec def "setX" as E4  <<(T,blue) action  def>> [[psysml:4c8d1a87-e4f0-488d-95b2-3c08653be801 ]] {
+portin "c" as E5  [[psysml:67b85fb2-732a-4f0d-acaf-2dbc99bbb04c ]] 
+portin "newX" as E6  [[psysml:66de3334-7e8a-4c78-85c3-1bf9d1970d97 ]] 
+}
+
+}
+E2 *- - E3 [[psysml:f0eb748c-5f73-4d82-874e-14822b4cf52e ]] 
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 19:01:30 CEST 2022)
+(EPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
