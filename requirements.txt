@@ -1,0 +1,7 @@
+openai
+pandas
+numpy 
+umap-learn
+plotly
+hdbscan
+requests
