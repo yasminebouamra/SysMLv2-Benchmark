@@ -1,0 +1,90 @@
+file,length,import ,calc ,package ,action ,in ,out ,part ,attribute  ,port ,interface ,connect ,subject ,assert ,file_short
+../data/examples/Analysis Examples/AnalysisAnnotation.sysml,26,3,0,1,1,8,3,0,0,3,0,0,0,0,AnalysisAnnotation.sysml
+../data/examples/Analysis Examples/Dynamics.sysml,91,2,7,1,5,41,12,0,22,2,0,0,0,1,Dynamics.sysml
+../data/examples/Analysis Examples/Turbojet Stage Analysis.sysml,110,4,8,4,5,30,2,4,14,4,0,0,0,0,Turbojet Stage Analysis.sysml
+../data/examples/Analysis Examples/Vehicle Analysis Demo.sysml,286,14,8,6,3,66,11,8,30,22,0,0,4,2,Vehicle Analysis Demo.sysml
+../data/examples/Arrowhead Framework Example/AHFCoreLib.sysml,55,3,0,1,1,6,0,0,2,11,0,0,0,0,AHFCoreLib.sysml
+../data/examples/Arrowhead Framework Example/AHFNorwayTopics.sysml,160,4,1,1,3,25,9,1,14,14,0,7,0,0,AHFNorwayTopics.sysml
+../data/examples/Arrowhead Framework Example/AHFProfileLib.sysml,117,3,13,2,1,14,0,21,7,19,1,0,0,0,AHFProfileLib.sysml
+../data/examples/Arrowhead Framework Example/AHFSequences.sysml,122,4,13,1,0,13,0,7,0,6,1,1,0,0,AHFSequences.sysml
+../data/examples/Camera Example/Camera.sysml,14,1,0,0,1,4,0,3,0,1,0,0,0,0,Camera.sysml
+../data/examples/Camera Example/PictureTaking.sysml,12,0,0,1,5,2,1,1,0,0,0,0,0,0,PictureTaking.sysml
+../data/examples/Cause and Effect Examples/CauseAndEffectExample.sysml,55,1,0,1,1,0,0,9,0,1,0,7,0,0,CauseAndEffectExample.sysml
+../data/examples/Cause and Effect Examples/MedicalDeviceFailure.sysml,25,1,0,1,0,0,0,2,0,1,0,2,0,0,MedicalDeviceFailure.sysml
+../data/examples/Comment Examples/Comments.sysml,15,0,0,3,0,2,4,4,0,0,0,0,0,0,Comments.sysml
+../data/examples/Flashlight Example/Flashlight Example.sysml,60,0,0,1,4,11,6,4,2,11,1,1,0,0,Flashlight Example.sysml
+../data/examples/Geometry Examples/CarWithEnvelopingShape.sysml,17,2,0,1,0,3,0,1,0,2,0,0,0,0,CarWithEnvelopingShape.sysml
+../data/examples/Geometry Examples/CarWithShapeAndCSG.sysml,88,9,0,1,0,24,0,4,7,9,0,0,0,0,CarWithShapeAndCSG.sysml
+../data/examples/Geometry Examples/ExternalShapeRefExample.sysml,31,4,0,1,0,6,0,1,2,4,0,0,0,0,ExternalShapeRefExample.sysml
+../data/examples/Geometry Examples/SimpleQuadcopter.sysml,247,11,0,1,0,46,7,25,26,11,0,0,0,0,SimpleQuadcopter.sysml
+../data/examples/Geometry Examples/VehicleGeometryAndCoordinateFrames.sysml,131,15,0,1,0,21,0,12,32,15,0,0,0,1,VehicleGeometryAndCoordinateFrames.sysml
+../data/examples/Import Tests/AliasImport.sysml,13,2,0,3,0,2,0,2,0,2,0,0,0,0,AliasImport.sysml
+../data/examples/Import Tests/CircularImport.sysml,27,5,0,5,0,1,0,8,0,5,0,0,0,0,CircularImport.sysml
+../data/examples/Import Tests/PrivateImportTest.sysml,33,8,0,6,0,1,1,7,0,8,0,0,0,0,PrivateImportTest.sysml
+../data/examples/Import Tests/QualifiedNameImportTest.sysml,13,3,0,4,0,1,0,2,0,3,0,0,0,0,QualifiedNameImportTest.sysml
+../data/examples/Individuals Examples/AnalysisIndividualExample.sysml,95,13,1,5,4,15,3,7,14,13,0,0,2,0,AnalysisIndividualExample.sysml
+../data/examples/Individuals Examples/JohnIndividualExample.sysml,57,0,0,1,0,12,0,0,1,0,0,0,0,1,JohnIndividualExample.sysml
+../data/examples/Interaction Sequencing Examples/ServerSequenceModel.sysml,42,2,0,2,0,5,0,5,2,2,0,0,0,0,ServerSequenceModel.sysml
+../data/examples/Interaction Sequencing Examples/ServerSequenceModelOutside.sysml,20,1,0,1,0,1,2,4,0,1,0,0,0,0,ServerSequenceModelOutside.sysml
+../data/examples/Interaction Sequencing Examples/ServerSequenceOutsideRealization-2.sysml,101,3,0,2,5,23,5,7,2,18,2,0,0,0,ServerSequenceOutsideRealization-2.sysml
+../data/examples/Interaction Sequencing Examples/ServerSequenceOutsideRealization-3.sysml,159,3,0,2,9,48,13,8,10,21,10,2,0,0,ServerSequenceOutsideRealization-3.sysml
+../data/examples/Interaction Sequencing Examples/ServerSequenceRealization-2.sysml,106,3,0,2,5,21,2,7,2,18,2,0,0,0,ServerSequenceRealization-2.sysml
+../data/examples/Interaction Sequencing Examples/ServerSequenceRealization-3.sysml,151,3,0,2,9,40,10,7,4,21,10,2,0,0,ServerSequenceRealization-3.sysml
+../data/examples/Mass Roll-up Example/MassConstraintExample.sysml,117,3,0,1,0,27,0,24,17,3,0,0,0,4,MassConstraintExample.sysml
+../data/examples/Mass Roll-up Example/MassRollup.sysml,27,1,0,1,0,10,0,5,6,1,0,0,0,0,MassRollup.sysml
+../data/examples/Mass Roll-up Example/Vehicles.sysml,37,3,0,1,0,12,0,8,2,3,0,0,0,0,Vehicles.sysml
+../data/examples/Metadata Examples/IssueMetadataExample.sysml,30,1,0,1,0,11,2,2,0,10,8,2,0,0,IssueMetadataExample.sysml
+../data/examples/Metadata Examples/RationaleMetadataExample.sysml,24,2,0,1,0,12,1,3,0,2,0,0,1,0,RationaleMetadataExample.sysml
+../data/examples/Metadata Examples/RequirementMetadataExample.sysml,34,4,0,1,0,5,0,0,0,4,0,0,0,0,RequirementMetadataExample.sysml
+../data/examples/Metadata Examples/RiskMetadataExample.sysml,19,2,0,1,0,1,0,1,0,2,0,0,0,0,RiskMetadataExample.sysml
+../data/examples/Metadata Examples/VerificationMetadataExample.sysml,15,2,0,1,1,3,0,0,0,2,0,0,0,0,VerificationMetadataExample.sysml
+../data/examples/Packet Example/Packets.sysml,35,2,0,1,0,10,0,2,16,2,0,0,0,0,Packets.sysml
+../data/examples/Packet Example/PacketUsage.sysml,16,2,0,1,0,2,0,3,3,2,0,0,0,0,PacketUsage.sysml
+../data/examples/Requirements Examples/HSUVRequirements.sysml,39,1,0,1,0,7,0,0,0,1,0,0,0,0,HSUVRequirements.sysml
+../data/examples/Requirements Examples/RequirementDerivationExample.sysml,39,1,0,1,1,1,0,7,0,1,0,2,0,0,RequirementDerivationExample.sysml
+../data/examples/Requirements Examples/VehicleRequirementDerivation.sysml,40,1,0,1,0,6,0,3,4,1,0,1,4,0,VehicleRequirementDerivation.sysml
+../data/examples/Room Model/RoomModel.sysml,77,6,0,6,0,18,0,14,0,14,0,3,0,0,RoomModel.sysml
+../data/examples/Simple Tests/ActionTest.sysml,33,0,0,1,7,3,0,0,2,0,0,0,0,0,ActionTest.sysml
+../data/examples/Simple Tests/AliasTest.sysml,22,1,0,1,0,0,0,3,1,4,0,2,0,0,AliasTest.sysml
+../data/examples/Simple Tests/AllocationTest.sysml,35,0,0,1,0,0,0,10,0,0,0,0,0,0,AllocationTest.sysml
+../data/examples/Simple Tests/AnalysisTest.sysml,38,0,0,1,0,0,0,3,0,0,0,0,4,0,AnalysisTest.sysml
+../data/examples/Simple Tests/AssignmentTest.sysml,52,0,1,1,3,13,0,2,3,0,0,0,0,0,AssignmentTest.sysml
+../data/examples/Simple Tests/CalculationTest.sysml,30,2,3,1,0,2,0,10,4,2,0,0,0,0,CalculationTest.sysml
+../data/examples/Simple Tests/CommentTest.sysml,44,0,0,5,0,4,4,6,0,0,0,0,0,0,CommentTest.sysml
+../data/examples/Simple Tests/ConjugationTest.sysml,35,0,0,1,0,2,0,3,0,11,2,2,0,0,ConjugationTest.sysml
+../data/examples/Simple Tests/ConnectionTest.sysml,49,0,0,1,0,0,0,12,0,0,0,8,0,0,ConnectionTest.sysml
+../data/examples/Simple Tests/ConstraintTest.sysml,90,3,0,1,0,34,0,11,7,3,0,0,0,7,ConstraintTest.sysml
+../data/examples/Simple Tests/ControlNodeTest.sysml,15,0,0,0,5,1,0,0,0,0,0,0,0,0,ControlNodeTest.sysml
+../data/examples/Simple Tests/DecisionTest.sysml,22,0,0,0,4,0,0,0,1,0,0,0,0,0,DecisionTest.sysml
+../data/examples/Simple Tests/DefaultValueTest.sysml,18,0,0,1,0,0,0,4,4,0,0,0,0,0,DefaultValueTest.sysml
+../data/examples/Simple Tests/DependencyTest.sysml,20,1,0,5,0,0,0,0,3,1,0,0,0,0,DependencyTest.sysml
+../data/examples/Simple Tests/EnumerationTest.sysml,54,0,0,1,0,9,0,0,5,0,0,0,0,0,EnumerationTest.sysml
+../data/examples/Simple Tests/FeaturePathTest.sysml,43,0,0,1,0,2,0,14,1,0,0,1,0,0,FeaturePathTest.sysml
+../data/examples/Simple Tests/ImportTest.sysml,18,5,0,5,0,0,0,3,0,5,0,0,0,0,ImportTest.sysml
+../data/examples/Simple Tests/ItemTest.sysml,23,0,0,1,0,2,1,3,0,1,0,0,0,0,ItemTest.sysml
+../data/examples/Simple Tests/MetadataTest.sysml,42,1,0,2,0,2,0,0,0,1,0,0,0,0,MetadataTest.sysml
+../data/examples/Simple Tests/MultiplicityTest.sysml,19,0,0,1,0,2,0,8,4,0,0,0,0,0,MultiplicityTest.sysml
+../data/examples/Simple Tests/OccurrenceTest.sysml,33,0,0,1,0,5,0,1,1,0,0,0,0,0,OccurrenceTest.sysml
+../data/examples/Simple Tests/ParameterTest.sysml,16,0,1,1,0,2,0,0,8,0,0,0,0,0,ParameterTest.sysml
+../data/examples/Simple Tests/PartTest.sysml,44,0,0,2,2,2,0,12,2,7,0,0,0,0,PartTest.sysml
+../data/examples/Simple Tests/RequirementTest.sysml,29,1,0,1,0,4,0,2,0,1,0,0,1,2,RequirementTest.sysml
+../data/examples/Simple Tests/RootPackageTest.sysml,14,2,0,3,0,0,0,3,0,2,0,0,0,0,RootPackageTest.sysml
+../data/examples/Simple Tests/StateTest.sysml,56,0,0,1,7,0,0,1,2,0,0,0,0,0,StateTest.sysml
+../data/examples/Simple Tests/StructuredControlTest.sysml,36,0,0,1,2,2,0,0,2,0,0,0,0,0,StructuredControlTest.sysml
+../data/examples/Simple Tests/TextualRepresentationTest.sysml,22,1,0,1,1,5,0,0,1,1,0,0,0,1,TextualRepresentationTest.sysml
+../data/examples/Simple Tests/TradeStudyTest.sysml,21,2,1,1,0,7,0,5,0,2,0,0,1,0,TradeStudyTest.sysml
+../data/examples/Simple Tests/UseCaseTest.sysml,36,0,0,1,0,3,0,4,0,0,0,0,2,0,UseCaseTest.sysml
+../data/examples/Simple Tests/VariabilityTest.sysml,41,0,0,1,3,0,0,7,4,0,0,0,0,0,VariabilityTest.sysml
+../data/examples/Simple Tests/VerificationTest.sysml,39,0,0,1,0,1,0,3,0,0,0,0,3,0,VerificationTest.sysml
+../data/examples/Simple Tests/ViewTest.sysml,44,1,0,2,0,6,0,3,0,1,0,0,0,0,ViewTest.sysml
+../data/examples/State Space Representation Examples/CartSample.sysml,64,1,3,1,2,10,9,5,12,1,0,0,0,0,CartSample.sysml
+../data/examples/State Space Representation Examples/EVSample.sysml,319,2,0,1,4,32,21,14,58,2,0,0,3,0,EVSample.sysml
+../data/examples/v1 Spec Examples/8.4.1 Wheel Hub Assembly/Wheel Package - Updated.sysml,92,1,0,1,2,12,0,26,0,1,0,3,0,0,Wheel Package - Updated.sysml
+../data/examples/v1 Spec Examples/8.4.1 Wheel Hub Assembly/Wheel Package.sysml,94,1,0,1,2,16,0,26,0,1,0,3,0,0,Wheel Package.sysml
+../data/examples/v1 Spec Examples/8.4.5 Constraining Decomposition/Vehicle Decomposition - Updated.sysml,68,0,0,1,0,19,0,31,0,0,0,0,0,0,Vehicle Decomposition - Updated.sysml
+../data/examples/v1 Spec Examples/8.4.5 Constraining Decomposition/Vehicle Decomposition.sysml,55,0,0,1,0,16,0,21,0,0,0,0,0,0,Vehicle Decomposition.sysml
+../data/examples/v1 Spec Examples/D.4.7.8 Dynamics/HSUVDynamics.sysml,88,3,0,1,0,27,0,0,46,3,0,0,0,0,HSUVDynamics.sysml
+../data/examples/Variability Examples/VehicleVariabilityModel.sysml,165,6,0,10,20,31,2,36,6,13,0,0,0,3,VehicleVariabilityModel.sysml
+../data/examples/Vehicle Example/VehicleDefinitions.sysml,54,5,0,1,0,12,1,7,2,12,3,0,0,0,VehicleDefinitions.sysml
+../data/examples/Vehicle Example/VehicleIndividuals.sysml,111,5,0,4,0,21,0,10,6,6,0,0,0,3,VehicleIndividuals.sysml
+../data/examples/Vehicle Example/VehicleUsages.sysml,96,4,0,1,0,20,0,27,2,8,5,6,0,0,VehicleUsages.sysml
