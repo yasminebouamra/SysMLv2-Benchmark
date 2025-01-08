@@ -1,0 +1,26 @@
+Pour le benchmark, choisir les exemples selon 3 stratégies : 
+- tirer des exemples dans le même dossier que l'exemple sur lequel on travaille
+- tirer des exemples dans le même cluster que l'exemple sur lequel on travaille
+- faire un rag qui choisit les n exemples les plus proches
+- faire un rag de la documentation
+
+
+TO DO DEMAIN (LIS MOI LE MATIN CONNASSE) :
+
+- [X] Faire fonctionner la comparaison de clusterings
+- [X] Finaliser la comapraison par embeddings
+- [X] Finaliser le code du benchmark 
+- [ ] Commencer à reprendre les slides en template siemens 
+- [ ] BOSSER CORRECTEMENT SINON JE TE TUE 
+
+
+T0
+
+# HDR Frédéric
+Mots clés intéressants/a creuser : 
+- Intelligence ambiante
+
+
+# réu alexandre
+- pas trop d'avancées sur le sujet des modèles avec Matt which kinda sucks 
+- Bon moving forward 
