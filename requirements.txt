@@ -1,0 +1,11 @@
+openai
+pandas
+numpy 
+umap-learn
+plotly
+hdbscan
+requests
+scikit-learn
+matplotlib
+seaborn
+
